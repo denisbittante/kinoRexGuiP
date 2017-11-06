@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-Dieser Text wird ignoriert
+Dieser Text wird ignoriert Das ist das Programm
 
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
@@ -24,6 +24,15 @@ Dieser Text wird ignoriert
 				<h:outputText value="#{employee.employeeName}"></h:outputText>
 			</p:column>
 		</p:dataTable>
+
+		<h:form>
+			<p:commandLink value="moviedetail" action="moviedetail">
+			</p:commandLink>
+		</h:form>
+
+
 	</ui:define>
+
+
 </ui:composition>
 </html>

@@ -11,4 +11,35 @@
 			<var>msg</var>
 		</resource-bundle>
 	</application>
+
+
+
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>programm</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>moviedetail</from-outcome>
+			<to-view-id>/movieDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>movieshow</from-outcome>
+			<to-view-id>/movieShow.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>payment</from-outcome>
+			<to-view-id>/payment.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>confirm</from-outcome>
+			<to-view-id>/bookingConfirm.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+
+
 </faces-config>

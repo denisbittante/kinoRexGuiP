@@ -16,7 +16,7 @@
 			href="#{request.contextPath}/resources/images/favicon.jpg" />
 	</f:facet>
 
-	<title>#{msg.header.title}</title>
+	<title>#{msg.header_title}</title>
 
 	<h:outputScript name="jquery/jquery.js" library="primefaces" />
 	<h:outputScript name="jquery/jquery-plugins.js" library="primefaces" />
@@ -24,17 +24,73 @@
 
 	<ui:insert name="head" />
 
+
+
+	<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 24%;
+}
+
+.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 30px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+	color: #555;
+}
+</style>
+
+
 </h:head>
 
 <f:view>
 	<body>
-		<div id="PFTopLinksCover"></div>
-		<div class="content-container">
+
+		<div id="header">
+			<img src="/resources/images/logo.jpg" width="200px" alt="logo" />
+		</div>
+
+		<p:steps activeIndex="1" styleClass="custom" readonly="false">
+			<p:menuitem value="#{msg.wiz_1}" id="wiz_1" />
+			<p:menuitem value="#{msg.wiz_2}" id="wiz_2" />
+			<p:menuitem value="#{msg.wiz_3}" id="wiz_3" />
+			<p:menuitem value="#{msg.wiz_4}" id="wiz_4" />
+		</p:steps>
+
+		<p:tooltip id="toolTipFocus" for="wiz_1" position="bottom"
+			value="This tooltip uses clip/explode effects for the animation" />
+
+
+
+		<div class="content-container" style="margin-top: 60px">
 			<ui:insert name="content">
 
 			Dieser Text ist Platzhalter  und wird ersetzt
 			
 		</ui:insert>
+
+
+
+
 		</div>
 
 	</body>
@@ -43,99 +99,7 @@
 
 
 
-<h:form>
-                 
-    <p:growl id="growl" sticky="true" showDetail="true"/>
- 
-    <p:wizard flowListener="#{userWizard.onFlowProcess}">
-        <p:tab id="personal" title="Personal">
-            <p:panel header="Personal Details">
-                <p:messages />
-  
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="address" title="Address">
-            <p:panel header="Address Details">
-                <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
-                    <h:outputText value="Street: " />
-                    <p:inputText value="#{userWizard.user.street}" />
- 
-                    <h:outputText value="Postal Code: " />
-                    <p:inputText value="#{userWizard.user.postalCode}" />
- 
-                    <h:outputText value="City: " />
-                    <p:inputText value="#{userWizard.user.city}" />
- 
-                    <h:outputText value="Skip to last: " />
-                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />
-                </h:panelGrid>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="contact" title="Contact">
-            <p:panel header="Contact Information">
-                <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
-                    <h:outputText value="Email: *" />
-                    <p:inputText value="#{userWizard.user.email}" required="true" label="Email"/>
- 
-                    <h:outputText value="Phone: " />
-                    <p:inputText value="#{userWizard.user.phone}"/>
- 
-                    <h:outputText value="Additional Info: " />
-                    <p:inputText value="#{userWizard.user.info}"/>
-                </h:panelGrid>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="confirm" title="Confirmation">
-            <p:panel header="Confirmation">
-                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Firstname: " />
-                        <h:outputText value="#{userWizard.user.firstname}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Lastname: " />
-                        <h:outputText value="#{userWizard.user.lastname}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Age: " />
-                        <h:outputText value="#{userWizard.user.age}" styleClass="outputLabel"/>
-                    </h:panelGrid>
- 
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Street: " />
-                        <h:outputText value="#{userWizard.user.street}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Postal: " />
-                        <h:outputText value="#{userWizard.user.postalCode}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="City: " />
-                        <h:outputText value="#{userWizard.user.city}" styleClass="outputLabel"/>
-                    </h:panelGrid>
- 
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Email: " />
-                        <h:outputText value="#{userWizard.user.email}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Phone " />
-                        <h:outputText value="#{userWizard.user.phone}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Info: " />
-                        <h:outputText value="#{userWizard.user.info}" styleClass="outputLabel"/>
- 
-                        <h:outputText />
-                        <h:outputText />
-                    </h:panelGrid>
-                </h:panelGrid>
- 
-                <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
-            </p:panel>
-        </p:tab>
-    </p:wizard>
- 
-</h:form>
+
 
 
 </html>
