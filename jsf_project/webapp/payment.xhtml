@@ -9,16 +9,93 @@
 Dieser Text wird ignoriert
 
 <ui:composition template="template.xhtml">
+
+	<ui:define name="css">
+		<style type="text/css">
+		
+.white-button.ui-button.ui-state-default {
+	background-color: #ffffff;
+	color: #222222;
+	border-color: #d6d6d6;
+}
+
+.white-button.ui-button.ui-state-default:enabled:hover, .white-button.ui-button.ui-state-default:focus
+	{
+	background-color: #f2f2f2;
+	border-color: #ccc;
+	color: #373a3c;
+}
+
+.green-button.ui-button.ui-state-default {
+	background-color: #5cb85c;
+	border-color: #5cb85c;
+	color: #fff;
+}
+
+.green-button.ui-button.ui-state-default:enabled:hover, .green-button.ui-button.ui-state-default:focus
+	{
+	background-color: #4cae4c;
+	border-color: #5cb85c;
+}
+
+.red-button.ui-button.ui-state-default {
+	background-color: #d9534f;
+	border-color: #d9534f;
+	color: #fff;
+}
+
+.red-button.ui-button.ui-state-default:enabled:hover, .red-button.ui-button.ui-state-default:focus
+	{
+	background-color: #d43f3a;
+	border-color: #d9534f;
+}
+</style>
+
+	</ui:define>
 	<ui:define name="content">
 
-			<h:form id="outerForm" prependId="false">
-			
-			
-			
-			
-			
+		<h:form id="outerForm" prependId="false">
+
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>#{msg.payment_lbl_title}</h1>
+				<h2>#{msg.payment_lbl_info_1}</h2>
+				<h3>#{msg.payment_lbl_info_2}</h3>
+				<h3>#{msg.payment_lbl_info_3}</h3>
+			</div>
 			<div class="ui-g-12 ui-md-6 ui-lg-6">
-				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" ></k:ticketComponent>
+
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+					<p:inputText id="email" placeholder="E-Mail"
+						validatorMessage="#{msg.payment_val_email}">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
+					<p:message for="email" />
+
+
+				</div>
+
+				<p:outputLabel for="cc" value="#{msg.payment_lbl_cc}" />
+				<p:inputMask id="cc" mask="999-99-9999-9999" />
+
+				<p:outputLabel for="console" value="Basic:" />
+				<p:selectOneMenu id="console" style="width:125px">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+					<f:selectItem itemLabel="PS4" itemValue="PS4" />
+					<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="#{msg.payment_btn_pay}" ajax="false"
+					icon="ui-icon-check" validateClient="true"
+					style="margin-right:10px" action="confirm" />
+
+			</div>
+
+			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}"
+					formId="outerForm" editable="true"></k:ticketComponent>
 			</div>
 		</h:form>
 

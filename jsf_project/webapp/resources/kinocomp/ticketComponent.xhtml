@@ -14,19 +14,20 @@
 
 	<composite:interface>
 		<composite:attribute name="seats" />
+		<composite:attribute name="editable" type="java.lang.String"
+			required="true" />
 		<composite:attribute name="formId" type="java.lang.String"
 			required="true" />
 	</composite:interface>
 
 	<composite:implementation>
 
-		<p:dataTable var="seat" value="#{cc.attrs.seats}" editable="true"
-			editMode="cell">
-		<!-- 	<p:ajax event="cellEdit" listener="#{dtEditView.onCellEdit}"
-				update=":#{cc.attrs.formId}" /> -->
+		<p:dataTable id="price" var="seat" value="#{cc.attrs.seats}"
+			editable="#{cc.attrs.editable}" editMode="cell">
 
-			<p:column headerText="Platz">
-				<h:outputText value="#{seat.toString()}" />
+			<p:column headerText="#{msg.tickets_seat}">
+				<h:outputText
+					value="#{seat.seatColumn} #{msg.tickets_seat}., #{seat.seatRow} #{msg.tickets_row}" />
 			</p:column>
 			<p:column headerText="Typ">
 				<p:cellEditor>
@@ -34,26 +35,30 @@
 						<h:outputText value="#{seat.ticketType.title}" />
 					</f:facet>
 					<f:facet name="input">
-						<p:selectOneMenu value="#{seat.ticketType}" style="width:100%" >
+						<p:selectOneMenu value="#{seat.ticketType}" style="width:100%">
 							<f:selectItems value="#{dtEditView.ticketTypes}" var="man"
 								itemLabel="#{man.title}" itemValue="#{man}" />
 						</p:selectOneMenu>
 					</f:facet>
 				</p:cellEditor>
 			</p:column>
-			<p:column headerText="Preis">
+			<p:column headerText="#{msg.tickets_price}"
+				style="text-align: right;">
 				<h:outputText value="#{seat.ticketType.cost}">
 					<f:convertNumber pattern="#0.00 CHF" />
 				</h:outputText>
 			</p:column>
 
-			<p:column style="width:50px;text-align: center">
+			<p:column style="width:50px;text-align: center"
+				visible="#{cc.attrs.editable}">
 
 				<p:commandButton icon="ui-icon-trash" action="#{seat.reserve()}"
 					update=":#{cc.attrs.formId}">
 				</p:commandButton>
 			</p:column>
 		</p:dataTable>
+
+
 	</composite:implementation>
 </h:body>
 

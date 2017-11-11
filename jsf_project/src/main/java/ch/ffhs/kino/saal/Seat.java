@@ -26,6 +26,13 @@ public class Seat {
 		}
 	}
 
+	public String isOccupied() {
+		if (type == SeatType.SOLD) {
+			return "true";
+		}
+		return "false";
+	}
+
 	public enum TicketType {
 		KIND(8.50, "Kind"), ADULT(19.00, "Erwachsene"), STUDENT(11.50, "Student"), SENIOR(9.00, "Senior");
 

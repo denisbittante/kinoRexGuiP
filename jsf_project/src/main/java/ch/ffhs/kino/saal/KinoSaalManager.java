@@ -20,7 +20,7 @@ public class KinoSaalManager {
 	int seats = 176;
 
 	Date timeout;
-	private Integer timeoutSecond = -1;
+	private Integer timeoutSecond = 180;
 
 	public Integer getTimeoutSecond() {
 		return timeoutSecond;
@@ -33,8 +33,6 @@ public class KinoSaalManager {
 	@PostConstruct
 	public void init() {
 
-		recalculateTimeout();
-		
 		for (int i = 0; i < seats; i++) {
 
 			Seat e = new Seat(i / columns_count, i % columns_count);
@@ -64,9 +62,6 @@ public class KinoSaalManager {
 
 	}
 
-	
-	
-	
 	private void recalculateTimeout() {
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();
 		gregorianCalendar.add(GregorianCalendar.SECOND, 180);
@@ -74,7 +69,7 @@ public class KinoSaalManager {
 	}
 
 	public void remainingSeconds() {
-		timeoutSecond = timeout.getSeconds() - new Date().getSeconds();
+		timeoutSecond--;
 
 	}
 
@@ -117,6 +112,14 @@ public class KinoSaalManager {
 		}
 
 		return mySeats;
+
+	}
+
+	public void resetReservedSeats() {
+		for (Seat seat : allSeats) {
+
+			seat.setReserved(false);
+		}
 
 	}
 

@@ -4,12 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.event.CellEditEvent;
 
 import ch.ffhs.kino.saal.Seat.TicketType;
 
@@ -27,9 +23,7 @@ public class EditView implements Serializable {
 		return a;
 	}
 
-	public void onCellEdit(CellEditEvent event) {
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
+	public void handleKeyEvent() {
+    }
 
-	}
 }

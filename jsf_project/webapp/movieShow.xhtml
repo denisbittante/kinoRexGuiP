@@ -106,9 +106,10 @@ select {
 			<h:form id="outerForm" prependId="false">
 				<div class="ui-g-6 ui-md-8 ui-lg-7">
 
+					#{msg.mvishw_ticket_lbl_reservierung}
 					<h:outputText id="txt_count"
 						value="#{kinoSaalManager.timeoutSecond}" />
-					<p:poll interval="3" listener="#{kinoSaalManager.remainingSeconds}"
+					<p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}"
 						update="txt_count" />
 				</div>
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
@@ -121,9 +122,10 @@ select {
 								<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
 									<td class="noborder"><h:commandButton id="seatButton"
 											action="#{i.reserve()}"
-											styleClass="seat #{kinoSaalManager.style(i)}">
+											styleClass="seat #{kinoSaalManager.style(i)}"
+											disabled="#{i.isOccupied()}">
 										</h:commandButton> <p:tooltip for="seatButton"
-											value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row},"></p:tooltip>
+											value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row}"></p:tooltip>
 									</td>
 								</ui:repeat>
 							</tr>
@@ -131,10 +133,17 @@ select {
 					</table>
 
 				</div>
-
+				<p:commandButton value="#{msg.mvishw_ticket_btn_entfernen}"
+					id="resetReservedSeats"
+					action="#{kinoSaalManager.resetReservedSeats()}" update="outerForm">
+				</p:commandButton>
+				<p:commandButton value="#{msg.mvishw_ticket_btn_kaufen}"
+					action="payment">
+				</p:commandButton>
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
+
 					<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}"
-						formId="outerForm"></k:ticketComponent>
+						formId="outerForm" editable="true"></k:ticketComponent>
 				</div>
 			</h:form>
 		</div>
