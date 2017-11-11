@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15099245876530" configfile="/kinoRex/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="120" y="84" id="pf15099312730671" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf150993228485023 pf150993228485024 pf150993228485025 pf150993228485026 pf150993228485027" inlinks="pf150993228485023" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="movieDetail.xhtml" x="575" y="300" id="pf150993228485028" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf150993228485024" path="/movieDetail.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="movieShow.xhtml" x="575" y="216" id="pf150993228485029" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf150993228485025" path="/movieShow.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="payment.xhtml" x="596" y="48" id="pf150993228485030" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf150993228485026" path="/payment.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="bookingConfirm.xhtml" x="575" y="120" id="pf150993228485031" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf150993228485027" path="/bookingConfirm.xhtml"/>
-  <links id="pf150993228485023" target="pf15099312730671" source="pf15099312730671" outcome="programm"/>
-  <links id="pf150993228485024" target="pf150993228485028" source="pf15099312730671" outcome="moviedetail"/>
-  <links id="pf150993228485025" target="pf150993228485029" source="pf15099312730671" outcome="movieshow"/>
-  <links id="pf150993228485026" target="pf150993228485030" source="pf15099312730671" outcome="payment"/>
-  <links id="pf150993228485027" target="pf150993228485031" source="pf15099312730671" outcome="confirm"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf151033324481543" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf151033324481644 pf151033324481645 pf151033324481646 pf151033324481647 pf151033324481648" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf151033324481649" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf151033324481644" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="movieDetail.xhtml" id="pf151033324481650" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf151033324481645" path="/movieDetail.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="movieShow.xhtml" id="pf151033324481651" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf151033324481646" path="/movieShow.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="payment.xhtml" id="pf151033324481652" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf151033324481647" path="/payment.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="bookingConfirm.xhtml" id="pf151033324481653" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf151033324481648" path="/bookingConfirm.xhtml"/>
+  <links id="pf151033324481644" target="pf151033324481649" source="pf151033324481543" outcome="programm"/>
+  <links id="pf151033324481645" target="pf151033324481650" source="pf151033324481543" outcome="moviedetail"/>
+  <links id="pf151033324481646" target="pf151033324481651" source="pf151033324481543" outcome="movieshow"/>
+  <links id="pf151033324481647" target="pf151033324481652" source="pf151033324481543" outcome="payment"/>
+  <links id="pf151033324481648" target="pf151033324481653" source="pf151033324481543" outcome="confirm"/>
 </pageflow:Pageflow>

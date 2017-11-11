@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 
 Dieser Text wird ignoriert Das ist das Programm
 
@@ -24,11 +25,13 @@ Dieser Text wird ignoriert Das ist das Programm
 				<h:outputText value="#{employee.employeeName}"></h:outputText>
 			</p:column>
 		</p:dataTable>
+		<k:sessionOver></k:sessionOver>
 
 		<h:form>
-			<p:commandLink value="moviedetail" action="moviedetail">
-			</p:commandLink>
+			<p:commandLink value="moviedetail" action="moviedetail" />
+			<p:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
 		</h:form>
+
 
 
 	</ui:define>

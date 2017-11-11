@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:kino="http://java.sun.com/jsf/composite/kinocomp"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+	<h1>Composite Components in JSF 2.0</h1>
+
+	<composite:interface>
+
+	</composite:interface>
+
+	<composite:implementation>
+
+		<p:dataTable id="basicDT" var="seat" value="">
+			<f:facet name="header"> Basic     </f:facet>
+			<p:column headerText="Id">
+				<h:outputText value="99979" />
+			</p:column>
+			<p:column headerText="Year">
+				<h:outputText value="2101" />
+			</p:column>
+			<p:column headerText="Brand">
+				<h:outputText value="8984" />
+			</p:column>
+			<p:column headerText="Color">
+				<h:outputText value="+8+" />
+			</p:column>
+			<p:column style="width:32px;text-align: center">
+				<p:commandButton icon="ui-icon-search" title="View">
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</composite:implementation>
+</h:body>
+
+</html>

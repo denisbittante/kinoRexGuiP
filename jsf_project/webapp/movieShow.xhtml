@@ -3,13 +3,131 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 Dieser Text wird ignoriert
 
 <ui:composition template="template.xhtml">
+
+	<ui:define name="css">
+
+		<style type="text/css">
+.seat {
+	border-radius: 50%;
+	background-color: gray;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: block;
+	margin: auto;
+	border: solid;
+	height: 19px;
+	width: 19px;
+}
+
+.selected {
+	background-color: #E9365A;
+}
+
+.leinwand {
+	background-color: gray;
+	border-width: 20px;
+	border-color: white;
+	color: white;
+	text-align: center
+}
+
+.noborder {
+	border: none;
+	text-align: center;
+	padding: 0px;
+}
+
+.PREMIUM {
+	background-color: #f1c40f;
+}
+
+.RESERVED {
+	background-color: #E9365A;
+}
+
+.HIDDEN {
+	visibility: hidden;
+}
+
+.SOLD {
+	background-color: #2c3e50;
+}
+
+.HANDYCAP {
+	background-color: #3498db;
+}
+</style>
+
+
+
+	</ui:define>
+
+
 	<ui:define name="content">
-		Hier soll was rein... 
+
+
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>#{msg.mvishw_lbl_title}</h1>
+				<h2>#{msg.mvishw_lbl_info}</h2>
+
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat RESERVED">
+				</h:commandButton>
+				#{msg.mvishw_lbl_meinePlaetze}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat NORMAL">
+				</h:commandButton>
+				#{msg.mvishw_lbl_frei}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat SOLD">
+				</h:commandButton>
+				#{msg.mvishw_lbl_verkauft}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat PREMIUM">
+				</h:commandButton>
+				#{msg.mvishw_lbl_premium}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat HANDYCAP">
+				</h:commandButton>
+				#{msg.mvishw_lbl_handicap}
+			</div>
+			<div class="ui-g-6 ui-md-8 ui-lg-7"></div>
+			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<h:form>
+					<table class="noborder">
+						<tr>
+							<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
+						</tr>
+						<ui:repeat var="row" value="#{kinoSaalManager.returnRows()}">
+							<tr class="noborder">
+								<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
+									<td class="noborder"><h:commandButton id="seatButton"
+											action="#{kinoSaalManager.reserve(i)}"
+											styleClass="seat #{kinoSaalManager.style(i)}">
+										</h:commandButton> <p:tooltip for="seatButton" value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row},"></p:tooltip>
+									</td>
+								</ui:repeat>
+							</tr>
+						</ui:repeat>
+					</table>
+				</h:form>
+			</div>
+
+
+		</div>
 	</ui:define>
 </ui:composition>
 </html>
