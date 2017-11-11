@@ -63,15 +63,14 @@ Dieser Text wird ignoriert
 .HANDYCAP {
 	background-color: #3498db;
 }
+
+select {
+	color: #4f4f4f;
+}
 </style>
 
-
-
 	</ui:define>
-
-
 	<ui:define name="content">
-
 
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-12 ui-lg-12">
@@ -104,9 +103,15 @@ Dieser Text wird ignoriert
 				</h:commandButton>
 				#{msg.mvishw_lbl_handicap}
 			</div>
-			<div class="ui-g-6 ui-md-8 ui-lg-7"></div>
-			<div class="ui-g-12 ui-md-6 ui-lg-6">
-				<h:form>
+			<h:form id="outerForm" prependId="false">
+				<div class="ui-g-6 ui-md-8 ui-lg-7">
+
+					<h:outputText id="txt_count"
+						value="#{kinoSaalManager.timeoutSecond}" />
+					<p:poll interval="3" listener="#{kinoSaalManager.remainingSeconds}"
+						update="txt_count" />
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
 					<table class="noborder">
 						<tr>
 							<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
@@ -115,18 +120,23 @@ Dieser Text wird ignoriert
 							<tr class="noborder">
 								<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
 									<td class="noborder"><h:commandButton id="seatButton"
-											action="#{kinoSaalManager.reserve(i)}"
+											action="#{i.reserve()}"
 											styleClass="seat #{kinoSaalManager.style(i)}">
-										</h:commandButton> <p:tooltip for="seatButton" value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row},"></p:tooltip>
+										</h:commandButton> <p:tooltip for="seatButton"
+											value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row},"></p:tooltip>
 									</td>
 								</ui:repeat>
 							</tr>
 						</ui:repeat>
 					</table>
-				</h:form>
-			</div>
 
+				</div>
 
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
+					<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}"
+						formId="outerForm"></k:ticketComponent>
+				</div>
+			</h:form>
 		</div>
 	</ui:define>
 </ui:composition>

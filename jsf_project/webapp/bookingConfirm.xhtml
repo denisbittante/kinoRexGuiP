@@ -13,13 +13,16 @@ Dieser Text wird ignoriert
 
 		<h1>#{msg.confirm_lbl_title}</h1>
 
-			<h2>#{msg.confirm_lbl_thanks}</h2>
-			<p>#{msg.confirm_lbl_sent}</p>
-			<p>#{msg.confirm_lbl_print}</p>
-		
+		<h2>#{msg.confirm_lbl_thanks}</h2>
+		<p>#{msg.confirm_lbl_sent}</p>
+		<p>#{msg.confirm_lbl_print}</p>
 
-		
-			<k:ticketComponent></k:ticketComponent>
+		<h:form id="outerForm" prependId="false">
+			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}"
+					formId="outerForm"></k:ticketComponent>
+			</div>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

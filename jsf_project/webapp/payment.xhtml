@@ -10,7 +10,18 @@ Dieser Text wird ignoriert
 
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
-		Hier soll was rein... 
+
+			<h:form id="outerForm" prependId="false">
+			
+			
+			
+			
+			
+			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" ></k:ticketComponent>
+			</div>
+		</h:form>
+
 	</ui:define>
 </ui:composition>
 </html>

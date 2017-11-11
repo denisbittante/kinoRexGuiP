@@ -1,6 +1,8 @@
 package ch.ffhs.kino.saal;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,8 +19,22 @@ public class KinoSaalManager {
 	int columns_count = 16;
 	int seats = 176;
 
+	Date timeout;
+	private Integer timeoutSecond = -1;
+
+	public Integer getTimeoutSecond() {
+		return timeoutSecond;
+	}
+
+	public void setTimeoutSecond(Integer timeoutSecond) {
+		this.timeoutSecond = timeoutSecond;
+	}
+
 	@PostConstruct
 	public void init() {
+
+		recalculateTimeout();
+		
 		for (int i = 0; i < seats; i++) {
 
 			Seat e = new Seat(i / columns_count, i % columns_count);
@@ -48,6 +64,20 @@ public class KinoSaalManager {
 
 	}
 
+	
+	
+	
+	private void recalculateTimeout() {
+		GregorianCalendar gregorianCalendar = new GregorianCalendar();
+		gregorianCalendar.add(GregorianCalendar.SECOND, 180);
+		timeout = gregorianCalendar.getTime();
+	}
+
+	public void remainingSeconds() {
+		timeoutSecond = timeout.getSeconds() - new Date().getSeconds();
+
+	}
+
 	public List<Integer> returnRows() {
 
 		ArrayList<Integer> rows = new ArrayList<Integer>();
@@ -64,18 +94,6 @@ public class KinoSaalManager {
 
 	}
 
-	public void reserve(Seat s) {
-
-		System.out.println("Seat " + s.toString() + "was reserved");
-
-		if (s.isReserved()) {
-			s.setReserved(false);
-		} else {
-			s.setReserved(true);
-		}
-
-	}
-
 	public String style(Seat s) {
 
 		if (s.isReserved()) {
@@ -83,7 +101,6 @@ public class KinoSaalManager {
 		} else if (s.isHidden()) {
 			return "HIDDEN";
 		} else {
-
 			return s.getType().toString();
 		}
 
