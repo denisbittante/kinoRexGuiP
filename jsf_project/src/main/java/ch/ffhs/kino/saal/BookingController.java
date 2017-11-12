@@ -2,22 +2,25 @@ package ch.ffhs.kino.saal;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import ch.ffhs.kino.saal.Seat.SeatType;
+import ch.ffhs.kino.saal.Seat.TicketType;
 
-@ManagedBean
+@ManagedBean(name = "kinoSaalManager")
 @SessionScoped
-public class KinoSaalManager {
+public class BookingController {
 
 	ArrayList<Seat> allSeats = new ArrayList<Seat>();
 	int columns_count = 16;
 	int seats = 176;
+
+	private String paymentmethod = "false";
 
 	Date timeout;
 	private Integer timeoutSecond = 180;
@@ -62,10 +65,12 @@ public class KinoSaalManager {
 
 	}
 
-	private void recalculateTimeout() {
-		GregorianCalendar gregorianCalendar = new GregorianCalendar();
-		gregorianCalendar.add(GregorianCalendar.SECOND, 180);
-		timeout = gregorianCalendar.getTime();
+	public String getPaymentmethod() {
+		return paymentmethod;
+	}
+
+	public void setPaymentmethod(String paymentmethod) {
+		this.paymentmethod = paymentmethod;
 	}
 
 	public void remainingSeconds() {
@@ -102,16 +107,20 @@ public class KinoSaalManager {
 	}
 
 	public List<Seat> returnMySeats() {
-
 		List<Seat> mySeats = new ArrayList<Seat>();
-
 		for (Seat seat : allSeats) {
 			if (seat.isReserved()) {
 				mySeats.add(seat);
 			}
 		}
-
 		return mySeats;
+	}
+
+	public String hasNoTickets() {
+		if (returnMySeats().size() > 0) {
+			return "false";
+		}
+		return "true";
 
 	}
 
@@ -121,6 +130,36 @@ public class KinoSaalManager {
 			seat.setReserved(false);
 		}
 
+	}
+
+	public int count(String category) {
+
+		TicketType valueOf = TicketType.valueOf(category);
+
+		List<Seat> returnMySeats = returnMySeats();
+		int count = 0;
+		for (Seat seat : returnMySeats) {
+			if (seat.getTicketType().equals(valueOf)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	public double totalprice() {
+
+		List<Seat> returnMySeats = returnMySeats();
+		double total = 0.0;
+		for (Seat seat : returnMySeats) {
+			total += seat.getTicketType().getCost();
+		}
+		return total;
+	}
+
+	public String endSession() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "programm?faces-redirect=true";
 	}
 
 }

@@ -1,6 +1,7 @@
 package ch.ffhs.kino.saal;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,27 @@ public class EditView implements Serializable {
 	}
 
 	public void handleKeyEvent() {
-    }
+	}
+
+	public List<String> getYears() {
+
+		List<String> options = new ArrayList<String>();
+		DecimalFormat decim = new DecimalFormat("2000");
+		for (int i = 17; i <= 27; i++) {
+			options.add(decim.format(i));
+		}
+		return options;
+
+	}
+
+	public List<String> getMonths() {
+		// Kreditkarten-Felder
+		List<String> options = new ArrayList<String>();
+		DecimalFormat decim = new DecimalFormat("00");
+		for (int i = 1; i <= 12; i++) {
+			options.add(decim.format(i));
+		}
+		return options;
+	}
 
 }

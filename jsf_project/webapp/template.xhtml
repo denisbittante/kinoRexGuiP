@@ -86,23 +86,24 @@
 			</div>
 			</header>
 		</div>
-		<div class="wrapper row2"></div>
-
-		<h:form>
-			<p:breadCrumb>
-				<p:menuitem value="#{msg.wiz_1}" action="programm" />
-				<p:menuitem value="#{msg.wiz_2}" action="movieshow" />
-				<p:menuitem value="#{msg.wiz_3}" action="payment" />
-				<p:menuitem value="#{msg.wiz_4}" action="confirm" />
-			</p:breadCrumb>
-		</h:form>
-
+		<div class="wrapper row2">
+			<!-- MENU PINK -->
+		</div>
 		<div class="wrapper row3">
+
+			<h:form>
+				<p:breadCrumb>
+					<p:menuitem value="#{msg.wiz_1}" action="programm" />
+					<p:menuitem value="#{msg.wiz_2}" action="movieshow" />
+					<p:menuitem value="#{msg.wiz_3}" action="payment" />
+					<p:menuitem value="#{msg.wiz_4}" action="confirm" />
+				</p:breadCrumb>
+			</h:form>
+
+
 			<div class="content-container" style="margin-top: 60px">
 				<ui:insert name="content">
-
-			Dieser Text ist Platzhalter  und wird ersetzt
-			
+			Dieser Text ist Platzhalter  und wird ersetzt	
 		</ui:insert>
 			</div>
 		</div>
@@ -161,10 +162,10 @@
 		</div>
 		<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
 		<!-- JAVASCRIPTS -->
-		<script src="layout/scripts/jquery.min.js"></script>
+		<!-- <script src="layout/scripts/jquery.min.js"></script>
 		<script src="layout/scripts/jquery.backtotop.js"></script>
 		<script src="layout/scripts/jquery.mobilemenu.js"></script>
-		<script src="layout/scripts/jquery.flexslider-min.js"></script>
+		<script src="layout/scripts/jquery.flexslider-min.js"></script> -->
 	</body>
 
 </f:view>

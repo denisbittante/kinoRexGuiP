@@ -1,9 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 
 Dieser Text wird ignoriert
@@ -12,7 +8,6 @@ Dieser Text wird ignoriert
 
 	<ui:define name="css">
 		<style type="text/css">
-		
 .white-button.ui-button.ui-state-default {
 	background-color: #ffffff;
 	color: #222222;
@@ -54,50 +49,95 @@ Dieser Text wird ignoriert
 	</ui:define>
 	<ui:define name="content">
 
+		<div class="ui-g-12 ui-md-12 ui-lg-12">
+			<h1>#{msg.payment_lbl_title}</h1>
+			<h2>#{msg.payment_lbl_info_1}</h2>
+			<p>#{msg.payment_lbl_info_2}</p>
+			<p>
+				<strong>#{msg.payment_lbl_info_3}</strong>
+			</p>
+		</div>
+		<!-- ########################################################################## -->
+
 		<h:form id="outerForm" prependId="false">
 
-			<div class="ui-g-12 ui-md-12 ui-lg-12">
-				<h1>#{msg.payment_lbl_title}</h1>
-				<h2>#{msg.payment_lbl_info_1}</h2>
-				<h3>#{msg.payment_lbl_info_2}</h3>
-				<h3>#{msg.payment_lbl_info_3}</h3>
-			</div>
 			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<!-- ##################### FORM ######################### -->
 
-				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-					<p:inputText id="email" placeholder="E-Mail"
-						validatorMessage="#{msg.payment_val_email}">
-						<f:validateRegex
-							pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
+					<p:outputLabel for="email" value="#{msg.payment_lbl_email}" />
+					<p:inputText id="email" placeholder="E-Mail" validatorMessage="#{msg.payment_val_email}">
+						<f:validateRegex pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					</p:inputText>
-					<p:message for="email" />
+				</h:panelGrid>
+				<p:message for="email" />
+				<p:outputPanel id="customPanel" style="margin-bottom:10px">
+
+					<p:selectOneRadio  id="paymentmethods" value="#{kinoSaalManager.paymentmethod}" layout="custom">
+						<f:selectItem itemLabel="#{msg.payment_lbl_cc}"  itemValue="false" />
+						<f:selectItem itemLabel="#{msg.payment_lbl_paypal}" itemValue="true">
+						</f:selectItem>
+						<p:ajax update="panel1" />
+					</p:selectOneRadio>
 
 
-				</div>
+					<h:panelGrid columns="3" cellpadding="5">
+						<p:radioButton id="opt1" for="paymentmethods" itemIndex="0" />
+						<i class="fa fa-credit-card" aria-hidden="true"></i>
+						<h:outputLabel for="opt1" value="#{msg.payment_lbl_cc}" />
 
-				<p:outputLabel for="cc" value="#{msg.payment_lbl_cc}" />
-				<p:inputMask id="cc" mask="999-99-9999-9999" />
+						<p:radioButton id="opt2" for="paymentmethods" itemIndex="1" />
+						<i class="fa fa-paypal" aria-hidden="true"></i>
+						<h:outputLabel for="opt2" value="#{msg.payment_lbl_paypal}" />
+					</h:panelGrid>
 
-				<p:outputLabel for="console" value="Basic:" />
-				<p:selectOneMenu id="console" style="width:125px">
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-					<f:selectItem itemLabel="PS4" itemValue="PS4" />
-					<f:selectItem itemLabel="Wii U" itemValue="Wii U" />
-				</p:selectOneMenu>
 
-				<p:commandButton value="#{msg.payment_btn_pay}" ajax="false"
-					icon="ui-icon-check" validateClient="true"
-					style="margin-right:10px" action="confirm" />
+				</p:outputPanel>
 
+
+				<p:panel id="panel1" visible="#{not kinoSaalManager.paymentmethod}" toggleable="true">
+
+					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value" title="#{msg.payment_lbl_zahlungsart}">
+
+						<p:outputLabel for="cc" value="#{msg.payment_lbl_cc}" />
+						<p:inputMask id="cc" mask="999-99-9999-9999" placeholder="#{msg.payment_lbl_ccinput}" />
+
+						<p:outputLabel for="ccname" value="#{msg.payment_lbl_cc_owner}" />
+						<p:inputMask id="ccname" placeholder="#{msg.payment_lbl_ccnameinput}" />
+
+
+
+						<p:outputLabel for="expirationyear" value="#{msg.payment_lbl_cc_gueltigbis}" />
+
+						<p:panel>
+							<p:selectOneMenu id="expirationyear">
+								<f:selectItem itemLabel="#{msg.payment_lbl_cc_year}" itemValue="" noSelectionOption="true" />
+								<f:selectItems value="#{dtEditView.getYears()}" />
+							</p:selectOneMenu>
+							<p:selectOneMenu id="expirationdate">
+								<f:selectItem itemLabel="#{msg.payment_lbl_cc_month}" itemValue="" noSelectionOption="true" />
+								<f:selectItems value="#{dtEditView.getMonths()}" />
+							</p:selectOneMenu>
+						</p:panel>
+						<p:outputLabel for="cvv" value="#{msg.payment_lbl_cc_cvv}" />
+						<p:inputMask id="cvv" mask="999" placeholder="#{msg.payment_lbl_cc_cvv}" />
+					</h:panelGrid>
+
+
+				</p:panel>
+
+				<p:commandButton value="#{msg.payment_btn_pay}" ajax="false" icon="fa fa-shopping-cart" validateClient="true" style="margin-right:10px" action="confirm" />
+
+
+
+				<!-- ##################### END FORM ######################### -->
 			</div>
-
 			<div class="ui-g-12 ui-md-6 ui-lg-6">
-				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}"
-					formId="outerForm" editable="true"></k:ticketComponent>
+				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" editable="true"></k:ticketComponent>
 			</div>
 		</h:form>
+		<!-- ########################################################################## -->
+
 
 	</ui:define>
 </ui:composition>
