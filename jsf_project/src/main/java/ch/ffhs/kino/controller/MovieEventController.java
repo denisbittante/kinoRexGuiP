@@ -9,9 +9,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import ch.ffhs.kino.model.EventDateTime;
 import ch.ffhs.kino.model.GenreType;
 import ch.ffhs.kino.model.Movie;
 import ch.ffhs.kino.model.MovieEvent;
+import ch.ffhs.kino.model.MovieEventDetail;
 import ch.ffhs.kino.model.MovieLanguage;
 
 @ManagedBean(name = "movieEventController")
@@ -21,10 +23,18 @@ public class MovieEventController {
 	private Movie movie1 = new Movie();
 	private Movie movie2 = new Movie();
 	private Movie movie3 = new Movie();
+	private List<LocalDate> dates = new ArrayList<LocalDate>();
 	private List<MovieEvent> events = new ArrayList<MovieEvent>();
 	
 	@PostConstruct
 	public void populateShowList() {
+		dates.add(LocalDate.now());
+		dates.add(LocalDate.now().plusDays(1));
+		dates.add(LocalDate.now().plusDays(2));
+		dates.add(LocalDate.now().plusDays(3));
+		dates.add(LocalDate.now().plusDays(4));
+		dates.add(LocalDate.now().plusDays(5));
+		dates.add(LocalDate.now().plusDays(6));
 		
 		movie1.setTitle("Hereinspaziert");
 		movie1.setGenre(GenreType.COMEDY);
@@ -61,32 +71,68 @@ public class MovieEventController {
 		movie3.setRegie("Denis Vileneuve");
 		movie3.addActors("Ana de Armas").addActors("Dave Bautista").addActors("Edward James Olmos").addActors("Harrison Ford");
 		
+		// 1. Film
 		MovieEvent event1 = new MovieEvent();
 		event1.setMovie(movie1);
-		event1.setDate(LocalDate.now());
-		event1.setTime(LocalTime.parse("18:30"));	
-		event1.setLanguage(MovieLanguage.DEUTSCH);
-		event1.setHall("1");	
 		events.add(event1);
 		
+		MovieEventDetail detail1 = new MovieEventDetail();	
+		detail1.setLanguage(MovieLanguage.DEUTSCH);
+		detail1.setHall("1");	
+		event1.getDetails().add(detail1);
+		
+		EventDateTime showTime1 = new EventDateTime();
+		showTime1.setShowDate(LocalDate.now());
+		showTime1.setShowTime(LocalTime.parse("18:30"));
+		detail1.getEventDateTimes().add(showTime1);
+		
+		EventDateTime showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(1));
+		showTime2.setShowTime(LocalTime.parse("16:00"));
+		detail1.getEventDateTimes().add(showTime2);
+		
+		EventDateTime showTime3 = new EventDateTime();
+		showTime3.setShowDate(LocalDate.now().plusDays(2));
+		showTime3.setShowTime(LocalTime.parse("19:30"));
+		detail1.getEventDateTimes().add(showTime3);		
+		
+		
+		
+		
+		MovieEventDetail detail2 = new MovieEventDetail();	
+		detail2.setLanguage(MovieLanguage.ENGLISH);
+		detail2.setHall("1");
+		event1.getDetails().add(detail2);
+		
+		EventDateTime showTime1b = new EventDateTime();
+		showTime1b.setShowDate(LocalDate.now());
+		showTime1b.setShowTime(LocalTime.parse("22:45"));
+		detail2.getEventDateTimes().add(showTime1b);
+		
+		
+		
+		// 2. Film
 		MovieEvent event2 = new MovieEvent();
-		event2.setMovie(movie1);
-		event2.setDate(LocalDate.now());
-		event2.setTime(LocalTime.parse("22:45"));	
-		event2.setLanguage(MovieLanguage.ENGLISH);
-		event2.setHall("1");	
+		event2.setMovie(movie2);
 		events.add(event2);
 		
-		MovieEvent event3 = new MovieEvent();
-		event3.setMovie(movie2);
-		event3.setDate(LocalDate.now());
-		event3.setTime(LocalTime.parse("19:30"));	
-		event3.setLanguage(MovieLanguage.DEUTSCH);
-		event3.setHall("1");	
-		events.add(event3);
+		MovieEventDetail detail3 = new MovieEventDetail();
+//		detail3.setDate(LocalDate.now());
+//		detail3.setTime(LocalTime.parse("19:30"));	
+		detail3.setLanguage(MovieLanguage.DEUTSCH);
+		detail3.setHall("1");	
+		event2.getDetails().add(detail3);
 	}
 
     // #### getters and setters ####
+    public List<LocalDate> getDates() {
+        return dates;
+    }
+
+    public void setDates(List<LocalDate> dates) {
+        this.dates = dates;
+    }
+    
     public List<MovieEvent> getEvents() {
         return events;
     }

@@ -48,19 +48,43 @@
 		        <th>Film</th>
 		        <th>Sprache</th>
 		        <th>Saal</th>
-		        <th>Sa 06.01</th>
+		        <c:forEach items="#{movieEventController.dates}" var="eventDate">
+		        	<th><h:outputText value="#{eventDate}"/></th>
+		        </c:forEach>
+		        <!-- <th>Sa 06.01</th>
 		        <th>So 07.01</th>
 		        <th>Mo 08.01</th>
 		        <th>Di 09.01</th>
 		        <th>Mi 10.01</th>
 		        <th>Do 11.01</th>
-		        <th>Fr 12.01</th>
+		        <th>Fr 12.01</th> -->
 		      </tr>
 		    </thead>
 		    <tbody>
 				<c:forEach items="#{movieEventController.events}" var="event">
 				  <tr>
 				  	<td><h:outputText value="#{event.movie.title}"/></td>
+				  	<td>
+					  	<c:forEach items="#{event.details}" var="detail">
+					  		<h:outputText value="#{detail.language}"/><br></br>
+					  	</c:forEach>
+				  	</td>
+				  	<td>
+					  	<c:forEach items="#{event.details}" var="detail">
+					  		<h:outputText value="#{detail.hall}"/><br></br>
+					  	</c:forEach>
+				  	</td>
+				  	<c:forEach items="#{movieEventController.dates}" var="eventDate">
+				  		<td>
+						  	<c:forEach items="#{event.details}" var="detail">
+						  		<c:forEach items="#{detail.eventDateTimes}" var="eventDateTime">
+						  			<c:if test="${eventDateTime.showDate eq eventDate}">
+						  				<h:outputText value="#{eventDateTime.showTime}"/><br></br>
+						  			</c:if>
+						  		</c:forEach>
+						  	</c:forEach>
+				  		</td>
+				  	</c:forEach>
 				  </tr>
 				</c:forEach>
 		    </tbody>
