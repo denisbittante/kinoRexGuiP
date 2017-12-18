@@ -2,34 +2,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
-
-Dieser Text wird ignoriert Das ist das Programm
 
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
-		<p:dataTable value="#{viewEmployeesManagedBean.employees}"
-			var="employee">
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Employee ID"></h:outputText>
-				</f:facet>
-				<h:outputText value="#{employee.employeeId}"></h:outputText>
-			</p:column>
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Employee Name"></h:outputText>
-				</f:facet>
-				<h:outputText value="#{employee.employeeName}"></h:outputText>
-			</p:column>
-		</p:dataTable>
+	
+	<h:form>
+		<table class="table table-striped">
+		    <thead>
+		      <tr>
+		        <th>Film</th>
+		        <th>Sprache</th>
+		        <th>Saal</th>
+		        <th>Sa 06.01</th>
+		        <th>So 07.01</th>
+		        <th>Mo 08.01</th>
+		        <th>Di 09.01</th>
+		        <th>Mi 10.01</th>
+		        <th>Do 11.01</th>
+		        <th>Fr 12.01</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		        <td>Blade Runner</td>
+		        <td>D<br></br>E</td>
+		        <td>1<br></br>1</td>
+		        <td><h:commandLink action="moviedetail">19:30</h:commandLink><br></br>22:45</td>
+		        <td>16:00<br></br>19:30</td>
+		        <td>16:00<br></br>19:30</td>
+		        <td>16:00<br></br>19:30</td>
+		        <td>16:00<br></br>19:30</td>
+		        <td></td>
+		        <td></td>
+		      </tr>
+		    </tbody>
+		  </table>
+	</h:form>
+
+		<table class="table table-striped">
+			<thead>
+		      <tr>
+		        <th>Film</th>
+		        <th>Sprache</th>
+		        <th>Saal</th>
+		        <th>Sa 06.01</th>
+		        <th>So 07.01</th>
+		        <th>Mo 08.01</th>
+		        <th>Di 09.01</th>
+		        <th>Mi 10.01</th>
+		        <th>Do 11.01</th>
+		        <th>Fr 12.01</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+				<c:forEach items="#{movieEventController.events}" var="event">
+				  <tr>
+				  	<td><h:outputText value="#{event.movie.title}"/></td>
+				  </tr>
+				</c:forEach>
+		    </tbody>
+		</table>				  
+
 		<k:sessionOver></k:sessionOver>
 
 		<h:form>
-			<p:commandLink value="moviedetail" action="moviedetail" />
-			<p:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
+			<h:commandLink value="moviedetail" action="moviedetail" />
+			<h:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
 		</h:form>
 
 
