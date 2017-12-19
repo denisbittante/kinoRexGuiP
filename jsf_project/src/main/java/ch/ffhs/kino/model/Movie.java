@@ -13,7 +13,8 @@ public class Movie {
 	private String regie;
 	private List<String> actors = new ArrayList<String>();
 	private String title;
-	private List<GenreType> genre;
+	//	private List<GenreType> genre;
+	private List<Genre> genreList = new ArrayList<Genre>();
 	private String desc;
 	private String movieImage;
 //	private String altersfreigabe;
@@ -96,10 +97,6 @@ public class Movie {
 		this.laengeMin = laengeMin;
 	}
 
-	public void setGenre(List<GenreType> genre) {
-		this.genre = genre;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -107,16 +104,12 @@ public class Movie {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
 //	public String getGenreText() {
 //		return StringUtils.join(this.genre, ", ");
 //
 //	}
-
-	public void setGenre(GenreType... genreTypes) {
-		this.genre = Arrays.asList(genreTypes);
-	}
-
+	
 	public String getDesc() {
 		return desc;
 	}
@@ -136,7 +129,7 @@ public class Movie {
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", originalLanguage=" + originalLanguage + ", regie=" + regie + ", actors=" + actors
-				+ ", title=" + title + ", genre=" + genre + ", desc=" + desc + ", imageRessource=" + movieImage
+				+ ", title=" + title + ", genre=" + genreList + ", desc=" + desc + ", imageRessource=" + movieImage
 				+ ", altersfreigabe=" + altersfreigabe + ", laengeMin=" + laengeMin + ", webseite=" + webseite
 				+ ", criticsStar=" + criticStars + ", trailer=" + trailer + "]";
 	}
@@ -153,5 +146,17 @@ public class Movie {
 
 	public void setMovieImage(String movieImage) {
 		this.movieImage = movieImage;
+	}
+
+	public List<Genre> getGenreList() {
+		return genreList;
+	}
+
+	public void setGenreList(List<Genre> genreList) {
+		this.genreList = genreList;
+	}
+	
+	public void addGenre(Genre genre){
+		genreList.add(genre);
 	}
 }

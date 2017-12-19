@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.ffhs.kino.model.EventDateTime;
+import ch.ffhs.kino.model.Genre;
 import ch.ffhs.kino.model.GenreType;
 import ch.ffhs.kino.model.Movie;
 import ch.ffhs.kino.model.MovieEvent;
@@ -19,6 +20,11 @@ public class BackendService {
 	private Movie movie1 = new Movie();
 	private Movie movie2 = new Movie();
 	private Movie movie3 = new Movie();
+	private List<Genre> genreList;
+	
+	public BackendService(){
+		LoadGenre();
+	}
 	
 	public List<LocalDate> getEventsDates(){
 		List<LocalDate> dates = new ArrayList<LocalDate>();
@@ -86,10 +92,26 @@ public class BackendService {
 		return events;
 	}
 	
+	private List<Genre> LoadGenre(){
+		genreList = new ArrayList<Genre>();
+		genreList.add(new Genre(0, ""));
+		genreList.add(new Genre(1, "Drama"));
+		genreList.add(new Genre(2, "Action"));
+		genreList.add(new Genre(3, "Komödie"));
+		genreList.add(new Genre(4, "Mystery"));
+		genreList.add(new Genre(5, "Thriller"));
+		genreList.add(new Genre(6, "Krimi"));
+		genreList.add(new Genre(7, "Horror"));
+		genreList.add(new Genre(8, "Science Fiction"));
+		genreList.add(new Genre(9, "Trickfilm"));
+		return genreList;
+	}
+	
 	private void createMovies(){
 		
 		movie1.setTitle("Dschungelhelden");
-		movie1.setGenre(GenreType.COMEDY);
+		movie1.addGenre(new Genre(1, "Komödie"));
+		movie1.addGenre(new Genre(9, "Trickfilm"));
 		movie1.setDesc("Der grosse weisse Tiger Maurice versucht mit aller Kraft, zusammen mit Freunden den bösen Koala-Bären Igor zu bezwingen, der den ganzen Dschungel ausrotten will. Nach und nach lernen sowohl Maurice als auch Igor, sich ihrer Vergangenheit zu stellen.");
 		movie1.setAltersfreigabe(6);
 		movie1.setLaengeMin(90);
@@ -106,7 +128,9 @@ public class BackendService {
 		
 
 		movie2.setTitle("Barry Seal - Only in America");
-		movie2.setGenre(GenreType.ACTION, GenreType.COMEDY, GenreType.DRAMA, GenreType.THRILLER);
+		movie2.addGenre(new Genre(2, "Action"));
+		movie2.addGenre(new Genre(5, "Thriller"));
+//		movie2.setGenre(GenreType.ACTION, GenreType.COMEDY, GenreType.DRAMA, GenreType.THRILLER);
 		movie2.setDesc("Einige Waisenkinder finden ein Zuhause bei einem Puppenmacher. Schon bald geraten sie ins Visier einer seiner Kreationen.");
 		//movie2.setImageRessource(String.format(imgPath, "4"));
 		movie2.setAltersfreigabe(14);
@@ -118,7 +142,8 @@ public class BackendService {
 		
 		// Blade Runner 2049
 		movie3.setTitle("Blade Runner 2049");
-		movie3.setGenre(GenreType.SCIENCE_FICTION, GenreType.THRILLER);
+		movie3.addGenre(new Genre(8, "Science Fiction"));
+		movie3.addGenre(new Genre(5, "Thriller"));
 		movie3.setDesc("30 Jahre nach dem ersten Film f�rdert ein neuer Blade Runner ein lange unter Verschluss gehaltenes Geheimnis zu Tage.");
 		//movie3.setImageRessource(String.format(imgPath, "23"));
 		movie3.setAltersfreigabe(12);
@@ -132,5 +157,13 @@ public class BackendService {
 		movie3.setSubtitle(MovieLanguage.FRANZOESISCH);
 		movie3.setRegie("Denis Vileneuve");
 		movie3.addActors("Ana de Armas").addActors("Dave Bautista").addActors("Edward James Olmos").addActors("Harrison Ford");
+	}
+	
+	public void setGenreList(List<Genre> genreList){
+		this.genreList = genreList;
+	}
+	
+	public List<Genre> getGenreList(){
+		return this.genreList;
 	}
 }
