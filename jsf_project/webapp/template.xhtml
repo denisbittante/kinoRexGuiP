@@ -12,41 +12,42 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicon.jpg" />
-		<link href="/resources/layout/styles/layout.css" rel="stylesheet" type="text/css" media="all" />
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<link href="/resources/layout/styles/layoutNew.css" rel="stylesheet" type="text/css" media="all" />
 		<link href="/resources/layout/styles/kino.css" rel="stylesheet" type="text/css" media="all" />
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</f:facet>
 
 	<title>#{msg.header_title}</title>
 
-	<h:outputScript name="jquery/jquery.js" library="primefaces" />
+<!-- 	<h:outputScript name="jquery/jquery.js" library="primefaces" />
 	<h:outputScript name="jquery/jquery-plugins.js" library="primefaces" />
-	<h:outputScript name="core.js" library="primefaces" />
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<h:outputScript name="core.js" library="primefaces" /> -->
 
 	<ui:insert name="head" />
-
 	<ui:insert name="css" />
-
-
-
 </h:head>
 
 <f:view>
 	<body>
 
-		<div class="wrapper row0">
-			<div id="topbar" class="hoc clear">
+		<div class="wrapper header_row">
+			<div id="headerbar" class="center_horizontal clear">
+				<!-- <div class="fl_left">
+					<a href="index.html"> <img src="/resources/images/logo.jpg"
+						style="width: 44px" alt="logo" /> #{msg.header_title}
+					</a>
+				</div> -->
 				<div class="fl_left">
 					<ul class="nospace inline pushright">
-						<li><i class="fa fa-phone"></i> +00 (123) 456 7890</li>
-						<li><i class="fa fa-envelope-o"></i> info@domain.com</li>
+						<li><i class="fa fa-phone"></i> +41 44 814 27 74</li>
+						<li><i class="fa fa-envelope-o"></i> kinorex@gmx.ch</li>
 						<h:form>
-							<h:selectOneMenu value="#{localeManager.language}"
-								onchange="submit()">
+							<h:selectOneMenu value="#{localeManager.language}" onchange="submit()">
 								<f:selectItem itemValue="en" itemLabel="English" />
 								<f:selectItem itemValue="de" itemLabel="Deutsch" />
 							</h:selectOneMenu>
@@ -57,12 +58,8 @@
 					<ul class="faico clear">
 						<li><a class="faicon-facebook" href="#"><i
 								class="fa fa-facebook"></i></a></li>
-						<li><a class="faicon-pinterest" href="#"><i
-								class="fa fa-pinterest"></i></a></li>
 						<li><a class="faicon-twitter" href="#"><i
 								class="fa fa-twitter"></i></a></li>
-						<li><a class="faicon-dribble" href="#"><i
-								class="fa fa-dribbble"></i></a></li>
 						<li><a class="faicon-linkedin" href="#"><i
 								class="fa fa-linkedin"></i></a></li>
 						<li><a class="faicon-google-plus" href="#"><i
@@ -72,27 +69,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="wrapper row1">
-			<header id="header" class="hoc clear">
-			<div id="logo" class="fl_left">
-				<h1>
-					<a href="index.html"> <img src="/resources/images/logo.jpg"
-						style="width: 88px" alt="logo" /> #{msg.header_title}
-					</a>
-				</h1>
-			</div>
-			<div id="quickinfo" class="fl_right">
-				<ul class="nospace inline">
-					<li><strong>Malesuada:</strong><br></br> +00 (123) 456 7890</li>
-					<li><strong>Semper:</strong><br></br> +00 (123) 456 7890</li>
-				</ul>
-			</div>
-			</header>
-		</div>
-		<div class="wrapper row2">
-			<!-- MENU PINK -->
-		</div>
-		<div class="wrapper row3">
+		
+		<div class="wrapper content_row">
 
 			<h:form>
 				<p:breadCrumb>
@@ -103,17 +81,15 @@
 				</p:breadCrumb>
 			</h:form>
 
-
-			<div class="content-container" style="margin-top: 60px">
-				<ui:insert name="content">
-			Dieser Text ist Platzhalter  und wird ersetzt	
-		</ui:insert>
+			<div class="content-container" style="margin-top: 10px">
+				<ui:insert name="content"></ui:insert>
 			</div>
+			
 		</div>
 
 
-		<div class="wrapper row4">
-			<footer id="footer" class="hoc clear">
+		<div class="wrapper footer_row">
+			<footer id="footer" class="center_horizontal clear">
 			<div class="one_third first">
 				<h6 class="title">Imperdiet diam et ante</h6>
 				<ul class="nospace linklist contact">
@@ -151,8 +127,9 @@
 			</div>
 			</footer>
 		</div>
+		
 		<div class="wrapper row5">
-			<div id="copyright" class="hoc clear">
+			<div id="copyright" class="center_horizontal clear">
 				<p class="fl_left">
 					Copyright &copy; 2016 - All Rights Reserved - <a href="#">Domain
 						Name</a>
@@ -164,11 +141,6 @@
 			</div>
 		</div>
 		<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
-		<!-- JAVASCRIPTS -->
-		<!-- <script src="layout/scripts/jquery.min.js"></script>
-		<script src="layout/scripts/jquery.backtotop.js"></script>
-		<script src="layout/scripts/jquery.mobilemenu.js"></script>
-		<script src="layout/scripts/jquery.flexslider-min.js"></script> -->
 	</body>
 
 </f:view>

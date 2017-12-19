@@ -9,12 +9,17 @@
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
 
-		<h1>#{movieEventController.selectedMovie.title}</h1>
-		#{movieEventController.selectedMovie.laengeMin} 	
+		<h3>
+			#{movieEventController.selectedMovie.title}
+			#{movieEventController.selectedMovie.laengeMin} 	
 
-      	<c:set var="string3" value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}" />
-      	<p><h:outputText value="${string3}"/></p>
-		<p><h:outputText value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}"/></p>
+      		<!-- <c:set var="string3" value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}" />
+      		<p><h:outputText value="${string3}"/></p> -->
+      		
+			<p><h:outputText value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}"/></p>
+		</h3>
+		
+		<hr></hr>
 		
 		#{msg.mvidet_lbl_info}
 		

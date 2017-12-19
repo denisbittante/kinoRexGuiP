@@ -1,5 +1,70 @@
 @charset "utf-8";
+@import url("fontawesome-4.5.0.min.css");
 
+body {
+	color:#888888; 
+	background-color:#EEEEEE;
+}
+
+/* Fonts*/
+body, input, textarea, select{font-family:Verdana, Geneva, sans-serif;}
+h1, h2, h3, h4, h5, h6, .heading{font-family:Georgia, "Times New Roman", Times, serif;}
+
+
+.wrapper {
+	display:block; 
+	width:100%; 
+	margin:0; 
+	padding:0; 
+	text-align:left; 
+	word-wrap:break-word;
+}
+
+.center_horizontal {
+	display:block; 
+	margin:0 auto;
+	max-width:90%;
+}
+
+.clear, .group{display:block;}
+.clear::before, .clear::after, .group::before, .group::after{display:table; content:"";}
+.clear, .clear::after, .group, .group::after{clear:both;}
+
+.header_row {
+ 	color:#888888; 
+	background-color:#EEEEEE;
+}
+.footer_row {
+ 	color:#888888; 
+	background-color:#EEEEEE;
+}
+
+.fl_left, .imgl{float:left;}
+.fl_right, .imgr{float:right;}
+
+
+/* Header Bar*/
+#headerbar {
+	padding:10px 0 15px; 
+	font-size:12px;
+	 text-align:center;
+}
+#headerbar .fl_left {
+	margin-top:4px;
+}
+#headerbar .fl_left .inline > li i {
+	margin:0 5px 0 0; 
+	line-height:normal;
+}
+#headerbar *{margin:0;}
+#headerbar .fl_left ul{margin:0 0 10px 0; line-height:normal;}
+#headerbar .fl_left ul li{display:inline-block; margin-right:20px;}
+#headerbar .fl_left ul li:last-child{margin-right:0;}
+#headerbar .faico li{float:none;}
+
+
+/* Weitere Styles
+--------------------------------------------------------------------------------------------------------------- */
 .glyphicon-star { 
   color: #e67e22; 
   font-size: 1.0em;
