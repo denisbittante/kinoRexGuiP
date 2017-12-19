@@ -9,43 +9,75 @@
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
 
-		<h3>
-			#{movieEventController.selectedMovie.title}
-			#{movieEventController.selectedMovie.laengeMin} 	
-
+		<h:outputText value="#{movieEventController.selectedMovie.title}" styleClass="font-h2"/>
+		<h:outputText value="#{movieEventController.selectedMovie.laengeMin}" styleClass="font-h1"/>
+		
+		<h4>
       		<!-- <c:set var="string3" value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}" />
-      		<p><h:outputText value="${string3}"/></p> -->
-      		
+      		<p><h:outputText value="${string3}"/></p> -->     		
 			<p><h:outputText value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}"/></p>
-		</h3>
+		</h4>
 		
 		<hr></hr>
 		
-		#{msg.mvidet_lbl_info}
+		<div class="row">
+		    <div class="col-sm-3 center_horizontal clear" style="background-color:lavender;">
+		    
+			    <h:graphicImage value="#{movieEventController.selectedMovie.movieImage}"
+							    class="img-responsive" style="width:250px" alt="movie"/>
+						
+				<h:outputText value="#{msg.mvidet_lbl_kritik}" />
+				<p style="white-space: nowrap;">
+					<c:forEach begin="0" end="4" var="val">						    
+						<c:choose>
+			              	<c:when test="${movieEventController.selectedMovie.criticStars > (val + 0.5)}">
+			              		<span class="glyphicon glyphicon-star"></span>
+			              	</c:when>
+							<c:otherwise>
+								<span class="glyphicon glyphicon-star-empty"></span>
+							</c:otherwise>
+						</c:choose>								    									    
+					</c:forEach>
+				</p>
+				
+		    </div>
+		    
+		    <div class="col-sm-9" style="background-color:lavenderblush;">
+		    	#{msg.mvidet_lbl_info}
+		    	
+		    <h:form>
+				<table class="table table-striped">
+				<thead>
+			      <tr>
+			        <th>#{msg.programm_lbl_film}</th>
+			        <th>#{msg.programm_lbl_language}</th>
+			        <th>#{msg.programm_lbl_saal}</th>
+			        <c:forEach items="#{movieEventController.dates}" var="eventDate">
+			        	<th>
+							<h:outputText value="#{eventDate}" converter="localDateTimeConverter" />
+			        	</th>
+			        </c:forEach>
+			        <!-- <th>Sa 06.01</th>-->
+			        
+			      </tr>
+			    </thead>
+			    </table>
+		    </h:form>	
+		    	
+    			#{msg.mvidet_lbl_genre}
+				#{msg.mvidet_lbl_originalsprache}
+				#{msg.mvidet_lbl_untertitel}
+				#{msg.mvidet_lbl_regie}
+				#{msg.mvidet_lbl_schauspieler}
+			</div>
+		  </div>
+
+		
 		
 		<!-- <h:graphicImage url="image?id=#{item.id}" class="img-responsive"/> -->
-		<h:graphicImage value="#{movieEventController.selectedMovie.movieImage}"
-						class="img-responsive" style="width:250px" alt="movie"/>
-						
-		<h:outputText value="#{msg.mvidet_lbl_kritik}" />
-		<p style="white-space: nowrap;">
-			<c:forEach begin="0" end="4" var="val">						    
-				<c:choose>
-	              	<c:when test="${movieEventController.selectedMovie.criticStars > (val + 0.5)}">
-	              		<span class="glyphicon glyphicon-star"></span>
-	              	</c:when>
-					<c:otherwise>
-						<span class="glyphicon glyphicon-star-empty"></span>
-					</c:otherwise>
-				</c:choose>								    									    
-			</c:forEach>
-		</p>
 		
-		#{msg.mvidet_lbl_genre}
-		#{msg.mvidet_lbl_originalsprache}
-		#{msg.mvidet_lbl_untertitel}
-		#{msg.mvidet_lbl_regie}
-		#{msg.mvidet_lbl_schauspieler}
+		
+
 		
 	</ui:define>
 </ui:composition>

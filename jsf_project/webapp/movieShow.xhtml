@@ -108,12 +108,17 @@ select {
 				</h:commandButton>
 				#{msg.mvishw_lbl_handicap}
 			</div>
+			
+			
 			<h:form id="outerForm" prependId="false">
+			
 				<div class="ui-g-6 ui-md-8 ui-lg-7">
 					<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" />
 					</span>
 				</div>
+				
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
+				
 					<table class="noborder">
 						<tr>
 							<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
@@ -129,12 +134,19 @@ select {
 					</table>
 
 				</div>
-				<p:commandButton value="#{msg.mvishw_ticket_btn_entfernen}" id="resetReservedSeats" action="#{kinoSaalManager.resetReservedSeats()}" update="outerForm" icon="fa fa-recycle">
-				</p:commandButton>
-				<p:commandButton value="#{msg.mvishw_ticket_btn_kaufen}" action="payment" icon="fa fa-shopping-cart" disabled="#{kinoSaalManager.hasNoTickets()}">
-				</p:commandButton>
+				
+				<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
+							   action="#{kinoSaalManager.resetReservedSeats}">
+					<f:ajax render="outerForm" />
+		 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
+		 		</h:commandLink>
+		 		
+				<h:commandLink class="btn btn-primary btn-xs" 
+							   action="payment">
+		 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
+		 		</h:commandLink>
+		 						
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
-
 					<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" editable="true"></k:ticketComponent>
 				</div>
 			</h:form>

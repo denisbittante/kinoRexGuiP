@@ -99,12 +99,11 @@ Dieser Text wird ignoriert
 
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value" title="#{msg.payment_lbl_zahlungsart}">
 
-						<p:outputLabel for="cc" value="#{msg.payment_lbl_cc}" />
+						<h:outputText for="cc" value="#{msg.payment_lbl_cc}" />
 						<p:inputMask id="cc" mask="999-99-9999-9999" placeholder="#{msg.payment_lbl_ccinput}" />
 
-						<p:outputLabel for="ccname" value="#{msg.payment_lbl_cc_owner}" />
+						<h:outputText for="ccname" value="#{msg.payment_lbl_cc_owner}" />
 						<p:inputMask id="ccname" placeholder="#{msg.payment_lbl_ccnameinput}" />
-
 
 
 						<p:outputLabel for="expirationyear" value="#{msg.payment_lbl_cc_gueltigbis}" />

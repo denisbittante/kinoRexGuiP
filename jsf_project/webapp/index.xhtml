@@ -11,46 +11,13 @@
 	
 	<h:form>
 		<table class="table table-striped">
-		    <thead>
-		      <tr>
-		        <th>Film</th>
-		        <th>Sprache</th>
-		        <th>Saal</th>
-		        <th>Sa 06.01</th>
-		        <th>So 07.01</th>
-		        <th>Mo 08.01</th>
-		        <th>Di 09.01</th>
-		        <th>Mi 10.01</th>
-		        <th>Do 11.01</th>
-		        <th>Fr 12.01</th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		      <tr>
-		        <td>Blade Runner</td>
-		        <td>D<br></br>E</td>
-		        <td>1<br></br>1</td>
-		        <td><h:commandLink action="moviedetail">19:30</h:commandLink><br></br>22:45</td>
-		        <td>16:00<br></br>19:30</td>
-		        <td>16:00<br></br>19:30</td>
-		        <td>16:00<br></br>19:30</td>
-		        <td>16:00<br></br>19:30</td>
-		        <td></td>
-		        <td></td>
-		      </tr>
-		    </tbody>
-		  </table>
-	</h:form>
-
-<h:form>
-		<table class="table table-striped">
 			<thead>
 		      <tr>
-		        <th>Film</th>
-		        <th>Sprache</th>
-		        <th>Saal</th>
+		        <th>#{msg.programm_lbl_film}</th>
+		        <th>#{msg.programm_lbl_language}</th>
+			    <th>#{msg.programm_lbl_saal}</th>
 		        <c:forEach items="#{movieEventController.dates}" var="eventDate">
-		        	<th><h:outputText value="#{eventDate}"/></th>
+		        	<th><h:outputText value="#{eventDate}" converter="localDateTimeConverter"/></th>
 		        </c:forEach>
 		        <!-- <th>Sa 06.01</th>
 		        <th>So 07.01</th>
@@ -97,7 +64,8 @@
 				</c:forEach>
 		    </tbody>
 		</table>				  
-</h:form>
+	</h:form>
+	
 		<k:sessionOver></k:sessionOver>
 
 		<h:form>
