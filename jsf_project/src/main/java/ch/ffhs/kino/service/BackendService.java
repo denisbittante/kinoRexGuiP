@@ -92,7 +92,7 @@ public class BackendService {
 		//movie1.setImageRessource(String.format(imgPath, "20"));
 		movie1.setAltersfreigabe(6);
 		movie1.setLaengeMin(90);
-		movie1.setCriticsStar(4.3);
+		movie1.setCriticStars(4.3);
 		movie1.setOriginalLanguage(MovieLanguage.FRANZOESISCH);
 		String codemov1 = "VAB0tvLZtTw";
 		String urlmovie1 = "http://www.youtube.com/embed/" + codemov1 + "?rel=0;3&amp;autohide=1&amp;showinfo=0";
@@ -107,6 +107,8 @@ public class BackendService {
 		movie2.setDesc("Einige Waisenkinder finden ein Zuhause bei einem Puppenmacher. Schon bald geraten sie ins Visier einer seiner Kreationen.");
 		//movie2.setImageRessource(String.format(imgPath, "4"));
 		movie2.setAltersfreigabe(14);
+		movie2.setLaengeMin(90);
+		movie2.setCriticStars(3.1);
 		String codemov2 = "SiV3XA-sC8k";
 		String urlmovie2 = "http://www.youtube.com/embed/" + codemov2 + "?rel=0;3&amp;autohide=1&amp;showinfo=0";
 		movie2.setTrailer(urlmovie2);
@@ -122,7 +124,7 @@ public class BackendService {
 		String url = "http://www.youtube.com/embed/" + code + "?rel=0;3&amp;autohide=1&amp;showinfo=0";
 		movie3.setTrailer(url);
 		movie3.setWebseite("http://www.imdb.com/title/tt1856101/");
-		movie3.setCriticsStar(4.3);
+		movie3.setCriticStars(4.3);
 		movie3.setOriginalLanguage(MovieLanguage.ENGLISH);
 		movie3.setSubtitle(MovieLanguage.FRANZOESISCH);
 		movie3.setRegie("Denis Vileneuve");

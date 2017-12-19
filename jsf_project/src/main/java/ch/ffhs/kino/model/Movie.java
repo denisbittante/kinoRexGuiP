@@ -20,7 +20,7 @@ public class Movie {
 	private int altersfreigabe;
 	private int laengeMin;
 	private String webseite;
-	private double criticsStar;
+	private double criticStars;
 	private String trailer;
 
 //	public String getActorsAsString() {
@@ -72,12 +72,12 @@ public class Movie {
 		this.trailer = trailer;
 	}
 
-	public double getCriticsStar() {
-		return criticsStar;
+	public double getCriticStars() {
+		return criticStars;
 	}
 
-	public void setCriticsStar(double criticsStar) {
-		this.criticsStar = criticsStar;
+	public void setCriticStars(double criticStars) {
+		this.criticStars = criticStars;
 	}
 
 	public String getWebseite() {
@@ -146,7 +146,7 @@ public class Movie {
 		return "Movie [id=" + id + ", originalLanguage=" + originalLanguage + ", regie=" + regie + ", actors=" + actors
 				+ ", title=" + title + ", genre=" + genre + ", desc=" + desc + ", imageRessource=" + imageRessource
 				+ ", altersfreigabe=" + altersfreigabe + ", laengeMin=" + laengeMin + ", webseite=" + webseite
-				+ ", criticsStar=" + criticsStar + ", trailer=" + trailer + "]";
+				+ ", criticsStar=" + criticStars + ", trailer=" + trailer + "]";
 	}
 
 	public Movie addActors(String actor) {

@@ -9,14 +9,34 @@
 <ui:composition template="template.xhtml">
 	<ui:define name="content">
 
-		<h1>Movie Detail here</h1>
-		#{movieEventController.selectedMovie.title} Länge...	
+		<h1>#{movieEventController.selectedMovie.title}</h1>
 		#{movieEventController.selectedMovie.laengeMin} 	
 
       	<c:set var="string3" value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}" />
       	<p><h:outputText value="${string3}"/></p>
 		<p><h:outputText value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}"/></p>
-		<!-- <h:outputText value="#{fn:length(cat.items)}"/> -->
+		
+		#{msg.mvidet_lbl_info}
+		
+		<h:outputText value="#{msg.mvidet_lbl_kritik}" />
+		<p style="white-space: nowrap;">
+			<c:forEach begin="0" end="4" var="val">						    
+				<c:choose>
+	              	<c:when test="${movieEventController.selectedMovie.criticStars > (val + 0.5)}">
+	              		<span class="glyphicon glyphicon-star"></span>
+	              	</c:when>
+					<c:otherwise>
+						<span class="glyphicon glyphicon-star-empty"></span>
+					</c:otherwise>
+				</c:choose>								    									    
+			</c:forEach>
+		</p>
+		
+		#{msg.mvidet_lbl_genre}
+		#{msg.mvidet_lbl_originalsprache}
+		#{msg.mvidet_lbl_untertitel}
+		#{msg.mvidet_lbl_regie}
+		#{msg.mvidet_lbl_schauspieler}
 		
 	</ui:define>
 </ui:composition>
