@@ -16,7 +16,8 @@ public class Movie {
 	private List<GenreType> genre;
 	private String desc;
 	private String imageRessource;
-	private String altersfreigabe;
+//	private String altersfreigabe;
+	private int altersfreigabe;
 	private int laengeMin;
 	private String webseite;
 	private double criticsStar;
@@ -132,11 +133,11 @@ public class Movie {
 		this.imageRessource = imageRessource;
 	}
 
-	public String getAltersfreigabe() {
+	public int getAltersfreigabe() {
 		return altersfreigabe;
 	}
 
-	public void setAltersfreigabe(String altersfreigabe) {
+	public void setAltersfreigabe(int altersfreigabe) {
 		this.altersfreigabe = altersfreigabe;
 	}
 

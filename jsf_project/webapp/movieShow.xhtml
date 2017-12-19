@@ -70,6 +70,12 @@ select {
 		<div class="ui-g">
 			<div class="ui-g-12 ui-md-12 ui-lg-12">
 				<h1>#{msg.mvishw_lbl_title}</h1>
+				#{movieEventController.selectedMovie.title}
+				
+				#{movieEventController.selectedDetail.language}
+				#{movieEventController.selectedDetail.hall}
+				#{movieEventController.selectedEventDateTime.showDate} #{movieEventController.selectedEventDateTime.showTime}
+				
 				<h2>#{msg.mvishw_lbl_info}</h2>
 
 			</div>
