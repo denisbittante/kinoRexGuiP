@@ -18,6 +18,10 @@
 		
 		#{msg.mvidet_lbl_info}
 		
+		<!-- <h:graphicImage url="image?id=#{item.id}" class="img-responsive"/> -->
+		<h:graphicImage value="#{movieEventController.selectedMovie.movieImage}"
+						class="img-responsive" style="width:250px" alt="movie"/>
+						
 		<h:outputText value="#{msg.mvidet_lbl_kritik}" />
 		<p style="white-space: nowrap;">
 			<c:forEach begin="0" end="4" var="val">						    

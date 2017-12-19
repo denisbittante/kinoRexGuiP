@@ -14,6 +14,8 @@ import ch.ffhs.kino.model.MovieLanguage;
 
 public class BackendService {
 
+	private static final String IMAGE_PATH = "/resources/images/kino/%s";
+	
 	private Movie movie1 = new Movie();
 	private Movie movie2 = new Movie();
 	private Movie movie3 = new Movie();
@@ -89,11 +91,12 @@ public class BackendService {
 		movie1.setTitle("Dschungelhelden");
 		movie1.setGenre(GenreType.COMEDY);
 		movie1.setDesc("Der grosse weisse Tiger Maurice versucht mit aller Kraft, zusammen mit Freunden den bösen Koala-Bären Igor zu bezwingen, der den ganzen Dschungel ausrotten will. Nach und nach lernen sowohl Maurice als auch Igor, sich ihrer Vergangenheit zu stellen.");
-		//movie1.setImageRessource(String.format(imgPath, "20"));
 		movie1.setAltersfreigabe(6);
 		movie1.setLaengeMin(90);
 		movie1.setCriticStars(4.3);
 		movie1.setOriginalLanguage(MovieLanguage.FRANZOESISCH);
+		movie1.setMovieImage(String.format(IMAGE_PATH,"movie1.jpg"));
+		System.out.println(movie1.getMovieImage());
 		String codemov1 = "VAB0tvLZtTw";
 		String urlmovie1 = "http://www.youtube.com/embed/" + codemov1 + "?rel=0;3&amp;autohide=1&amp;showinfo=0";
 		movie1.setTrailer(urlmovie1);

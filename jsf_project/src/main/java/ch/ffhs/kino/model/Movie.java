@@ -15,7 +15,7 @@ public class Movie {
 	private String title;
 	private List<GenreType> genre;
 	private String desc;
-	private String imageRessource;
+	private String movieImage;
 //	private String altersfreigabe;
 	private int altersfreigabe;
 	private int laengeMin;
@@ -125,14 +125,6 @@ public class Movie {
 		this.desc = desc;
 	}
 
-	public String getImageRessource() {
-		return imageRessource;
-	}
-
-	public void setImageRessource(String imageRessource) {
-		this.imageRessource = imageRessource;
-	}
-
 	public int getAltersfreigabe() {
 		return altersfreigabe;
 	}
@@ -144,7 +136,7 @@ public class Movie {
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", originalLanguage=" + originalLanguage + ", regie=" + regie + ", actors=" + actors
-				+ ", title=" + title + ", genre=" + genre + ", desc=" + desc + ", imageRessource=" + imageRessource
+				+ ", title=" + title + ", genre=" + genre + ", desc=" + desc + ", imageRessource=" + movieImage
 				+ ", altersfreigabe=" + altersfreigabe + ", laengeMin=" + laengeMin + ", webseite=" + webseite
 				+ ", criticsStar=" + criticStars + ", trailer=" + trailer + "]";
 	}
@@ -153,5 +145,13 @@ public class Movie {
 
 		getActors().add(actor);
 		return this;
+	}
+
+	public String getMovieImage() {
+		return movieImage;
+	}
+
+	public void setMovieImage(String movieImage) {
+		this.movieImage = movieImage;
 	}
 }
