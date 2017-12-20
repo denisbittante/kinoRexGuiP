@@ -25,22 +25,12 @@ public class BookingController {
 	Date timeout;
 	private Integer timeoutSecond = 180;
 
-	public Integer getTimeoutSecond() {
-		return timeoutSecond;
-	}
-
-	public void setTimeoutSecond(Integer timeoutSecond) {
-		this.timeoutSecond = timeoutSecond;
-	}
-
 	@PostConstruct
 	public void init() {
-
+		
 		for (int i = 0; i < seats; i++) {
-
 			Seat e = new Seat(i / columns_count, i % columns_count);
 			allSeats.add(e);
-
 		}
 
 		allSeats.get(5).setType(SeatType.HANDYCAP);
@@ -62,36 +52,22 @@ public class BookingController {
 		allSeats.get(98).setHidden(true);
 		allSeats.get(101).setHidden(true);
 		allSeats.get(157).setHidden(true);
-
-	}
-
-	public String getPaymentmethod() {
-		return paymentmethod;
-	}
-
-	public void setPaymentmethod(String paymentmethod) {
-		this.paymentmethod = paymentmethod;
 	}
 
 	public void remainingSeconds() {
 		timeoutSecond--;
-
 	}
 
 	public List<Integer> returnRows() {
-
 		ArrayList<Integer> rows = new ArrayList<Integer>();
 		for (int i = 0; i < seats / columns_count; i++) {
 			rows.add(i);
 		}
 		return rows;
-
 	}
 
 	public List<Seat> returnOneRow(int row) {
-
 		return allSeats.subList(columns_count * row, (columns_count * (row + 1)));
-
 	}
 
 	public String style(Seat s) {
@@ -117,19 +93,14 @@ public class BookingController {
 	}
 
 	public String hasNoTickets() {
-		if (returnMySeats().size() > 0) {
+		if (returnMySeats().size() > 0)
 			return "false";
-		}
 		return "true";
-
 	}
 
 	public void resetReservedSeats() {
-		for (Seat seat : allSeats) {
-
+		for (Seat seat : allSeats)
 			seat.setReserved(false);
-		}
-
 	}
 
 	public int count(String category) {
@@ -162,4 +133,20 @@ public class BookingController {
 		return "programm?faces-redirect=true";
 	}
 
+	// #### getters and setters ####
+	public String getPaymentmethod() {
+		return paymentmethod;
+	}
+
+	public void setPaymentmethod(String paymentmethod) {
+		this.paymentmethod = paymentmethod;
+	}
+
+	public Integer getTimeoutSecond() {
+		return timeoutSecond;
+	}
+
+	public void setTimeoutSecond(Integer timeoutSecond) {
+		this.timeoutSecond = timeoutSecond;
+	}		
 }

@@ -8,13 +8,15 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.context.FacesContext;
 
 import ch.ffhs.kino.model.EventDateTime;
-import ch.ffhs.kino.model.Genre;
+import ch.ffhs.kino.model.GenreType;
 import ch.ffhs.kino.model.Movie;
 import ch.ffhs.kino.model.MovieEvent;
 import ch.ffhs.kino.model.MovieEventDetail;
+import ch.ffhs.kino.model.MovieLanguage;
+import ch.ffhs.kino.saal.BookingController;
 import ch.ffhs.kino.service.BackendService;
 
 @ManagedBean(name = "movieEventController")
@@ -26,49 +28,77 @@ public class MovieEventController {
 	private List<MovieEvent> filteredEvents = new ArrayList<MovieEvent>();
 	
 	private Movie selectedMovie;
+	private MovieEvent selectedMovieEvent;
 	private MovieEventDetail selectedDetail;
 	private EventDateTime selectedEventDateTime;
 	
-//	private GenreType selectedGenre;
-//	
-//	public GenreType[] getGenres() {
-//        return GenreType.values();
-//    }
-	
-	private List<Genre> genreList;
-	private int selectedGenre;
-	
-	
-//	 public SelectItem[] getGenderValues() {
-//	    SelectItem[] items = new SelectItem[GenreType.values().length];
-//	    int i = 0;
-//	    for(GenreType g: GenreType.values()) {
-//	      items[i++] = new SelectItem(g, g.getText());
-//	    }
-//	    return items;
-//	}
-	 
+	private GenreType searchGenre;
+	private MovieLanguage searchLanguage;
+
 	@PostConstruct
-	public void populateShowList() {
+	public void init() {
 		BackendService service = new BackendService();
 		dates = service.getEventsDates();	
 		events = service.getAllMovieEvents();
 		filteredEvents = new ArrayList<MovieEvent>(events);
-		
-		genreList = service.getGenreList();
+	}
+
+	public GenreType[] getGenres() {
+        return GenreType.values();
+    }
+
+	public MovieLanguage[] getLanguage() {
+        return MovieLanguage.values();
+    }
+	
+	public void search() {
+		filteredEvents = new ArrayList<MovieEvent>(events);
+		for (int i = filteredEvents.size() - 1; i >= 0; i--) {
+			MovieEvent movieEvent = filteredEvents.get(i);
+			
+			// Filter Genre
+			if (searchGenre != null && searchGenre != GenreType.NONE) {
+				Optional<GenreType> foundGenre = movieEvent.getMovie().getGenre().stream().filter(x -> x == searchGenre).findFirst();
+				if(!foundGenre.isPresent()){
+					filteredEvents.remove(i);
+					continue;
+				}
+			}
+			
+			// Filter Sprache
+			if (searchLanguage != null && searchLanguage != MovieLanguage.NONE) {
+				Optional<MovieEventDetail> foundEvent = movieEvent.getDetails().stream().filter(x -> x.getLanguage() == searchLanguage).findFirst();
+				if(!foundEvent.isPresent()){
+					filteredEvents.remove(i);
+					continue;
+				}
+			}
+		}
 	}
 
 	public String selectEvent(MovieEvent movieEvent, MovieEventDetail detail, EventDateTime dateTime){
 		setSelectedMovie(movieEvent.getMovie());
 		setSelectedDetail(detail);
 		setSelectedEventDateTime(dateTime);	
-		return "movieShow.jsf";
+		
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		// Gruusig: ELResolver geht bei Jetty leider nicht, da Java EE 7 Specification API
+		BookingController kinoSaalManager = (BookingController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "kinoSaalManager");
+		kinoSaalManager.resetReservedSeats();
+		
+		NavigationController navigationBean = (NavigationController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "navigationController");
+		return navigationBean.goToStep2();
 	}
 	
 	public String showMovieDetail(MovieEvent movieEvent){
+		setSelectedMovieEvent(movieEvent);
 		setSelectedMovie(movieEvent.getMovie());
 		return "movieDetail.jsf";
 	}
+	
+	
+	
 	
     // #### getters and setters ####
     public List<LocalDate> getDates() {
@@ -94,8 +124,7 @@ public class MovieEventController {
     public void setFilteredEvents(List<MovieEvent> filteredEvents) {
         this.filteredEvents = filteredEvents;
     }    
-    
-    
+        
 	public Movie getSelectedMovie() {
 		return selectedMovie;
 	}
@@ -119,70 +148,28 @@ public class MovieEventController {
 	public void setSelectedEventDateTime(EventDateTime selectedEventDateTime) {
 		this.selectedEventDateTime = selectedEventDateTime;
 	}
-
-	public void valueChangeMethod(AjaxBehaviorEvent event){
-		System.out.println("valueChangeMethod: " + getSelectedGenre());
-		
-		filteredEvents = new ArrayList<MovieEvent>(events);
-		for (int i = filteredEvents.size() - 1; i >= 0; i--) {
-			System.out.println("for Schlaufe... " + filteredEvents.size());
-			MovieEvent movieEvent = filteredEvents.get(i);
-			
-			//GenreType selectedGenre = GenreType.ACTION;
-			Optional<Genre> genre = genreList.stream().filter(x -> x.getId() == selectedGenre).findFirst();
-			if(genre.isPresent()){
-				System.out.println("Genre: " + genre.get().getDescription());
-
-				boolean hasGenere = false;
-				List<Genre> genreList = movieEvent.getMovie().getGenreList();
-				for(Genre x : genreList){
-					if(x.getId() == genre.get().getId()){
-						hasGenere = true;
-					}
-					System.out.println("Has this Genre... " + x.getDescription());
-				}
-				
-				System.out.println("ContainGenere: " + movieEvent.getMovie().getGenreList().contains(genre.get()));
-				
-				if (hasGenere == false) {
-					System.out.println("Remove" + movieEvent.getMovie().getTitle());
-					filteredEvents.remove(i);
-					continue;
-				}
-			}
-			
-			List<MovieEventDetail> details = movieEvent.getDetails();
-			for(MovieEventDetail detail : details){
-				System.out.println("Language... " + detail.getLanguage());
-			}
-			
-//			for (int d = details.size() - 1; d >= 0; d--) {
-//				MovieEventDetail detail = details.get(i);
-//				System.out.println("Language... " + detail.getLanguage());
-//			}
-			
-//			if (!movieEvent.getDetails().getLanguage().getLongText()
-//					.contains(sucheLanguage.getValue().toString())) {
-//				filteredEvents.remove(i);
-//				continue;
-//			}
-		}
-	}
 	
-	public List<Genre> getGenreList() {
-		return genreList;
+	public MovieLanguage getSearchLanguage() {
+		return searchLanguage;
 	}
 
-	public void setGenreList(List<Genre> genreList) {
-		this.genreList = genreList;
-	}
-	
-	public int getSelectedGenre() {
-		return selectedGenre;
+	public void setSearchLanguage(MovieLanguage searchLanguage) {
+		this.searchLanguage = searchLanguage;
 	}
 
-	public void setSelectedGenre(int selectedGenre) {
-		this.selectedGenre = selectedGenre;
-		System.out.println("setSelectedGenre: " + selectedGenre);
+	public GenreType getSearchGenre() {
+		return searchGenre;
+	}
+
+	public void setSearchGenre(GenreType searchGenre) {
+		this.searchGenre = searchGenre;
+	}
+
+	public MovieEvent getSelectedMovieEvent() {
+		return selectedMovieEvent;
+	}
+
+	public void setSelectedMovieEvent(MovieEvent selectedMovieEvent) {
+		this.selectedMovieEvent = selectedMovieEvent;
 	}
 }

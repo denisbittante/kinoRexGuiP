@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 
 <ui:composition template="template.xhtml">
@@ -52,20 +52,27 @@
   color:#ccc;
 }
 </style> 
+	<h1>#{msg.programm_lbl_title}</h1>
+	#{msg.mvidet_lbl_info}
+	<div class="row">
 
-	<!-- <div class="row"> -->
-		<div class="col-sm-4 form-group">
+		<div class="col-sm-9 pull-left">
+			<h:form>
 
- 		<h:form>
-		<h:selectOneMenu value="#{movieEventController.selectedGenre}">
-			<f:selectItems value="#{movieEventController.genreList}" var="genre" itemValue="#{genre.id}" itemLabel="#{genre.description}"/>
-			<f:ajax execute="@this" listener="#{movieEventController.valueChangeMethod}" render=":movieForm" />
-		</h:selectOneMenu>
-		</h:form>
-		</div>
-								
+				<h:outputText value="#{msg.programm_lbl_genre}"/>
+				<h:selectOneMenu value="#{movieEventController.searchGenre}">
+					<f:selectItems value="#{movieEventController.getGenres()}"/>
+					<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
+				</h:selectOneMenu>
+				
+				<h:outputText value="#{msg.programm_lbl_language}"/>
+				<h:selectOneMenu value="#{movieEventController.searchLanguage}">
+					<f:selectItems value="#{movieEventController.getLanguage()}"/>
+					<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
+				</h:selectOneMenu>
+			</h:form>
+		</div>					
         <div class="col-sm-3 pull-right">
-            <div> 
                 <div class="input-group stylish-input-group input-append">
                     <input type="text" class="search form-control" placeholder="Search" />
                     <span class="input-group-addon">
@@ -74,9 +81,8 @@
                         </button>  
                     </span>
                 </div>
-            </div>
         </div>
-	<!-- </div> -->
+	</div>
 	
 	<span class="counter pull-right"></span>
  
@@ -100,12 +106,13 @@
 				  <tr>
 				  	<td>
 				  		<h:commandLink action="#{movieEventController.showMovieDetail(event)}">
-				  			<h:outputText value="#{event.movie.title}"/>
+				  			<h:outputText value="#{event.movie.title}"/><br></br>
 				  		</h:commandLink>
+				  		<h:outputText value="#{event.movie.getGenreText().toString()}" style="font-size:12px;"/>
 				  	</td>
 				  	<td>
 					  	<c:forEach items="#{event.details}" var="detail">
-					  		<h:outputText value="#{detail.language}"/><br></br>
+					  		<h:outputText value="#{detail.language.getText()}"/><br></br>
 					  	</c:forEach>
 				  	</td>
 				  	<td>
@@ -133,14 +140,12 @@
 		</table>				  
 	</h:form>
 	
-		<k:sessionOver></k:sessionOver>
+	<k:sessionOver></k:sessionOver>
 
-		<h:form>
-			<h:commandLink value="moviedetail" action="moviedetail" />
-			<h:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
-		</h:form>
-
-
+	<h:form>
+		<h:commandLink value="moviedetail" action="moviedetail" />
+		<h:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
+	</h:form>
 
 	</ui:define>
 

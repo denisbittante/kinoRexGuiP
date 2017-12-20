@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <h:head>
 	<f:facet name="first">
@@ -34,28 +34,169 @@
 
 <f:view>
 	<body>
+	<div class="container-fluid">
+	
+		<!-- Infos -->
+		<div class="row header">	
+			<div class="col-sm-3 header_col1">
+				<a href="index.html"> <img src="/resources/images/logoRex.png"
+					style="width: 44px" alt="logo" /> #{msg.header_title}
+				</a>
+			</div>
+			<div class="col-sm-5 text-center header_col2">
+				<i class="fa fa-phone"></i> +41 44 814 27 74
+				<i class="fa fa-envelope-o leftspace-20"></i> kinorex@gmx.ch
+			</div>
+			
+			<div class="col-sm-4 text-right header_col3">
+				<ul class="faico clear pull-right">
+					<li><a class="faicon-facebook" href="#"><i
+							class="fa fa-facebook"></i></a></li>
+					<li><a class="faicon-twitter" href="#"><i
+							class="fa fa-twitter"></i></a></li>
+					<li><a class="faicon-linkedin" href="#"><i
+							class="fa fa-linkedin"></i></a></li>
+					<li><a class="faicon-google-plus" href="#"><i
+							class="fa fa-google-plus"></i></a></li>
+					<li><a class="faicon-rss" href="#"><i class="fa fa-rss"></i></a></li>
+					<h:form class="pull-right leftspace-10 topspace-5">
+						<h:selectOneMenu value="#{localeManager.language}" onchange="submit()">
+							<f:selectItem itemValue="en" itemLabel="English" />
+							<f:selectItem itemValue="de" itemLabel="Deutsch" />
+						</h:selectOneMenu>
+					</h:form>
+				</ul>					
+			</div>
+		</div>
+		
+		<!-- Process Steps -->
+		<div>
+			<h:form>
+		        <div class="btn-group btn-breadcrumb breadcrumb-default">
+		            
+		            <h:link class="btn btn-primary" outcome="programm">
+		      			<i class="glyphicon glyphicon-home"></i>
+		      		</h:link>
 
-		<div class="wrapper header_row">
-			<div id="headerbar" class="center_horizontal clear">
-				<!-- <div class="fl_left">
-					<a href="index.html"> <img src="/resources/images/logo.jpg"
-						style="width: 44px" alt="logo" /> #{msg.header_title}
-					</a>
-				</div> -->
-				<div class="fl_left">
-					<ul class="nospace inline pushright">
-						<li><i class="fa fa-phone"></i> +41 44 814 27 74</li>
+					<!-- 1. Vorstellung wählen -->
+					<c:if test="${navigationController.step1Active}">
+						<div class="btn btn-success">
+							<u><h:outputText value="#{msg.wiz_1}"/></u>
+						</div>
+					</c:if>						
+		      		<h:commandLink styleClass="#{navigationController.step1Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+		      					   disabled="#{navigationController.step1Disabled}"
+						    	   action="#{navigationController.goToStep1()}"
+						    	   rendered="#{!navigationController.step1Active}">
+						    	   <h:outputText value="#{msg.wiz_1}"/>
+		            </h:commandLink>	
+		            
+		            <!-- 2. Sitzplatz wählen -->
+		            <c:if test="${navigationController.step2Active}">
+		            	<div class="btn btn-success">
+							<u><h:outputText value="#{msg.wiz_2}"/></u>
+						</div>
+		            </c:if>
+		            <h:commandLink styleClass="#{navigationController.step2Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+		      					   disabled="#{navigationController.step2Disabled}"
+						    	   action="#{navigationController.goToStep2()}"
+						    	   rendered="#{!navigationController.step2Active}">
+						    	   <h:outputText value="#{msg.wiz_2}"/>
+		            </h:commandLink>
+		            
+		            <!-- 3. Bezahlen -->
+		            <c:if test="${navigationController.step3Active}">
+		            	<div class="btn btn-success">
+							<u><h:outputText value="#{msg.wiz_3}"/></u>
+						</div>
+		            </c:if>
+		            <h:commandLink styleClass="#{navigationController.step3Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+		      					   disabled="#{navigationController.step3Disabled}"
+						    	   action="#{navigationController.goToStep3()}"
+						    	   rendered="#{!navigationController.step3Active}">
+						    	   <h:outputText value="#{msg.wiz_3}"/>
+		            </h:commandLink>
+		            
+		            <!-- 4. Bestellbestätigung -->
+		            <c:if test="${navigationController.step4Active}">
+		            	<div class="btn btn-success">
+							<u><h:outputText value="#{msg.wiz_4}"/></u>
+						</div>
+		            </c:if>
+		            <h:commandLink styleClass="#{navigationController.step4Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+		      					   disabled="#{navigationController.step4Disabled}"
+						    	   action="#{navigationController.goToStep4()}"
+						    	   rendered="#{!navigationController.step4Active}">
+						    	   <h:outputText value="#{msg.wiz_4}"/>
+		            </h:commandLink>
+
+		      		<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
+		        </div>				
+			</h:form>			
+		</div>
+		
+		<!-- Content -->
+		<div class="content_row inspace-10">
+			<ui:insert name="content"></ui:insert>
+		</div>
+		
+		<!-- Footer -->
+		<div class="wrapper footer_row">
+			<footer id="footer" class="center_horizontal clear">
+				<div class="one_third first">
+					<h6 class="title">Kontaktdaten</h6>
+					<ul class="nospace linklist contact">
+						<li><i class="fa fa-map-marker"></i>
+							<address>Kinostrasse &amp; 11, Zürich, 8001</address></li>
+						<li><i class="fa fa-phone"></i> +41 44 814 27 74<br></br>
+							+00 (123)456 7890</li>
+						<li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
 						<li><i class="fa fa-envelope-o"></i> kinorex@gmx.ch</li>
-						<h:form>
-							<h:selectOneMenu value="#{localeManager.language}" onchange="submit()">
-								<f:selectItem itemValue="en" itemLabel="English" />
-								<f:selectItem itemValue="de" itemLabel="Deutsch" />
-							</h:selectOneMenu>
-						</h:form>
 					</ul>
 				</div>
-				<div class="fl_right">
-					<ul class="faico clear">
+				<div class="one_third">
+					<h6 class="title">Über Kino Rex</h6>
+					<ul class="nospace linklist">
+						<li><a href="#">Über uns</a></li>
+						<li><a href="#">Kontakt</a></li>
+						<li><a href="#">Pressemitteilungen</a></li>
+						<li><a href="#">Allgemeine Geschäftsbedingungen</a></li>
+					</ul>
+				</div>
+				<div class="one_third">
+					<h6 class="title">Newsletter</h6>
+					<p class="btmspace-30">Abonniere jetzt den Kino Rex Newsletter und erfahre alles über die neusten Filmstarts, Events und Spezialangebote.</p>
+					<form method="post" action="#">
+						<fieldset>
+							<legend>Email:</legend>
+							<input class="btmspace-15" type="text" value="" placeholder="Name" />
+							<input class="btmspace-15" type="text" value="" placeholder="Email" />
+							<button type="submit" value="submit">Submit</button>
+						</fieldset>
+					</form>
+				</div>
+			</footer>
+		</div>
+		
+		<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+	</div>
+	
+	
+	
+	
+	
+	
+<!-- 		<div class="row" style="font-size:12px;height:60px;">
+			<div class="col-md-3 pull-left" style="margin-top:10px;">
+				<a href="index.xhtml" style="margin-left:20px;">
+					<img src="/resources/images/logoRex.png" style="width: 44px" alt="logo" /> #{msg.header_title}
+				</a>
+			</div>
+			<div class="col-md-6" style="margin-top:25px;">
+				<i class="fa fa-phone"></i> +41 44 814 27 74   <i class="fa fa-envelope-o"></i> kinorex@gmx.ch
+			</div>
+			<div class="col-sm-3 pull-right" style="margin-top:15px;">
+				<ul class="faico clear">
 						<li><a class="faicon-facebook" href="#"><i
 								class="fa fa-facebook"></i></a></li>
 						<li><a class="faicon-twitter" href="#"><i
@@ -65,82 +206,15 @@
 						<li><a class="faicon-google-plus" href="#"><i
 								class="fa fa-google-plus"></i></a></li>
 						<li><a class="faicon-rss" href="#"><i class="fa fa-rss"></i></a></li>
-					</ul>
-				</div>
+						<h:form>
+							<h:selectOneMenu value="#{localeManager.language}" onchange="submit()">
+								<f:selectItem itemValue="en" itemLabel="English" />
+								<f:selectItem itemValue="de" itemLabel="Deutsch" />
+							</h:selectOneMenu>
+						</h:form>
+					</ul>					
 			</div>
-		</div>
-		
-		<div class="wrapper content_row">
-
-			<h:form>
-				<p:breadCrumb>
-					<p:menuitem value="#{msg.wiz_1}" action="programm" />
-					<p:menuitem value="#{msg.wiz_2}" action="movieshow" />
-					<p:menuitem value="#{msg.wiz_3}" action="payment" />
-					<p:menuitem value="#{msg.wiz_4}" action="confirm" />
-				</p:breadCrumb>
-			</h:form>
-
-			<div class="content-container" style="margin-top: 10px">
-				<ui:insert name="content"></ui:insert>
-			</div>
-			
-		</div>
-
-
-		<div class="wrapper footer_row">
-			<footer id="footer" class="center_horizontal clear">
-			<div class="one_third first">
-				<h6 class="title">Imperdiet diam et ante</h6>
-				<ul class="nospace linklist contact">
-					<li><i class="fa fa-map-marker"></i>
-						<address>Street Name &amp; Number, Town, Postcode/Zip</address></li>
-					<li><i class="fa fa-phone"></i> +00 (123) 456 7890<br></br>
-						+00 (123)456 7890</li>
-					<li><i class="fa fa-fax"></i> +00 (123) 456 7890</li>
-					<li><i class="fa fa-envelope-o"></i> info@domain.com</li>
-				</ul>
-			</div>
-			<div class="one_third">
-				<h6 class="title">Tincidunt vitae viverra</h6>
-				<ul class="nospace linklist">
-					<li><a href="#">At neque eu pharetra etiam ornare</a></li>
-					<li><a href="#">Neque vel arcu faucibus venenatis</a></li>
-					<li><a href="#">A lacinia lectus non gravida maecenas</a></li>
-					<li><a href="#">Sagittis nec turpis viverra venenatis</a></li>
-					<li><a href="#">Nunc elementum vestibulum at</a></li>
-				</ul>
-			</div>
-			<div class="one_third">
-				<h6 class="title">Turpis in elementum</h6>
-				<p class="btmspace-30">Eget turpis cras cursus dolor sit amet
-					lectus pretium ut consequat.</p>
-				<form method="post" action="#">
-					<fieldset>
-						<legend>Newsletter:</legend>
-						<input class="btmspace-15" type="text" value="" placeholder="Name" />
-						<input class="btmspace-15" type="text" value=""
-							placeholder="Email" />
-						<button type="submit" value="submit">Submit</button>
-					</fieldset>
-				</form>
-			</div>
-			</footer>
-		</div>
-		
-		<div class="wrapper row5">
-			<div id="copyright" class="center_horizontal clear">
-				<p class="fl_left">
-					Copyright &copy; 2016 - All Rights Reserved - <a href="#">Domain
-						Name</a>
-				</p>
-				<p class="fl_right">
-					Template by <a target="_blank" href="http://www.os-templates.com/"
-						title="Free Website Templates">OS Templates</a>
-				</p>
-			</div>
-		</div>
-		<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+		</div> -->
 	</body>
 
 </f:view>

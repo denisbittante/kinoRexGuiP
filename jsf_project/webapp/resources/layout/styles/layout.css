@@ -108,13 +108,13 @@ File: Layout CSS
 
 /* Coloured Boxes
 --------------------------------------------------------------------------------------------------------------- */
-.clrbox{display:table;}
+/* .clrbox{display:table;}
 
 .clrbox *{margin:0;}
 .clrbox li{display:table-cell; width:33.33333333333333%;}
 .clrbox article{padding:15%;}
 .clrbox .heading, .clrbox p:first-of-type{margin-bottom:30px;}
-.clrbox .btn{}
+.clrbox .btn{} */
 
 
 /* Footer
