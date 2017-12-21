@@ -1,5 +1,6 @@
 package ch.ffhs.kino.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class MovieEventController {
 	
 	private GenreType searchGenre;
 	private MovieLanguage searchLanguage;
+	private String movieEventSummary;
 
 	@PostConstruct
 	public void init() {
@@ -77,10 +79,20 @@ public class MovieEventController {
 	}
 
 	public String selectEvent(MovieEvent movieEvent, MovieEventDetail detail, EventDateTime dateTime){
-		setSelectedMovie(movieEvent.getMovie());
+		Movie selectedMovie = movieEvent.getMovie();
+		
+		setSelectedMovie(selectedMovie);
 		setSelectedDetail(detail);
 		setSelectedEventDateTime(dateTime);	
 		
+		String movieTitle = selectedMovie.getTitle();
+		String movieLanguage = detail.getLanguage().getText();
+		String movieEventSummary = movieTitle + " (" + movieLanguage + "), " + "Datum Uhrzeit" + ", " + "HallenNamen";
+				
+		SimpleDateFormat fmt = new SimpleDateFormat("E dd MMM yyyy HH:mm");
+		// fmt.format(movieShow.getDate())
+		//dateTime.getShowDate()
+		setMovieEventSummary(movieEventSummary);
 		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		// Gruusig: ELResolver geht bei Jetty leider nicht, da Java EE 7 Specification API
@@ -171,5 +183,13 @@ public class MovieEventController {
 
 	public void setSelectedMovieEvent(MovieEvent selectedMovieEvent) {
 		this.selectedMovieEvent = selectedMovieEvent;
+	}
+
+	public String getMovieEventSummary() {
+		return movieEventSummary;
+	}
+
+	public void setMovieEventSummary(String movieEventSummary) {
+		this.movieEventSummary = movieEventSummary;
 	}
 }

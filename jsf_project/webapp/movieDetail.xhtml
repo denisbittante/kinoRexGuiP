@@ -17,150 +17,169 @@
 			});
         });
 		//]]>
-	</script>      
-		<h:outputText class="font-h2 leftspace-30" value="#{movieEventController.selectedMovie.title}"/>
-		<h:outputText class="font-h3 leftspace-30"
-		              value="#{msg.mvidet_lbl_laenge} #{movieEventController.selectedMovie.laengeMin} min."/> 
-		<h:outputText class="font-h4 leftspace-30"
-		              value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}"/>         
-		<h:graphicImage value="#{movieEventController.selectedMovie.altersfreigabeImage}"
-						class="img-responsive leftspace-30" style="width:30px;display:inline;" alt="fsk"/>              
-		              
-<!-- 		movieTitle + " (" + movieLanguage + "), " + fmt.format(movieShow.getDate()) + ", "
-				+ getHall().getHallName() -->	
-      		<!-- <c:set var="string3" value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}" />
-      		<p><h:outputText value="${string3}"/></p> -->     		
-		<!-- <hr></hr> -->
-<div class="row" style="margin-left:0px; margin-right:0px;">		
-		    <div class="col-sm-3 clear text-center">
-		    
-			    <h:graphicImage value="#{movieEventController.selectedMovie.movieImage}"
-							    class="img-responsive" style="width:250px;display:block;margin:auto;" alt="movie"/>
-						
-				<h:outputText value="#{msg.mvidet_lbl_kritik}" />
-				<p style="white-space: nowrap;">
-					<c:forEach begin="0" end="4" var="val">						    
-						<c:choose>
-			              	<c:when test="${movieEventController.selectedMovie.criticStars > (val + 0.5)}">
-			              		<span class="glyphicon glyphicon-star"></span>
-			              	</c:when>
-							<c:otherwise>
-								<span class="glyphicon glyphicon-star-empty"></span>
-							</c:otherwise>
-						</c:choose>								    									    
-					</c:forEach>
-				</p>
-				
-		 		<div>
-                    <a href="#" class="launch-modal" data-modal-id="modal-video">
-                        <span><i class="fa fa-play"></i></span> 
-                        <span><h:outputText value="#{msg.mvidet_lbl_trailer}"/></span>
-                    </a>
-                </div>
-		    </div>
-		    
-		    <div class="col-sm-9">
-		    	#{msg.mvidet_lbl_info}
-		    	
-		    <h:form>
-				<table class="table table-striped">
-				<thead>
-			      <tr>
-			        <th>#{msg.programm_lbl_language}</th>
-			        <th>#{msg.programm_lbl_saal}</th>
-			        <c:forEach items="#{movieEventController.dates}" var="eventDate">
-			        	<th>
-							<h:outputText value="#{eventDate}" converter="localDateTimeConverter" />
-			        	</th>
-			        </c:forEach>
-			      </tr>
-			    </thead>
-			    <tbody>
-			    <tr>
-			    	<td>
-					  	<c:forEach items="#{movieEventController.selectedMovieEvent.details}" var="detail">
-					  		<h:outputText value="#{detail.language.getText()}"/><br></br>
-					  	</c:forEach>
-				  	</td>
-				  	<td>
-					  	<c:forEach items="#{movieEventController.selectedMovieEvent.details}" var="detail">
-					  		<h:outputText value="#{detail.hall}"/><br></br>
-					  	</c:forEach>
-				  	</td>
-				  	<c:forEach items="#{movieEventController.dates}" var="eventDate">
-				  		<td>
-						  	<c:forEach items="#{movieEventController.selectedMovieEvent.details}" var="detail">
-						  		<c:forEach items="#{detail.eventDateTimes}" var="eventDateTime">
-						  			<c:if test="${eventDateTime.showDate eq eventDate}">
-						  				<h:commandLink action="#{movieEventController.selectEvent(movieEventController.selectedMovieEvent, detail, eventDateTime)}">
-						  					<h:outputText value="#{eventDateTime.showTime}"/>
-						  				</h:commandLink>
-						  				<br></br>
-						  			</c:if>
-						  		</c:forEach>
-						  	</c:forEach>
-				  		</td>
-				  	</c:forEach>
-			    </tr>
-			    </tbody>
-			    </table>
-		    </h:form>	
-		    	<div class="form-horizontal">
-				    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
-				    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_genre}"/>
-				      <div class="col-sm-10">
-				        <p class="form-control-static">#{movieEventController.selectedMovie.getGenreText().toString()}</p>
-				      </div>
-				    </div>			    
-				    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
-				      <h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_originalsprache}:"/>	
-				      <div class="col-sm-10">
-				        <p class="form-control-static">#{movieEventController.selectedMovie.getOriginalLanguage().getLongText()}</p>
-				      </div>
-				    </div>				    
-				    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
-				    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_untertitel}:"/>
-				      <div class="col-sm-10">
-				        <p class="form-control-static">#{movieEventController.selectedMovie.getSubtitle().getLongText()}</p>
-				      </div>
-				    </div>
-				    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
-				    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_regie}:"/>
-				      <div class="col-sm-10">
-				        <p class="form-control-static">#{movieEventController.selectedMovie.getRegie()}</p>
-				      </div>
-				    </div>
-				    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
-				    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_schauspieler}:"/>
-				      <div class="col-sm-10">
-				        <p class="form-control-static">#{movieEventController.selectedMovie.getActorsAsString()}</p>
-				      </div>
-				    </div>		    			    				    
-				</div>
-			</div>
-	</div>
+	</script>  
 	
-        <!-- MODAL -->
-        <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video-label">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-video">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" 
-                                		src="#{movieEventController.selectedMovie.trailer}">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+				<h:outputText class="font-h2" value="#{movieEventController.selectedMovie.title}"/>
+				<h:outputText class="font-h3 leftspace-30"
+				              value="#{msg.mvidet_lbl_laenge} #{movieEventController.selectedMovie.laengeMin} min."/> 
+				<h:outputText class="font-h4 leftspace-30"
+				              value="${fn:replace(msg.mvidet_lbl_fsk, '%s', movieEventController.selectedMovie.altersfreigabe)}"/>         
+				<h:graphicImage value="#{movieEventController.selectedMovie.altersfreigabeImage}"
+								class="img-responsive leftspace-30" style="width:30px;display:inline;" alt="fsk"/>
+	    	</div>
+	    	<div class="panel-body">
+	
+				<!-- Links -->
+			    <div class="col-sm-3 clear text-center">
+			    
+				    <h:graphicImage value="#{movieEventController.selectedMovie.movieImage}"
+								    class="img-responsive" style="width:250px;display:block;margin:auto;" alt="movie"/>
+					<br></br>
+					<h:outputText value="#{msg.mvidet_lbl_kritik}" />					
+					<p style="white-space: nowrap;">
+						<c:forEach begin="0" end="4" var="val">						    
+							<c:choose>
+				              	<c:when test="${movieEventController.selectedMovie.criticStars > (val + 0.5)}">
+				              		<span class="glyphicon glyphicon-star"></span>
+				              	</c:when>
+								<c:otherwise>
+									<span class="glyphicon glyphicon-star-empty"></span>
+								</c:otherwise>
+							</c:choose>								    									    
+						</c:forEach>
+					</p>
+					
+			 		<div>
+	                    <a href="#" class="launch-modal" data-modal-id="modal-video">
+	                        <span><i class="fa fa-play"></i></span> 
+	                        <span><h:outputText value="#{msg.mvidet_lbl_trailer}"/></span>
+	                    </a>
+	                </div>
+			    </div>
+	
+				<!-- Rechts -->
+			    <div class="col-sm-9">
+			    	<p>#{msg.mvidet_lbl_info}</p>
+			    	
+				    <h:form>
+						<table class="table table-striped">
+						<thead>
+					      <tr>
+					        <th>#{msg.programm_lbl_language}</th>
+					        <th>#{msg.programm_lbl_saal}</th>
+					        <c:forEach items="#{movieEventController.dates}" var="eventDate">
+					        	<th>
+									<h:outputText value="#{eventDate}" converter="localDateTimeConverter" />
+					        	</th>
+					        </c:forEach>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    <tr>
+					    	<td>
+							  	<c:forEach items="#{movieEventController.selectedMovieEvent.details}" var="detail">
+							  		<h:outputText value="#{detail.language.getText()}"/><br></br>
+							  	</c:forEach>
+						  	</td>
+						  	<td>
+							  	<c:forEach items="#{movieEventController.selectedMovieEvent.details}" var="detail">
+							  		<h:outputText value="#{detail.hall}"/><br></br>
+							  	</c:forEach>
+						  	</td>
+						  	<c:forEach items="#{movieEventController.dates}" var="eventDate">
+						  		<td>
+								  	<c:forEach items="#{movieEventController.selectedMovieEvent.details}" var="detail">
+								  		<c:forEach items="#{detail.eventDateTimes}" var="eventDateTime">
+								  			<c:if test="${eventDateTime.showDate eq eventDate}">
+								  				<h:commandLink action="#{movieEventController.selectEvent(movieEventController.selectedMovieEvent, detail, eventDateTime)}">
+								  					<h:outputText value="#{eventDateTime.showTime}"/>
+								  				</h:commandLink>
+								  				<br></br>
+								  			</c:if>
+								  		</c:forEach>
+								  	</c:forEach>
+						  		</td>
+						  	</c:forEach>
+					    </tr>
+					    </tbody>
+					    </table>
+				    </h:form>	
+			      
+			    	<div class="form-horizontal">
+					    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
+					    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_genre}"/>
+					      <div class="col-sm-10">
+					        <p class="form-control-static">#{movieEventController.selectedMovie.getGenreText().toString()}</p>
+					      </div>
+					    </div>			    
+					    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
+					      <h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_originalsprache}:"/>	
+					      <div class="col-sm-10">
+					        <p class="form-control-static">#{movieEventController.selectedMovie.getOriginalLanguage().getLongText()}</p>
+					      </div>
+					    </div>				    
+					    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
+					    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_untertitel}:"/>
+					      <div class="col-sm-10">
+					        <p class="form-control-static">#{movieEventController.selectedMovie.getSubtitle().getLongText()}</p>
+					      </div>
+					    </div>
+					    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
+					    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_regie}:"/>
+					      <div class="col-sm-10">
+					        <p class="form-control-static">#{movieEventController.selectedMovie.getRegie()}</p>
+					      </div>
+					    </div>
+					    <div class="form-group" style="margin-bottom:0px;padding-top:0px;padding-bottom:0px;">
+					    	<h:outputLabel class="control-label col-sm-2" value="#{msg.mvidet_lbl_schauspieler}:"/>
+					      <div class="col-sm-10">
+					        <p class="form-control-static">#{movieEventController.selectedMovie.getActorsAsString()}</p>
+					      </div>
+					    </div>	
+					    
+					    <div class="panel panel-default">
+						  <div class="panel-body">
+						  	<p>
+						  		<h:outputText value="#{movieEventController.selectedMovie.desc}"/>
+						  	</p>
+						  	<div class="text-right font-10">					  	
+						  		<a href="#{movieEventController.selectedMovie.webseite}" target="_blank">
+			                        <span><i class="fa fa-external-link"></i></span> 
+			                        <span><h:outputText value="#{msg.mvidet_lbl_infolink}"/></span>
+			                    </a>
+						  	</div>
+						  </div>
+						</div>
+	    			    				    
+					</div>
+				</div>
+	
+	    	</div>
+	  	</div>
+               
+       <!-- MODAL -->
+       <div class="modal fade" id="modal-video" tabindex="-1" role="dialog" aria-labelledby="modal-video-label">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                   </div>
+                   <div class="modal-body">
+                       <div class="modal-video">
+                           <div class="embed-responsive embed-responsive-16by9">
+                               <iframe class="embed-responsive-item" 
+                               		src="#{movieEventController.selectedMovie.trailer}">
+                               </iframe>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
         	
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
+
+<ui:composition template="template.xhtml">
+
+	<ui:define name="css">
+
+		<style type="text/css">
+.seat {
+	border-radius: 50%;
+	background-color: gray;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: block;
+	margin: auto;
+	border: solid;
+	height: 19px;
+	width: 19px;
+}
+
+.selected {
+	background-color: #E9365A;
+}
+
+.leinwand {
+	background-color: gray;
+	border-width: 20px;
+	border-color: white;
+	color: white;
+	text-align: center
+}
+
+.noborder {
+	border: none;
+	text-align: center;
+	padding: 0px;
+}
+
+.PREMIUM {
+	background-color: #f1c40f;
+}
+
+.RESERVED {
+	background-color: #E9365A;
+}
+
+.HIDDEN {
+	visibility: hidden;
+}
+
+.SOLD {
+	background-color: #2c3e50;
+}
+
+.HANDYCAP {
+	background-color: #3498db;
+}
+
+select {
+	color: #4f4f4f;
+}
+</style>
+
+	</ui:define>
+	<ui:define name="content">
+
+		<div class="panel panel-default">
+	    	<div class="panel-heading">
+	    		<h:outputText class="font-h2" value="#{msg.mvishw_lbl_title}"/>
+				<h:outputText class="font-h3 leftspace-30" value="#{movieEventController.movieEventSummary}"/>			
+	    	</div>
+	    	<div class="panel-body">
+	    		
+	    		  <div class="row">
+				    <div class="col-sm-6" style="background-color:yellow;">
+				    	<p>#{msg.mvishw_lbl_info}</p>
+				      	
+				      	<!-- Legende -->
+						<div class="row">
+							<div class="col-sm-2" style="background-color:yellow;">
+								<h:commandButton readonly="true" styleClass="seat RESERVED"></h:commandButton>
+								#{msg.mvishw_lbl_meinePlaetze}
+						    </div>
+						    <div class="col-sm-2" style="background-color:pink;">
+								<h:commandButton readonly="true" styleClass="seat NORMAL"></h:commandButton>
+								#{msg.mvishw_lbl_frei}
+						    </div>
+						    <div class="col-sm-2" style="background-color:pink;">
+								<h:commandButton readonly="true" styleClass="seat SOLD"></h:commandButton>
+								#{msg.mvishw_lbl_verkauft}
+						    </div>
+						    <div class="col-sm-2" style="background-color:pink;">
+								<h:commandButton readonly="true" styleClass="seat PREMIUM"></h:commandButton>
+								#{msg.mvishw_lbl_premium}
+						    </div>
+						    <div class="col-sm-2" style="background-color:pink;">
+								<h:commandButton readonly="true" styleClass="seat HANDYCAP"></h:commandButton>
+								#{msg.mvishw_lbl_handicap}
+						    </div>
+						</div>
+						
+						<!-- Sitzplan -->
+						<div>
+							
+						</div>	  
+				    </div>
+				    
+				    <!-- Tickets -->
+				    <div class="col-sm-6" style="background-color:pink;">
+						<p>Tickets</p>
+				      	<div style="background-color:blue;">
+					      	<h:form>
+								<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
+											   action="#{kinoSaalManager.resetReservedSeats()}">
+									<f:ajax render=":outerForm" />
+						 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
+						 		</h:commandLink>
+						 		
+								<h:commandLink class="btn btn-primary btn-xs" 
+											   action="payment">
+						 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
+						 		</h:commandLink>
+					 		</h:form>
+					 		
+					 		<div class="panel panel-default">
+						  		<div class="panel-body">
+							  		<c:set var="adults" value="#{kinoSaalManager.count('ADULT')}" />
+							  		<c:set var="seniors" value="#{kinoSaalManager.count('SENIOR')}" />
+							  		<c:set var="childs" value="#{kinoSaalManager.count('KIND')}" />
+							  		<c:set var="students" value="#{kinoSaalManager.count('STUDENT')}" />
+							  							
+							  		<c:set var="pagerTotDisp" value="${9}" />
+									<c:set var="TotalPages" value="${10}" /> 
+							  	 	<c:set var="personCount" value="${personCount + room.persons.size()}" />
+							  	 	
+							  		<h:outputText value="#{adults}"/>
+									<h:outputText value="#{msg.tickets_adult} #{adults}," 
+												  rendered="${pagerTotDisp} > 0}" />
+											  
+									<b><h:outputText id="totalprice" value="#{kinoSaalManager.getTotalPrice()}"/></b>	  
+						  		</div>
+						  	</div>
+					 		
+						</div>
+				    </div>
+				    
+				  </div>
+
+	    	</div>
+    	</div>
+    	
+		<div class="ui-g" style="background-color:yellow;">
+<!-- 			<div class="ui-g-6 ui-md-1 ui-lg-1" style="background-color:green;">
+				<h:commandButton readonly="true" styleClass="seat RESERVED">
+				</h:commandButton>
+				#{msg.mvishw_lbl_meinePlaetze}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat NORMAL">
+				</h:commandButton>
+				#{msg.mvishw_lbl_frei}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat SOLD">
+				</h:commandButton>
+				#{msg.mvishw_lbl_verkauft}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat PREMIUM">
+				</h:commandButton>
+				#{msg.mvishw_lbl_premium}
+			</div>
+			<div class="ui-g-6 ui-md-1 ui-lg-1">
+				<h:commandButton readonly="true" styleClass="seat HANDYCAP">
+				</h:commandButton>
+				#{msg.mvishw_lbl_handicap}
+			</div> -->
+			
+			
+			<h:form id="outerForm" prependId="false">
+			
+				<div class="ui-g-6 ui-md-8 ui-lg-7" style="background-color:blue;">
+					<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" />
+					</span>
+				</div>
+				
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
+				
+					<table class="noborder">
+						<tr>
+							<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
+						</tr>
+						<ui:repeat var="row" value="#{kinoSaalManager.returnRows()}">
+							<tr class="noborder">
+								<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
+									<td class="noborder">
+									<h:commandButton id="seatButton" 
+													 action="#{i.reserve()}" 
+													 styleClass="seat #{kinoSaalManager.style(i)}}" 
+													 disabled="#{i.isOccupied()}">
+												 		 
+									</h:commandButton> 
+									
+									
+									
+									<p:tooltip for="seatButton" value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row}"></p:tooltip>
+									</td>
+								</ui:repeat>
+							</tr>
+						</ui:repeat>
+					</table>
+
+				</div>
+				
+				
+		 						
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
+					<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" editable="true"></k:ticketComponent>
+				</div>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

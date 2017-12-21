@@ -52,98 +52,104 @@
   color:#ccc;
 }
 </style> 
-	<h1>#{msg.programm_lbl_title}</h1>
-	#{msg.mvidet_lbl_info}
-	<div class="row">
 
-		<div class="col-sm-9 pull-left">
-			<h:form>
-
-				<h:outputText value="#{msg.programm_lbl_genre}"/>
-				<h:selectOneMenu value="#{movieEventController.searchGenre}">
-					<f:selectItems value="#{movieEventController.getGenres()}"/>
-					<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
-				</h:selectOneMenu>
-				
-				<h:outputText value="#{msg.programm_lbl_language}"/>
-				<h:selectOneMenu value="#{movieEventController.searchLanguage}">
-					<f:selectItems value="#{movieEventController.getLanguage()}"/>
-					<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
-				</h:selectOneMenu>
-			</h:form>
-		</div>					
-        <div class="col-sm-3 pull-right">
-                <div class="input-group stylish-input-group input-append">
-                    <input type="text" class="search form-control" placeholder="Search" />
-                    <span class="input-group-addon">
-                        <button type="submit">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>  
-                    </span>
-                </div>
-        </div>
-	</div>
-	
-	<span class="counter pull-right"></span>
- 
-	<h:form id="movieForm">
-		<table id="movieTable" class="table table-hover table-striped results">
-			<thead>
-		      <tr>
-		        <th class="col-md-2 col-xs-2">#{msg.programm_lbl_film}</th>
-		        <th>#{msg.programm_lbl_language}</th>
-			    <th>#{msg.programm_lbl_saal}</th>
-		        <c:forEach items="#{movieEventController.dates}" var="eventDate">
-		        	<th><h:outputText value="#{eventDate}" converter="localDateTimeConverter"/></th>
-		        </c:forEach>
-		      </tr>
-		      <tr class="warning no-result">
-		      	<td colspan="10"><i class="fa fa-warning"></i> No result</td>
-		      </tr>
-		    </thead>
-		    <tbody>
-				<c:forEach items="#{movieEventController.filteredEvents}" var="event">
-				  <tr>
-				  	<td>
-				  		<h:commandLink action="#{movieEventController.showMovieDetail(event)}">
-				  			<h:outputText value="#{event.movie.title}"/><br></br>
-				  		</h:commandLink>
-				  		<h:outputText value="#{event.movie.getGenreText().toString()}" style="font-size:12px;"/>
-				  	</td>
-				  	<td>
-					  	<c:forEach items="#{event.details}" var="detail">
-					  		<h:outputText value="#{detail.language.getText()}"/><br></br>
-					  	</c:forEach>
-				  	</td>
-				  	<td>
-					  	<c:forEach items="#{event.details}" var="detail">
-					  		<h:outputText value="#{detail.hall}"/><br></br>
-					  	</c:forEach>
-				  	</td>
-				  	<c:forEach items="#{movieEventController.dates}" var="eventDate">
-				  		<td>
-						  	<c:forEach items="#{event.details}" var="detail">
-						  		<c:forEach items="#{detail.eventDateTimes}" var="eventDateTime">
-						  			<c:if test="${eventDateTime.showDate eq eventDate}">
-						  				<h:commandLink action="#{movieEventController.selectEvent(event, detail, eventDateTime)}">
-						  					<h:outputText value="#{eventDateTime.showTime}"/>
-						  				</h:commandLink>
-						  				<br></br>
-						  			</c:if>
-						  		</c:forEach>
+	<div class="panel panel-default">
+	   	<div class="panel-heading">
+			<h:outputText class="font-h2" value="#{msg.programm_lbl_title}"/>
+	   	</div>
+	   	<div class="panel-body">
+	   		<p>#{msg.mvidet_lbl_info}</p>
+	   		<!-- Filter, Search -->
+			<div class="row">		
+				<div class="col-sm-9 pull-left">
+					<h:form>	
+						<h:outputText value="#{msg.programm_lbl_genre}"/>
+						<h:selectOneMenu value="#{movieEventController.searchGenre}">
+							<f:selectItems value="#{movieEventController.getGenres()}"/>
+							<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
+						</h:selectOneMenu>
+						
+						<h:outputText value="#{msg.programm_lbl_language}"/>
+						<h:selectOneMenu value="#{movieEventController.searchLanguage}">
+							<f:selectItems value="#{movieEventController.getLanguage()}"/>
+							<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
+						</h:selectOneMenu>
+					</h:form>
+				</div>					
+		        <div class="col-sm-3 pull-right">
+		                <div class="input-group stylish-input-group input-append">
+		                    <input type="text" class="search form-control" placeholder="Search" />
+		                    <span class="input-group-addon">
+		                        <button type="submit">
+		                            <span class="glyphicon glyphicon-search"></span>
+		                        </button>  
+		                    </span>
+		                </div>
+		        </div>
+			</div>	  
+			<span class="counter pull-right"></span>
+			
+			<!-- Table Programm --> 		
+			<h:form id="movieForm">
+				<table id="movieTable" class="table table-hover table-striped results">
+					<thead>
+				      <tr>
+				        <th class="col-md-2 col-xs-2">#{msg.programm_lbl_film}</th>
+				        <th>#{msg.programm_lbl_language}</th>
+					    <th>#{msg.programm_lbl_saal}</th>
+				        <c:forEach items="#{movieEventController.dates}" var="eventDate">
+				        	<th><h:outputText value="#{eventDate}" converter="localDateTimeConverter"/></th>
+				        </c:forEach>
+				      </tr>
+				      <tr class="warning no-result">
+				      	<td colspan="10"><i class="fa fa-warning"></i> No result</td>
+				      </tr>
+				    </thead>
+				    <tbody>
+						<c:forEach items="#{movieEventController.filteredEvents}" var="event">
+						  <tr>
+						  	<td>
+						  		<h:commandLink action="#{movieEventController.showMovieDetail(event)}">
+						  			<h:outputText value="#{event.movie.title}"/><br></br>
+						  		</h:commandLink>
+						  		<h:outputText value="#{event.movie.getGenreText().toString()}" style="font-size:12px;"/>
+						  	</td>
+						  	<td>
+							  	<c:forEach items="#{event.details}" var="detail">
+							  		<h:outputText value="#{detail.language.getText()}"/><br></br>
+							  	</c:forEach>
+						  	</td>
+						  	<td>
+							  	<c:forEach items="#{event.details}" var="detail">
+							  		<h:outputText value="#{detail.hall}"/><br></br>
+							  	</c:forEach>
+						  	</td>
+						  	<c:forEach items="#{movieEventController.dates}" var="eventDate">
+						  		<td>
+								  	<c:forEach items="#{event.details}" var="detail">
+								  		<c:forEach items="#{detail.eventDateTimes}" var="eventDateTime">
+								  			<c:if test="${eventDateTime.showDate eq eventDate}">
+								  				<h:commandLink action="#{movieEventController.selectEvent(event, detail, eventDateTime)}">
+								  					<h:outputText value="#{eventDateTime.showTime}"/>
+								  				</h:commandLink>
+								  				<br></br>
+								  			</c:if>
+								  		</c:forEach>
+								  	</c:forEach>
+						  		</td>
 						  	</c:forEach>
-				  		</td>
-				  	</c:forEach>
-				  </tr>
-				</c:forEach>
-		    </tbody>
-		</table>				  
-	</h:form>
-	
+						  </tr>
+						</c:forEach>
+				    </tbody>
+				</table>				  
+			</h:form>			
+			
+	   	</div>
+	</div>
+	    	
 	<k:sessionOver></k:sessionOver>
 
 	<h:form>
-		<h:commandLink value="moviedetail" action="moviedetail" />
 		<h:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
 	</h:form>
 
