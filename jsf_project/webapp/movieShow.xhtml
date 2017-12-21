@@ -1,13 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
-
-<ui:composition template="template.xhtml">
 
 	<ui:define name="css">
 
@@ -18,7 +16,6 @@
 	color: white;
 	text-align: center;
 	text-decoration: none;
-	display: block;
 	margin: auto;
 	border: solid;
 	height: 19px;
@@ -80,11 +77,15 @@ select {
 	    		<div class="row">
 	    			
 	    			<!-- Kinosaal -->
-				    <div class="col-sm-6" style="background-color:yellow;">
+				    <div class="col-sm-6 text-center" style="background-color:yellow;">
 	    				<p>#{msg.mvishw_lbl_info}</p>
 	    				<!-- Legende -->
 	    				<div>
-							
+							<h:commandButton readonly="true" styleClass="seat RESERVED"/> #{msg.mvishw_lbl_meinePlaetze}
+							<h:commandButton readonly="true" styleClass="seat NORMAL"/> #{msg.mvishw_lbl_frei}
+							<h:commandButton readonly="true" styleClass="seat SOLD"/> #{msg.mvishw_lbl_verkauft}
+							<h:commandButton readonly="true" styleClass="seat PREMIUM"/> #{msg.mvishw_lbl_premium}
+							<h:commandButton readonly="true" styleClass="seat HANDYCAP"/> #{msg.mvishw_lbl_handicap}
 						</div>
 						
 	    				<!-- Sitzplan -->
@@ -119,7 +120,9 @@ select {
 	    			
 	    			<!-- Tickets -->
 				    <div class="col-sm-6" style="background-color:pink;">
-						<p>Tickets</p>
+						<h:form id="xxxxForm" prependId="false">
+							<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" /></span>
+						</h:form>
 						<div style="background-color:blue;">
 					      	<h:form>
 								<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
@@ -134,59 +137,8 @@ select {
 						 		</h:commandLink>
 					 		</h:form>
 				 		
-					 		<h:form id="ticketForm">
-						 		<div class="panel panel-default">
-							  		<div class="panel-body">
-								  		 Keine Tickets ausgewählt
-							  		</div>
-							  	</div>
-						  							  	
-							  	<table id="ticketTable" class="table table-hover table-striped results">
-									<thead>
-										<tr>
-											<th>#{msg.tickets_seat}</th>
-											<th>#{msg.tickets_type}</th>
-											<th>#{msg.tickets_price}</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
-											<tr>
-												<td>
-													<h:outputText value="#{msg.tickets_row} #{seat.seatRow + 1}, #{msg.tickets_seat} #{seat.seatColumn + 1}" />
-												</td>
-												<td>
-													<h:selectOneMenu value="#{seat.ticketType}">
-														<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
-														<f:ajax execute="@this" render=":outerForm :ticketForm" />
-													</h:selectOneMenu>						
-												</td>
-												
-												<td>
-													<h:selectOneMenu value="#{seat.ticketType}">
-														<f:selectItems value="#{kinoSaalManager.getTicketTypes()}"/>
-														<f:ajax execute="@this" render=":outerForm :ticketForm" />
-													</h:selectOneMenu>
-												</td>
-
-												<td>
-													<h:outputText value="#{seat.ticketType.cost}">
-														<f:convertNumber pattern="#0.00 CHF" />
-													</h:outputText>
-												</td>
-												<td>
-													<h:commandLink action="#{seat.reserve()}" 
-						                			   			   class="btn btn-default btn-xs">
-						                				<span class="glyphicon glyphicon-trash"></span>
-						                    			<f:ajax render=":outerForm :ticketForm" />
-						                			</h:commandLink>
-												</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-					 		</h:form>
+				 			<ui:include src="ticketTable.xhtml"></ui:include>
+					 		
 						</div>
 					</div>
 					
@@ -195,49 +147,5 @@ select {
 	    	</div>
 		</div>
 	    	
-		<div class="ui-g">
-			<div class="ui-g-6 ui-md-1 ui-lg-1">
-				<h:commandButton readonly="true" styleClass="seat RESERVED">
-				</h:commandButton>
-				#{msg.mvishw_lbl_meinePlaetze}
-			</div>
-			<div class="ui-g-6 ui-md-1 ui-lg-1">
-				<h:commandButton readonly="true" styleClass="seat NORMAL">
-				</h:commandButton>
-				#{msg.mvishw_lbl_frei}
-			</div>
-			<div class="ui-g-6 ui-md-1 ui-lg-1">
-				<h:commandButton readonly="true" styleClass="seat SOLD">
-				</h:commandButton>
-				#{msg.mvishw_lbl_verkauft}
-			</div>
-			<div class="ui-g-6 ui-md-1 ui-lg-1">
-				<h:commandButton readonly="true" styleClass="seat PREMIUM">
-				</h:commandButton>
-				#{msg.mvishw_lbl_premium}
-			</div>
-			<div class="ui-g-6 ui-md-1 ui-lg-1">
-				<h:commandButton readonly="true" styleClass="seat HANDYCAP">
-				</h:commandButton>
-				#{msg.mvishw_lbl_handicap}
-			</div>
-			
-			
-			<h:form id="xxxxForm" prependId="false">
-			
-				<div class="ui-g-6 ui-md-8 ui-lg-7">
-					<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" />
-					</span>
-				</div>
-				
-				<div class="ui-g-12 ui-md-6 ui-lg-6">
-				
-					
-
-				</div>
-
-			</h:form>
-		</div>
 	</ui:define>
 </ui:composition>
-</html>
