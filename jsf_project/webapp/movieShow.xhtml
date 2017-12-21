@@ -88,6 +88,30 @@ select {
 						
 	    				<!-- Sitzplan -->
 						<div>
+						
+						<h:form id="outerForm" prependId="false">
+							<table class="noborder">
+								<tr>
+									<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
+								</tr>
+								<ui:repeat var="row" value="#{kinoSaalManager.returnRows()}">
+									<tr class="noborder">
+										<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
+											<td class="noborder">
+												<h:commandButton id="seatButton" 
+																 action="#{i.reserve()}" 
+																 styleClass="seat #{kinoSaalManager.style(i)}" 
+																 disabled="#{i.isOccupied()}">
+													<f:ajax render=":outerForm :ticketForm" />				 
+												</h:commandButton> 
+												<p:tooltip for="seatButton" value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row}"/>
+											</td>
+										</ui:repeat>
+									</tr>
+								</ui:repeat>
+							</table>
+						</h:form>	
+							
 							
 						</div>	  
 	    			</div>
@@ -95,26 +119,73 @@ select {
 	    			<!-- Tickets -->
 				    <div class="col-sm-6" style="background-color:pink;">
 						<p>Tickets</p>
-							<div style="background-color:blue;">
-						      	<h:form>
-									<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
-												   action="#{kinoSaalManager.resetReservedSeats()}">
-										<f:ajax render=":outerForm" />
-							 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
-							 		</h:commandLink>
-							 		
-									<h:commandLink class="btn btn-primary btn-xs" 
-												   action="payment">
-							 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
-							 		</h:commandLink>
-						 		</h:form>
-					 		
-					 		<div class="panel panel-default">
-						  		<div class="panel-body">
-							  		 Keine Tickets ausgewählt
-						  		</div>
-						  	</div>
-					 		
+						<div style="background-color:blue;">
+					      	<h:form>
+								<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
+											   action="#{kinoSaalManager.resetReservedSeats()}">
+									<f:ajax render=":outerForm :ticketForm" />
+						 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
+						 		</h:commandLink>
+						 		
+								<h:commandLink class="btn btn-primary btn-xs" 
+											   action="payment">
+						 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
+						 		</h:commandLink>
+					 		</h:form>
+				 		
+					 		<h:form id="ticketForm">
+						 		<div class="panel panel-default">
+							  		<div class="panel-body">
+								  		 Keine Tickets ausgewählt
+							  		</div>
+							  	</div>
+						  							  	
+							  	<table id="ticketTable" class="table table-hover table-striped results">
+									<thead>
+										<tr>
+											<th>#{msg.tickets_seat}</th>
+											<th>#{msg.tickets_type}</th>
+											<th>#{msg.tickets_price}</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
+											<tr>
+												<td>
+													<h:outputText value="#{seat.seatColumn}. #{msg.tickets_seat}, #{seat.seatRow}. #{msg.tickets_row}" />
+												</td>
+												<td>
+													<h:selectOneMenu value="#{seat.ticketType}">
+														<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
+														<f:ajax execute="@this" render=":outerForm :ticketForm" />
+													</h:selectOneMenu>						
+												</td>
+												
+												<td>
+													<h:selectOneMenu value="#{seat.ticketType}">
+														<f:selectItems value="#{kinoSaalManager.getTicketTypes()}"/>
+														<f:ajax execute="@this" render=":outerForm :ticketForm" />
+													</h:selectOneMenu>
+												</td>
+
+												<td>
+													<h:outputText value="#{seat.ticketType.cost}">
+														<f:convertNumber pattern="#0.00 CHF" />
+													</h:outputText>
+												</td>
+												<td>
+													<h:commandLink action="#{seat.reserve()}" 
+						                			   			   class="btn btn-default btn-xs">
+						                				<span class="glyphicon glyphicon-trash"></span>
+						                    			<f:ajax render=":outerForm :ticketForm" />
+						                			</h:commandLink>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+					 		</h:form>
 						</div>
 					</div>
 					
@@ -151,7 +222,7 @@ select {
 			</div>
 			
 			
-			<h:form id="outerForm" prependId="false">
+			<h:form id="xxxxForm" prependId="false">
 			
 				<div class="ui-g-6 ui-md-8 ui-lg-7">
 					<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" />
@@ -160,25 +231,10 @@ select {
 				
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
 				
-					<table class="noborder">
-						<tr>
-							<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
-						</tr>
-						<ui:repeat var="row" value="#{kinoSaalManager.returnRows()}">
-							<tr class="noborder">
-								<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
-									<td class="noborder"><h:commandButton id="seatButton" action="#{i.reserve()}" styleClass="seat #{kinoSaalManager.style(i)}" disabled="#{i.isOccupied()}">
-										</h:commandButton> <p:tooltip for="seatButton" value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row}"></p:tooltip></td>
-								</ui:repeat>
-							</tr>
-						</ui:repeat>
-					</table>
+					
 
 				</div>
-			
-				<div class="ui-g-12 ui-md-6 ui-lg-6">
-					<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" editable="true"></k:ticketComponent>
-				</div>
+
 			</h:form>
 		</div>
 	</ui:define>

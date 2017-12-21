@@ -54,6 +54,10 @@ public class BookingController {
 		allSeats.get(157).setHidden(true);
 	}
 
+	public TicketType[] getTicketTypes() {
+        return TicketType.values();
+    }
+	
 	public void remainingSeconds() {
 		timeoutSecond--;
 	}
