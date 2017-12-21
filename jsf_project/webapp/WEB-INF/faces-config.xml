@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
 	<application>
 		<locale-config>
-			<default-locale>de</default-locale>
+			<default-locale>de_CH</default-locale>
 			<supported-locale>de</supported-locale>
 			<supported-locale>en</supported-locale>
 		</locale-config>

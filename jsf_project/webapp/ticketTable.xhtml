@@ -8,57 +8,81 @@
 	<h:body>
 
 		<h:form id="ticketForm">
-	 		<div class="panel panel-default">
-		  		<div class="panel-body">
-			  		 Keine Tickets ausgewählt
+	 		<div class="panel panel-info">
+		 		<div class="panel-heading" style="height:30px;padding:5px">
+
+					<div class="col-sm-12 text-left">
+						<h:outputText value="#{msg.mvishw_ticket_lbl_KeineAusgewaehlt}" 
+									  rendered="#{kinoSaalManager.totalprice() eq 0}" />
+					</div>	
+						  
+					<div class="col-sm-8 text-left">
+						<h:outputText value="#{msg.tickets_adult} #{kinoSaalManager.count('ADULT')}, " rendered="#{kinoSaalManager.count('ADULT') gt 0}" />
+						<h:outputText value="#{msg.tickets_senior} #{kinoSaalManager.count('SENIOR')}, " rendered="#{kinoSaalManager.count('SENIOR') gt 0}" />
+						<h:outputText value="#{msg.tickets_child} #{kinoSaalManager.count('KIND')}, " rendered="#{kinoSaalManager.count('KIND') gt 0}" />
+						<h:outputText value="#{msg.tickets_student} #{kinoSaalManager.count('STUDENT')}, " rendered="#{kinoSaalManager.count('STUDENT') gt 0}" />					
+					</div>
+					
+					<div class="col-sm-4 text-right bold">
+						<h:outputText value="#{msg.tickets_total} " 
+									  rendered="#{kinoSaalManager.totalprice() gt 0}" /> 
+						<h:outputText value="#{kinoSaalManager.totalprice()}" 
+									  rendered="#{kinoSaalManager.totalprice() gt 0}">
+							<f:convertNumber groupingUsed="true" pattern="#0.00 CHF" locale="de-CH"/>
+						</h:outputText>					
+					</div>
+					  				
+		    	</div>
+	 		
+		  		<div class="panel-body inspace-10">
+				  	<table id="ticketTable" class="table table-hover table-striped results">
+						<thead>
+							<tr>
+								<th>#{msg.tickets_seat}</th>
+								<th>#{msg.tickets_type}</th>
+								<th>#{msg.tickets_price}</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
+								<tr>
+									<td>
+										<h:outputText value="#{msg.tickets_row} #{seat.seatRow + 1}, #{msg.tickets_seat} #{seat.seatColumn + 1}" />
+									</td>
+									<td>
+										<h:selectOneMenu value="#{seat.ticketType}">
+											<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
+											<f:ajax execute="@this" render=":outerForm :ticketForm" />
+										</h:selectOneMenu>						
+									</td>
+									
+									<!-- <td>
+										<h:selectOneMenu value="#{seat.ticketType}">
+											<f:selectItems value="#{kinoSaalManager.getTicketTypes()}"/>
+											<f:ajax execute="@this" render=":outerForm :ticketForm" />
+										</h:selectOneMenu>
+									</td> -->
+			
+									<td>
+										<h:outputText value="#{seat.ticketType.cost}">
+											<f:convertNumber groupingUsed="true" pattern="#0.00 CHF" locale="de-CH"/>
+										</h:outputText>
+									</td>
+									<td>
+										<h:commandLink action="#{seat.reserve()}" 
+			                			   			   class="btn btn-default btn-xs">
+			                				<span class="glyphicon glyphicon-trash"></span>
+			                    			<f:ajax render=":outerForm :ticketForm" />
+			                			</h:commandLink>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 		  		</div>
 		  	</div>
-	  							  	
-		  	<table id="ticketTable" class="table table-hover table-striped results">
-				<thead>
-					<tr>
-						<th>#{msg.tickets_seat}</th>
-						<th>#{msg.tickets_type}</th>
-						<th>#{msg.tickets_price}</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
-						<tr>
-							<td>
-								<h:outputText value="#{msg.tickets_row} #{seat.seatRow + 1}, #{msg.tickets_seat} #{seat.seatColumn + 1}" />
-							</td>
-							<td>
-								<h:selectOneMenu value="#{seat.ticketType}">
-									<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
-									<f:ajax execute="@this" render=":outerForm :ticketForm" />
-								</h:selectOneMenu>						
-							</td>
-							
-							<!-- <td>
-								<h:selectOneMenu value="#{seat.ticketType}">
-									<f:selectItems value="#{kinoSaalManager.getTicketTypes()}"/>
-									<f:ajax execute="@this" render=":outerForm :ticketForm" />
-								</h:selectOneMenu>
-							</td> -->
-	
-							<td>
-								<h:outputText value="#{seat.ticketType.cost}">
-									<f:convertNumber pattern="#0.00 CHF" />
-								</h:outputText>
-							</td>
-							<td>
-								<h:commandLink action="#{seat.reserve()}" 
-	                			   			   class="btn btn-default btn-xs">
-	                				<span class="glyphicon glyphicon-trash"></span>
-	                    			<f:ajax render=":outerForm :ticketForm" />
-	                			</h:commandLink>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+	  							  
 		</h:form>
 					 		
 	</h:body>

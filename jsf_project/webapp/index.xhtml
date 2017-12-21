@@ -57,7 +57,7 @@
 			<h:outputText class="font-h2" value="#{msg.programm_lbl_title}"/>
 	   	</div>
 	   	<div class="panel-body">
-	   		<p>#{msg.mvidet_lbl_info}</p>
+	   		<p class="font-h3">#{msg.mvidet_lbl_info}</p>
 	   		<!-- Filter, Search -->
 			<div class="row">		
 				<div class="col-sm-9 pull-left">
@@ -94,10 +94,10 @@
 					<thead>
 				      <tr>
 				        <th class="col-md-2 col-xs-2">#{msg.programm_lbl_film}</th>
-				        <th>#{msg.programm_lbl_language}</th>
-					    <th>#{msg.programm_lbl_saal}</th>
+				        <th class="text-center">#{msg.programm_lbl_language}</th>
+					    <th class="text-center">#{msg.programm_lbl_saal}</th>
 				        <c:forEach items="#{movieEventController.dates}" var="eventDate">
-				        	<th><h:outputText value="#{eventDate}" converter="localDateTimeConverter"/></th>
+				        	<th class="text-center"><h:outputText value="#{eventDate}" converter="localDateTimeConverter"/></th>
 				        </c:forEach>
 				      </tr>
 				      <tr class="warning no-result">
@@ -113,18 +113,18 @@
 						  		</h:commandLink>
 						  		<h:outputText value="#{event.movie.getGenreText().toString()}" style="font-size:12px;"/>
 						  	</td>
-						  	<td>
+						  	<td class="text-center">
 							  	<c:forEach items="#{event.details}" var="detail">
 							  		<h:outputText value="#{detail.language.getText()}"/><br></br>
 							  	</c:forEach>
 						  	</td>
-						  	<td>
+						  	<td class="text-center">
 							  	<c:forEach items="#{event.details}" var="detail">
 							  		<h:outputText value="#{detail.hall}"/><br></br>
 							  	</c:forEach>
 						  	</td>
 						  	<c:forEach items="#{movieEventController.dates}" var="eventDate">
-						  		<td>
+						  		<td class="text-center">
 								  	<c:forEach items="#{event.details}" var="detail">
 								  		<c:forEach items="#{detail.eventDateTimes}" var="eventDateTime">
 								  			<c:if test="${eventDateTime.showDate eq eventDate}">

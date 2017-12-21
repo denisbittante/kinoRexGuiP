@@ -77,20 +77,18 @@ select {
 	    		<div class="row">
 	    			
 	    			<!-- Kinosaal -->
-				    <div class="col-sm-6 text-center" style="background-color:yellow;">
-	    				<p>#{msg.mvishw_lbl_info}</p>
+				    <div class="col-sm-6 text-center">
+	    				<p class="font-h3">#{msg.mvishw_lbl_info}</p>
 	    				<!-- Legende -->
 	    				<div>
-							<h:commandButton readonly="true" styleClass="seat RESERVED"/> #{msg.mvishw_lbl_meinePlaetze}
-							<h:commandButton readonly="true" styleClass="seat NORMAL"/> #{msg.mvishw_lbl_frei}
-							<h:commandButton readonly="true" styleClass="seat SOLD"/> #{msg.mvishw_lbl_verkauft}
-							<h:commandButton readonly="true" styleClass="seat PREMIUM"/> #{msg.mvishw_lbl_premium}
-							<h:commandButton readonly="true" styleClass="seat HANDYCAP"/> #{msg.mvishw_lbl_handicap}
+							<h:commandButton readonly="true" styleClass="seat RESERVED"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_meinePlaetze}"/>
+							<h:commandButton readonly="true" styleClass="seat NORMAL"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_frei}"/>
+							<h:commandButton readonly="true" styleClass="seat SOLD"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_verkauft}"/>
+							<h:commandButton readonly="true" styleClass="seat PREMIUM"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_premium}"/>
+							<h:commandButton readonly="true" styleClass="seat HANDYCAP"/> <h:outputText value="#{msg.mvishw_lbl_handicap}"/>
 						</div>
 						
-	    				<!-- Sitzplan -->
-						<div>
-						
+	    				<!-- Sitzplan -->					
 						<h:form id="outerForm" prependId="false">
 							<table class="noborder">
 								<tr>
@@ -113,31 +111,37 @@ select {
 								</ui:repeat>
 							</table>
 						</h:form>	
-							
-							
-						</div>	  
 	    			</div>
 	    			
 	    			<!-- Tickets -->
-				    <div class="col-sm-6" style="background-color:pink;">
-						<h:form id="xxxxForm" prependId="false">
-							<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" /></span>
-						</h:form>
-						<div style="background-color:blue;">
-					      	<h:form>
-								<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
-											   action="#{kinoSaalManager.resetReservedSeats()}">
-									<f:ajax render=":outerForm :ticketForm" />
-						 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
-						 		</h:commandLink>
-						 		
-								<h:commandLink class="btn btn-primary btn-xs" 
-											   action="#{navigationController.goToStep3()}">
-						 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
-						 		</h:commandLink>
-					 		</h:form>
-				 		
-				 			<ui:include src="ticketTable.xhtml"></ui:include>
+				    <div class="col-sm-6">
+						
+						<div>
+							<div class="col-sm-5 text-left">
+								<h:form id="xxxxForm" prependId="false">
+									<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" /></span>
+								</h:form>
+							</div>
+							<div class="col-sm-7 text-right">
+								<h:form class="btmspace-10">
+									<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
+												   action="#{kinoSaalManager.resetReservedSeats()}">
+										<f:ajax render=":outerForm :ticketForm" />
+							 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
+							 		</h:commandLink>
+							 		
+									<h:commandLink class="btn btn-primary btn-xs" 
+												   action="#{navigationController.goToStep3()}">
+							 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
+							 		</h:commandLink>
+						 		</h:form>
+							</div>
+							
+						
+					      	<div class="col-sm-12">
+
+				 				<ui:include src="ticketTable.xhtml"></ui:include>
+				 			</div>
 					 		
 						</div>
 					</div>
