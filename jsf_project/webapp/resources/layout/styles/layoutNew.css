@@ -4,9 +4,9 @@
 
 /* Colours
 --------------------------------------------------------------------------------------------------------------- */
-hr, .borderedbox{border-color:red;}
+/* hr, .borderedbox{border-color:red;} */
 label span{color:blue; background-color:inherit;}
-input:focus, textarea:focus, *:required:focus{border-color:yellow;}
+/* input:focus, textarea:focus, *:required:focus{border-color:yellow;} */
 .overlay{color:#FFFFFF; background-color:inherit;}
 .overlay::after{color:inherit; background-color:rgba(0,0,0,.55);}
 .overlay.coloured::after{color:#292B2C; background-color:rgba(233,54,90,.5);/* #E9365A */}
