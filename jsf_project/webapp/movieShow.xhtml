@@ -70,19 +70,17 @@ select {
 
 	</ui:define>
 	<ui:define name="content">
-
+		<div class="panel panel-default">
+			<div class="panel-heading">
+	    		<h:outputText class="font-h2" value="#{msg.mvishw_lbl_title}"/>
+				<h:outputText class="font-h3 leftspace-30" value="#{movieEventController.movieEventSummary}"/>			
+	    	</div>
+	    	<div class="panel-body">
+	    		<p>#{msg.mvishw_lbl_info}</p>
+	    	</div>
+		</div>
+	    	
 		<div class="ui-g">
-			<div class="ui-g-12 ui-md-12 ui-lg-12">
-				<h1>#{msg.mvishw_lbl_title}</h1>
-				#{movieEventController.selectedMovie.title}
-				
-				#{movieEventController.selectedDetail.language}
-				#{movieEventController.selectedDetail.hall}
-				#{movieEventController.selectedEventDateTime.showDate} #{movieEventController.selectedEventDateTime.showTime}
-				
-				<h2>#{msg.mvishw_lbl_info}</h2>
-
-			</div>
 			<div class="ui-g-6 ui-md-1 ui-lg-1">
 				<h:commandButton readonly="true" styleClass="seat RESERVED">
 				</h:commandButton>
