@@ -1,5 +1,6 @@
 package ch.ffhs.kino.beans;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
@@ -9,7 +10,8 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
-public class LocaleManager {
+public class LocaleManager implements Serializable {	
+	private static final long serialVersionUID = 1L;
 
 	private Locale locale;
 

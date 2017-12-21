@@ -69,6 +69,7 @@ select {
 </style>
 
 	</ui:define>
+	
 	<ui:define name="content">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -104,7 +105,7 @@ select {
 																 disabled="#{i.isOccupied()}">
 													<f:ajax render=":outerForm :ticketForm" />				 
 												</h:commandButton> 
-												<p:tooltip for="seatButton" value=" #{i.seatColumn} #{msg.mvishw_seats_seat}., #{i.seatRow} #{msg.mvishw_seats_row}"/>
+												<p:tooltip for="seatButton" value="#{msg.mvishw_seats_row} #{i.seatRow + 1}, #{msg.mvishw_seats_seat} #{i.seatColumn + 1}"/>
 											</td>
 										</ui:repeat>
 									</tr>
@@ -128,7 +129,7 @@ select {
 						 		</h:commandLink>
 						 		
 								<h:commandLink class="btn btn-primary btn-xs" 
-											   action="payment">
+											   action="#{navigationController.goToStep3()}">
 						 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
 						 		</h:commandLink>
 					 		</h:form>
@@ -153,7 +154,7 @@ select {
 										<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
 											<tr>
 												<td>
-													<h:outputText value="#{seat.seatColumn}. #{msg.tickets_seat}, #{seat.seatRow}. #{msg.tickets_row}" />
+													<h:outputText value="#{msg.tickets_row} #{seat.seatRow + 1}, #{msg.tickets_seat} #{seat.seatColumn + 1}" />
 												</td>
 												<td>
 													<h:selectOneMenu value="#{seat.ticketType}">

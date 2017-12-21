@@ -18,6 +18,29 @@ public class NavigationController {
 	
 	// programm
 	public String goToStep1(){
+		setStatusStep1();
+		return "index.jsf";
+	}
+	
+	// movieshow
+	public String goToStep2(){
+		setStatusStep2();
+		return "movieShow.jsf";
+	}
+	
+	// payment
+	public String goToStep3(){
+		setStatusStep3();
+		return "payment.jsf";
+	}	
+	
+	// confirm
+	public String goToStep4(){
+		setStatusStep4();
+		return "bookingConfirm.jsf";
+	}
+
+	public void setStatusStep1(){
 		step1Disabled = false;
 		step2Disabled = true;
 		step3Disabled = true;
@@ -27,14 +50,6 @@ public class NavigationController {
 		step2Active = false;
 		step3Active = false;
 		step4Active = false;
-		
-		return "index.jsf";
-	}
-	
-	// movieshow
-	public String goToStep2(){
-		setStatusStep2();
-		return "movieShow.jsf";
 	}
 	
 	public void setStatusStep2(){
@@ -49,7 +64,31 @@ public class NavigationController {
 		step4Active = false;
 	}
 	
+	public void setStatusStep3(){
+		step1Disabled = false;
+		step2Disabled = false;
+		step3Disabled = false;
+		step4Disabled = true;
+		
+		step1Active = false;
+		step2Active = false;
+		step3Active = true;
+		step4Active = false;
+	}	
+
+	public void setStatusStep4(){
+		step1Disabled = false;
+		step2Disabled = true;
+		step3Disabled = true;
+		step4Disabled = true;
+		
+		step1Active = false;
+		step2Active = false;
+		step3Active = false;
+		step4Active = true;
+	}
 	
+	// #### getters and setters ####
 	public boolean isStep1Disabled() {
 		return step1Disabled;
 	}

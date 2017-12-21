@@ -64,7 +64,7 @@
 							<f:selectItem itemValue="en" itemLabel="English" />
 							<f:selectItem itemValue="de" itemLabel="Deutsch" />
 						</h:selectOneMenu>
-					</h:form>
+					</h:form>			
 				</ul>					
 			</div>
 		</div>
@@ -144,7 +144,7 @@
 		<div class="wrapper footer_row">
 			<footer id="footer" class="center_horizontal clear">
 				<div class="one_third first">
-					<h6 class="title">Kontaktdaten</h6>
+					<h6 class="title">#{msg.footer_title_kontakt}</h6>
 					<ul class="nospace linklist contact">
 						<li><i class="fa fa-map-marker"></i>
 							<address>Kinostrasse &amp; 11, Zürich, 8001</address></li>
@@ -155,23 +155,23 @@
 					</ul>
 				</div>
 				<div class="one_third">
-					<h6 class="title">Über Kino Rex</h6>
+					<h6 class="title">#{msg.footer_title_uber}</h6>
 					<ul class="nospace linklist">
-						<li><a href="#">Über uns</a></li>
-						<li><a href="#">Kontakt</a></li>
-						<li><a href="#">Pressemitteilungen</a></li>
-						<li><a href="#">Allgemeine Geschäftsbedingungen</a></li>
+						<li><a href="#">#{msg.footer_link_uber}</a></li>
+						<li><a href="#">#{msg.footer_link_kontakt}</a></li>
+						<li><a href="#">#{msg.footer_link_presse}</a></li>
+						<li><a href="#">#{msg.footer_link_avb}</a></li>
 					</ul>
 				</div>
 				<div class="one_third">
-					<h6 class="title">Newsletter</h6>
-					<p class="btmspace-30">Abonniere jetzt den Kino Rex Newsletter und erfahre alles über die neusten Filmstarts, Events und Spezialangebote.</p>
+					<h6 class="title">#{msg.footer_title_newsletter}</h6>
+					<p class="btmspace-30">#{msg.footer_text_newsletter}</p>
 					<form method="post" action="#">
 						<fieldset>
 							<legend>Email:</legend>
 							<input class="btmspace-15" type="text" value="" placeholder="Name" />
 							<input class="btmspace-15" type="text" value="" placeholder="Email" />
-							<button type="submit" value="submit">Submit</button>
+							<button type="submit" value="submit">#{msg.footer_btn_submit}</button>
 						</fieldset>
 					</form>
 				</div>
