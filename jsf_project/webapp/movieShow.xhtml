@@ -76,7 +76,50 @@ select {
 				<h:outputText class="font-h3 leftspace-30" value="#{movieEventController.movieEventSummary}"/>			
 	    	</div>
 	    	<div class="panel-body">
-	    		<p>#{msg.mvishw_lbl_info}</p>
+	    		<div class="row">
+	    			
+	    			<!-- Kinosaal -->
+				    <div class="col-sm-6" style="background-color:yellow;">
+	    				<p>#{msg.mvishw_lbl_info}</p>
+	    				<!-- Legende -->
+	    				<div>
+							
+						</div>
+						
+	    				<!-- Sitzplan -->
+						<div>
+							
+						</div>	  
+	    			</div>
+	    			
+	    			<!-- Tickets -->
+				    <div class="col-sm-6" style="background-color:pink;">
+						<p>Tickets</p>
+							<div style="background-color:blue;">
+						      	<h:form>
+									<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
+												   action="#{kinoSaalManager.resetReservedSeats()}">
+										<f:ajax render=":outerForm" />
+							 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
+							 		</h:commandLink>
+							 		
+									<h:commandLink class="btn btn-primary btn-xs" 
+												   action="payment">
+							 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
+							 		</h:commandLink>
+						 		</h:form>
+					 		
+					 		<div class="panel panel-default">
+						  		<div class="panel-body">
+							  		 Keine Tickets ausgewählt
+						  		</div>
+						  	</div>
+					 		
+						</div>
+					</div>
+					
+	    		</div>
+	    		
 	    	</div>
 		</div>
 	    	
@@ -132,18 +175,7 @@ select {
 					</table>
 
 				</div>
-				
-				<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
-							   action="#{kinoSaalManager.resetReservedSeats}">
-					<f:ajax render="outerForm" />
-		 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
-		 		</h:commandLink>
-		 		
-				<h:commandLink class="btn btn-primary btn-xs" 
-							   action="payment">
-		 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
-		 		</h:commandLink>
-		 						
+			
 				<div class="ui-g-12 ui-md-6 ui-lg-6">
 					<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" editable="true"></k:ticketComponent>
 				</div>
