@@ -17,7 +17,6 @@ import ch.ffhs.kino.model.Movie;
 import ch.ffhs.kino.model.MovieEvent;
 import ch.ffhs.kino.model.MovieEventDetail;
 import ch.ffhs.kino.model.MovieLanguage;
-import ch.ffhs.kino.saal.BookingController;
 import ch.ffhs.kino.service.BackendService;
 
 @ManagedBean(name = "movieEventController")
@@ -98,6 +97,7 @@ public class MovieEventController {
 		// Gruusig: ELResolver geht bei Jetty leider nicht, da Java EE 7 Specification API
 		BookingController kinoSaalManager = (BookingController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "kinoSaalManager");
 		kinoSaalManager.resetReservedSeats();
+		kinoSaalManager.setHasPayed(false);
 		
 		NavigationController navigationBean = (NavigationController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "navigationController");
 		return navigationBean.goToStep2();
@@ -108,9 +108,6 @@ public class MovieEventController {
 		setSelectedMovie(movieEvent.getMovie());
 		return "movieDetail.jsf";
 	}
-	
-	
-	
 	
     // #### getters and setters ####
     public List<LocalDate> getDates() {

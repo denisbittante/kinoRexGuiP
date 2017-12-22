@@ -15,16 +15,6 @@ body{
 .header{
 	height:60px;
 }
-.header_col1{
-	top:15%;
-}
-.header_col2{
-	top:40%;
-	font-size:12px;
-}
-.header_col3{
-	top:25%;;
-}
 
 .font-10{
 	font-size:10px;
@@ -83,15 +73,15 @@ h6 { font-size: .75em; } */
 .fl_left, .imgl{float:left;}
 .fl_right, .imgr{float:right;}
 
-/***** Search Box *****/
-.search-box{
+/***** Vertical Box *****/
+.vertical-box{
     display: table;
     width: 100%;
 }
-.search-box .display-tr {
+.vertical-box .box-tr {
     display: table-row;
 }
-.search-box .display-td {
+.vertical-box .box-td {
     display: table-cell;
     vertical-align: middle;
 }
@@ -118,7 +108,6 @@ h6 { font-size: .75em; } */
 .credit-card-box .display-td {
     display: table-cell;
     vertical-align: middle;
-    width: 50%;
 }
 
 /***** Tables *****/
@@ -395,11 +384,7 @@ a:focus .video-link-icon {
     color: #e89a3e;
 }
 
-/***** Weitere Styles *****/
-hr, .borderedbox {
-	border-color:red;
-}
-	
+/***** Weitere Styles *****/	
 .stylish-input-group .input-group-addon{
     background: white !important; 
 }

@@ -59,9 +59,9 @@
 	   		<p class="font-h3">#{msg.mvidet_lbl_info}</p>
 	   		
 	   		<!-- Filter, Search -->
-			<div class="search-box">
-				<div class="display-tr">	
-					<div class="display-td">					
+			<div class="vertical-box">
+				<div class="box-tr">	
+					<div class="box-td">					
 						<h:form>	
 							<h:outputText value="#{msg.programm_lbl_genre}"/>
 							<h:selectOneMenu class="leftspace-10" value="#{movieEventController.searchGenre}">
@@ -77,10 +77,10 @@
 						</h:form>
 					</div>		
 								    
-			        <div class="display-td" style="width: 30%;">
-		                <div class="input-group stylish-input-group input-append">
-		                    <input type="text" class="search form-control input-sm" placeholder="Search" />
-		                    <span class="input-group-addon">
+			        <div class="box-td text-right">
+		                <div class="input-group form-group-sm stylish-input-group input-append">
+		                    <input type="text" class="search form-control" placeholder="Search" />
+		                    <span class="input-group-addon input-sm">
 		                        <button type="submit">
 		                            <span class="glyphicon glyphicon-search"></span>
 		                        </button>  

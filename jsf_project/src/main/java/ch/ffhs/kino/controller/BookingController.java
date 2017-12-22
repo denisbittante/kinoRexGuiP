@@ -1,4 +1,4 @@
-package ch.ffhs.kino.saal;
+package ch.ffhs.kino.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import ch.ffhs.kino.saal.Seat;
 import ch.ffhs.kino.saal.Seat.SeatType;
 import ch.ffhs.kino.saal.Seat.TicketType;
 
@@ -26,12 +27,15 @@ public class BookingController {
 	private String creditCardHolder;
 	private String creditCardExipry;
 	private String creditCardCvv;
+	private boolean hasPayed = false;
 
 	Date timeout;
 	private Integer timeoutSecond = 180;
 
 	@PostConstruct
 	public void init() {
+		setHasPayed(false);
+		
 		for (int i = 0; i < seats; i++) {
 			Seat e = new Seat(i / columns_count, i % columns_count);
 			allSeats.add(e);
@@ -68,9 +72,8 @@ public class BookingController {
 
 	public List<Integer> returnRows() {
 		ArrayList<Integer> rows = new ArrayList<Integer>();
-		for (int i = 0; i < seats / columns_count; i++) {
+		for (int i = 0; i < seats / columns_count; i++)
 			rows.add(i);
-		}
 		return rows;
 	}
 
@@ -79,7 +82,6 @@ public class BookingController {
 	}
 
 	public String style(Seat s) {
-
 		if (s.isReserved()) {
 			return "RESERVED";
 		} else if (s.isHidden()) {
@@ -87,16 +89,13 @@ public class BookingController {
 		} else {
 			return s.getType().toString();
 		}
-
 	}
 
 	public List<Seat> returnMySeats() {
 		List<Seat> mySeats = new ArrayList<Seat>();
-		for (Seat seat : allSeats) {
-			if (seat.isReserved()) {
+		for (Seat seat : allSeats)
+			if (seat.isReserved())
 				mySeats.add(seat);
-			}
-		}
 		
 		if(mySeats.size() > 0)
 			setHasTickets(true);
@@ -118,27 +117,20 @@ public class BookingController {
 	}
 
 	public int count(String category) {
-
 		TicketType valueOf = TicketType.valueOf(category);
-
 		List<Seat> returnMySeats = returnMySeats();
 		int count = 0;
-		for (Seat seat : returnMySeats) {
-			if (seat.getTicketType().equals(valueOf)) {
+		for (Seat seat : returnMySeats)
+			if (seat.getTicketType().equals(valueOf))
 				count++;
-			}
-		}
-
 		return count;
 	}
 
 	public double totalprice() {
-
 		List<Seat> returnMySeats = returnMySeats();
 		double total = 0.0;
-		for (Seat seat : returnMySeats) {
+		for (Seat seat : returnMySeats)
 			total += seat.getTicketType().getCost();
-		}
 		return total;
 	}
 
@@ -147,6 +139,14 @@ public class BookingController {
 		return "programm?faces-redirect=true";
 	}
 
+	public String confirm(){
+		setHasPayed(true);
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		NavigationController navigationBean = (NavigationController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "navigationController");
+		return navigationBean.goToStep4();		
+	}
+	
 	// #### getters and setters ####
 	public Integer getTimeoutSecond() {
 		return timeoutSecond;
@@ -202,5 +202,13 @@ public class BookingController {
 
 	public void setCreditCardCvv(String creditCardCvv) {
 		this.creditCardCvv = creditCardCvv;
+	}
+
+	public boolean isHasPayed() {
+		return hasPayed;
+	}
+
+	public void setHasPayed(boolean hasPayed) {
+		this.hasPayed = hasPayed;
 	}		
 }

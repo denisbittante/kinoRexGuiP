@@ -3,37 +3,27 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-<ui:composition template="template.xhtml">
 	<ui:define name="content">
+		<h:panelGroup id="commandForm"/>
+		<h:panelGroup id="outerForm"/>
+		
 		<div class="panel panel-default">
 		   	<div class="panel-heading">
 	    		<h:outputText class="font-h2" value="#{msg.confirm_lbl_title}"/>
 				<h:outputText class="font-h3 leftspace-30" value="#{movieEventController.movieEventSummary}"/>			
 	    	</div>
-		   	<div class="panel-body">	
+		   	<div class="panel-body">
+				<p class="font-h3">#{msg.confirm_lbl_thanks}</p>
+				<p>#{msg.confirm_lbl_sent}</p>
+				<p>#{msg.confirm_lbl_print}</p>
+					   	
+		        <!-- Tickets -->
+		        <div class="row col-xs-6 col-md-6">
+		        	<ui:include src="ticketTable.xhtml"/>
+		        </div>	   		
 		   	</div>
-		</div>	
-		
-		
-		<div class="ui-g-12 ui-md-12 ui-lg-12">
-			<h1>#{msg.confirm_lbl_title}</h1>
-
-			<h2>#{msg.confirm_lbl_thanks}</h2>
-			<p>#{msg.confirm_lbl_sent}</p>
-			<p>#{msg.confirm_lbl_print}</p>
 		</div>
-		<div class="ui-g-12 ui-md-6 ui-lg-6">
-
-			<h:form id="outerForm" prependId="false">
-
-				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}"
-					formId="outerForm" editable="false"></k:ticketComponent>
-			</h:form>
-		</div>
-
 	</ui:define>
 </ui:composition>
