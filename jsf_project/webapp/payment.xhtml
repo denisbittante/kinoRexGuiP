@@ -110,26 +110,28 @@
 										</div>
 								    </div>
 						  	</div>
-						
+						  	
+						  	<div class="form-group">
+								<h:outputLabel class="col-sm-4 control-label" for="cardOwner"
+	                                		   value="#{msg.payment_lbl_cc_owner}:"/>         				   
+						    	<div class="col-sm-8">
+						    		<div class="input-group">
+							    		<input type="tel" class="form-control" name="cardOwner"
+			                               	   placeholder="#{msg.payment_plh_cc_owner}"
+			                                   autocomplete="cc-number"
+			                                   required="true"/>
+			                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						    		</div>						      
+						    	</div>
+						  	</div>	
+							  	
 						<div>
     <label for="cc">Expiration Date</label>
     <!-- Set via HTML -->
     <input id="cc" type="text" placeholder="MM/YY" class="masked" pattern="(1[0-2]|0[1-9])\/(1[5-9]|2\d)" data-valid-example="05/18"/>
   </div>
   
-							  	<div class="form-group">
-									<h:outputLabel class="col-sm-4 control-label" for="cardOwner"
-		                                		   value="#{msg.payment_lbl_cc_owner}:"/>         				   
-							    	<div class="col-sm-8">
-							    		<div class="input-group">
-								    		<input type="tel" class="form-control" name="cardOwner"
-				                               	   placeholder="#{msg.payment_plh_cc_owner}"
-				                                   autocomplete="cc-number"
-				                                   required="true"/>
-				                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							    		</div>						      
-							    	</div>
-							  	</div>						  
+					  
 
 								<div class="form-group">
 									<h:outputLabel class="col-sm-4 control-label" for="cardExpiry"
@@ -164,24 +166,6 @@
 
 		                    <form role="form" class="form-horizontal" id="payment-form" method="POST" action="javascript:void(0);">
 
-		                        <div class="row">
-                            		<div class="col-xs-12">
-			                            <div class="form-group">
-		                                    <h:outputLabel class="control-label" for="cardOwner"
-		                                				   value="#{msg.payment_lbl_cc_owner}:"/>	
-		                                    <div class="input-group">
-		                                        <input 
-		                                            type="text"
-		                                            class="form-control"
-		                                            name="cardOwner"
-		                                            placeholder="#{msg.payment_plh_cc_owner}"
-		                                            required="true"/>
-		                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-		                                    </div>
-		                                </div>       
-		                                                        
-		                           </div>
-		                        </div>
 		                        		                        
 		                        <div class="row">
 		                            <div class="col-xs-7 col-md-7">
@@ -235,14 +219,6 @@
 	</div>
 	
 
-
-		<div class="ui-g-12 ui-md-12 ui-lg-12">
-			<h2>#{msg.payment_lbl_info_1}</h2>
-			<p>#{msg.payment_lbl_info_2}</p>
-			<p>
-				<strong>#{msg.payment_lbl_info_3}</strong>
-			</p>
-		</div>
 		<!-- ########################################################################## -->
 
 		<h:form id="outerForm" prependId="false">
@@ -317,9 +293,7 @@
 
 				<!-- ##################### END FORM ######################### -->
 			</div>
-			<div class="ui-g-12 ui-md-6 ui-lg-6">
-				<k:ticketComponent seats="#{kinoSaalManager.returnMySeats()}" formId="outerForm" editable="true"></k:ticketComponent>
-			</div>
+			
 		</h:form>
 		<!-- ########################################################################## -->
 
