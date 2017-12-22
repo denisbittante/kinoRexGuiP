@@ -4,7 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
+	xmlns:b="http://bootsfaces.net/ui">
 	
 	<ui:define name="content">
 
@@ -51,41 +51,45 @@
   color:#ccc;
 }
 </style> 
-
 	<div class="panel panel-default">
 	   	<div class="panel-heading">
 			<h:outputText class="font-h2" value="#{msg.programm_lbl_title}"/>
 	   	</div>
 	   	<div class="panel-body">
 	   		<p class="font-h3">#{msg.mvidet_lbl_info}</p>
+	   		
 	   		<!-- Filter, Search -->
-			<div class="row">		
-				<div class="col-sm-9 pull-left">
-					<h:form>	
-						<h:outputText value="#{msg.programm_lbl_genre}"/>
-						<h:selectOneMenu value="#{movieEventController.searchGenre}">
-							<f:selectItems value="#{movieEventController.getGenres()}"/>
-							<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
-						</h:selectOneMenu>
-						
-						<h:outputText value="#{msg.programm_lbl_language}"/>
-						<h:selectOneMenu value="#{movieEventController.searchLanguage}">
-							<f:selectItems value="#{movieEventController.getLanguage()}"/>
-							<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
-						</h:selectOneMenu>
-					</h:form>
-				</div>					
-		        <div class="col-sm-3 pull-right">
-	                <div class="input-group stylish-input-group input-append">
-	                    <input type="text" class="search form-control" placeholder="Search" />
-	                    <span class="input-group-addon">
-	                        <button type="submit">
-	                            <span class="glyphicon glyphicon-search"></span>
-	                        </button>  
-	                    </span>
-	                </div>
-		        </div>
-			</div>	  
+			<div class="search-box">
+				<div class="display-tr">	
+					<div class="display-td">					
+						<h:form>	
+							<h:outputText value="#{msg.programm_lbl_genre}"/>
+							<h:selectOneMenu class="leftspace-10" value="#{movieEventController.searchGenre}">
+								<f:selectItems value="#{movieEventController.getGenres()}"/>
+								<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
+							</h:selectOneMenu>
+	
+							<h:outputText class="leftspace-30" value="#{msg.programm_lbl_language}"/>
+							<h:selectOneMenu class="leftspace-10" value="#{movieEventController.searchLanguage}">
+								<f:selectItems value="#{movieEventController.getLanguage()}"/>
+								<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm" />
+							</h:selectOneMenu>
+						</h:form>
+					</div>		
+								    
+			        <div class="display-td" style="width: 30%;">
+		                <div class="input-group stylish-input-group input-append">
+		                    <input type="text" class="search form-control input-sm" placeholder="Search" />
+		                    <span class="input-group-addon">
+		                        <button type="submit">
+		                            <span class="glyphicon glyphicon-search"></span>
+		                        </button>  
+		                    </span>
+		                </div>
+			        </div>		    				    
+				</div>
+			</div>	
+
 			<span class="counter pull-right"></span>
 			
 			<!-- Table Programm --> 		
@@ -146,11 +150,8 @@
 	   	</div>
 	</div>
 	    	
-	<k:sessionOver></k:sessionOver>
-
 	<h:form>
 		<h:commandLink value="sessionOver" onclick="sessionOverDialog.show()" />
 	</h:form>
-
 	</ui:define>
 </ui:composition>

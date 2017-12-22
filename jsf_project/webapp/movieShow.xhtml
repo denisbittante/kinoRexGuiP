@@ -102,7 +102,7 @@ select {
 																 action="#{i.reserve()}" 
 																 styleClass="seat #{kinoSaalManager.style(i)}" 
 																 disabled="#{i.isOccupied()}">
-													<f:ajax render=":outerForm :ticketForm" />				 
+													<f:ajax render=":outerForm :ticketForm :commandForm" />				 
 												</h:commandButton> 
 												<p:tooltip for="seatButton" value="#{msg.mvishw_seats_row} #{i.seatRow + 1}, #{msg.mvishw_seats_seat} #{i.seatColumn + 1}"/>
 											</td>
@@ -123,21 +123,21 @@ select {
 								</h:form>
 							</div>
 							<div class="col-sm-7 text-right">
-								<h:form class="btmspace-10">
-									<h:commandLink id="resetReservedSeats" class="btn btn-danger btn-xs" 
-												   action="#{kinoSaalManager.resetReservedSeats()}">
-										<f:ajax render=":outerForm :ticketForm" />
-							 			<span class="glyphicon glyphicon-trash"></span> <h:outputText value="#{msg.mvishw_ticket_btn_entfernen}"/>
-							 		</h:commandLink>
-							 		
-									<h:commandLink class="btn btn-primary btn-xs" 
+								<h:form id="commandForm" class="btmspace-10">
+									<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-danger btn-xs' : 'btn btn-danger btn-xs disabled'}"
+										           action="#{kinoSaalManager.resetReservedSeats()}">
+										<span class="glyphicon glyphicon-trash"></span>
+										<h:outputText value="#{msg.mvishw_ticket_btn_entfernen}" />
+										<f:ajax render=":outerForm :ticketForm :commandForm" />
+									</h:commandLink>
+
+									<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-primary btn-xs leftspace-10' : 'btn btn-primary btn-xs leftspace-10 disabled'}"
 												   action="#{navigationController.goToStep3()}">
 							 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
 							 		</h:commandLink>
 						 		</h:form>
 							</div>
 							
-						
 					      	<div class="col-sm-12">
 				 				<ui:include src="ticketTable.xhtml"></ui:include>
 				 			</div>

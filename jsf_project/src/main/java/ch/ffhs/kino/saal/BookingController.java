@@ -20,14 +20,18 @@ public class BookingController {
 	int columns_count = 16;
 	int seats = 176;
 
-	private String paymentmethod = "false";
+	private boolean hasTickets = false;
+	private boolean payWithCreditCard = true;
+	private String creditCardNumber;
+	private String creditCardHolder;
+	private String creditCardExipry;
+	private String creditCardCvv;
 
 	Date timeout;
 	private Integer timeoutSecond = 180;
 
 	@PostConstruct
 	public void init() {
-		
 		for (int i = 0; i < seats; i++) {
 			Seat e = new Seat(i / columns_count, i % columns_count);
 			allSeats.add(e);
@@ -93,6 +97,12 @@ public class BookingController {
 				mySeats.add(seat);
 			}
 		}
+		
+		if(mySeats.size() > 0)
+			setHasTickets(true);
+		else
+			setHasTickets(false);
+		
 		return mySeats;
 	}
 
@@ -138,19 +148,59 @@ public class BookingController {
 	}
 
 	// #### getters and setters ####
-	public String getPaymentmethod() {
-		return paymentmethod;
-	}
-
-	public void setPaymentmethod(String paymentmethod) {
-		this.paymentmethod = paymentmethod;
-	}
-
 	public Integer getTimeoutSecond() {
 		return timeoutSecond;
 	}
 
 	public void setTimeoutSecond(Integer timeoutSecond) {
 		this.timeoutSecond = timeoutSecond;
+	}
+
+	public boolean isHasTickets() {
+		return hasTickets;
+	}
+
+	public void setHasTickets(boolean hasTickets) {
+		this.hasTickets = hasTickets;
+	}
+
+	public boolean isPayWithCreditCard() {
+		return payWithCreditCard;
+	}
+
+	public void setPayWithCreditCard(boolean payWithCreditCard) {
+		this.payWithCreditCard = payWithCreditCard;
+	}
+
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}
+
+	public String getCreditCardHolder() {
+		return creditCardHolder;
+	}
+
+	public void setCreditCardHolder(String creditCardHolder) {
+		this.creditCardHolder = creditCardHolder;
+	}
+
+	public String getCreditCardExipry() {
+		return creditCardExipry;
+	}
+
+	public void setCreditCardExipry(String creditCardExipry) {
+		this.creditCardExipry = creditCardExipry;
+	}
+
+	public String getCreditCardCvv() {
+		return creditCardCvv;
+	}
+
+	public void setCreditCardCvv(String creditCardCvv) {
+		this.creditCardCvv = creditCardCvv;
 	}		
 }

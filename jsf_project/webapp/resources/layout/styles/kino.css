@@ -1,5 +1,4 @@
 @charset "utf-8";
-/* @import url("fontawesome-4.5.0.min.css"); */
 
 html, body{
 	margin:0; 
@@ -58,18 +57,6 @@ h4 { font-size: 1.12em; }
 h5 { font-size: .83em; }
 h6 { font-size: .75em; } */
 
-
-/* .wrapper {
-	display:block; 
-	width:100%; 
-	margin:0; 
-	padding:0; 
-	text-align:left; 
-	word-wrap:break-word;
-}
- */
-
-
 .center_horizontal {
 	display:block; 
 	margin:0 auto;
@@ -96,25 +83,43 @@ h6 { font-size: .75em; } */
 .fl_left, .imgl{float:left;}
 .fl_right, .imgr{float:right;}
 
+/***** Search Box *****/
+.search-box{
+    display: table;
+    width: 100%;
+}
+.search-box .display-tr {
+    display: table-row;
+}
+.search-box .display-td {
+    display: table-cell;
+    vertical-align: middle;
+}
 
-/* Header Bar*/
-/* #headerbar {
-	padding:10px 0 15px; 
-	font-size:12px;
-	text-align:center;
+/***** CreditCard Box *****/
+.credit-card-box .panel-heading {
+	padding: 5px 15px;
 }
-#headerbar .fl_left {
-	margin-top:4px;
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
 }
-#headerbar .fl_left .inline > li i {
-	margin:0 5px 0 0; 
-	line-height:normal;
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
 }
-#headerbar *{margin:0;}
-#headerbar .fl_left ul{margin:0 0 10px 0; line-height:normal;}
-#headerbar .fl_left ul li{display:inline-block; margin-right:20px;}
-#headerbar .fl_left ul li:last-child{margin-right:0;}
-#headerbar .faico li{float:none;} */
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
+}
+.credit-card-box .display-tr {
+    display: table-row;
+}
+.credit-card-box .display-td {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
 
 /***** Tables *****/
 table, th, td {
@@ -151,7 +156,7 @@ tr:nth-child(even) {
 	background-color:#f7f7f7;
 }
 
-/* Font Awesome Social Icons */
+/***** Social Icons *****/
 .faico{margin:0; padding:0; list-style:none;}
 .faico li{display:inline-block; float:left; margin:0 5px 0 0; padding:0; line-height:normal;}
 .faico li:last-child{margin-right:0;}
@@ -283,7 +288,6 @@ tr:nth-child(even) {
 #footer input{display:block; width:100%; padding:8px;}
 #footer button{padding:8px 18px 10px; text-transform:uppercase; font-weight:700; cursor:pointer;}
 
-
 #footer .title{color:#333333;}
 #footer .linklist li{border-color:#DADADA;}
 
@@ -292,7 +296,6 @@ tr:nth-child(even) {
 #footer input:focus{border-color:#E9365A;}
 #footer button{color:#FFFFFF; background-color:#E9365A;}
 
-
 /* Copyright
 --------------------------------------------------------------------------------------------------------------- */
 #copyright{padding:30px 0; border-top:1px solid;}
@@ -300,7 +303,6 @@ tr:nth-child(even) {
 #copyright{border-color:#DADADA;}
 
 #backtotop{color:#FFFFFF; background-color:#E9365A;}
-
 
 /***** Modal *****/
 .modal-backdrop.in {

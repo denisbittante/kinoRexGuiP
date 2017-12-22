@@ -3,68 +3,21 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-	<ui:define name="css">
-		<style type="text/css">
-.credit-card-box .panel-title {
-    display: inline;
-    font-weight: bold;
-}
-
-.white-button.ui-button.ui-state-default {
-	background-color: #ffffff;
-	color: #222222;
-	border-color: #d6d6d6;
-}
-
-.white-button.ui-button.ui-state-default:enabled:hover, .white-button.ui-button.ui-state-default:focus
-	{
-	background-color: #f2f2f2;
-	border-color: #ccc;
-	color: #373a3c;
-}
-
-.green-button.ui-button.ui-state-default {
-	background-color: #5cb85c;
-	border-color: #5cb85c;
-	color: #fff;
-}
-
-.green-button.ui-button.ui-state-default:enabled:hover, .green-button.ui-button.ui-state-default:focus
-	{
-	background-color: #4cae4c;
-	border-color: #5cb85c;
-}
-
-.red-button.ui-button.ui-state-default {
-	background-color: #d9534f;
-	border-color: #d9534f;
-	color: #fff;
-}
-
-.red-button.ui-button.ui-state-default:enabled:hover, .red-button.ui-button.ui-state-default:focus
-	{
-	background-color: #d43f3a;
-	border-color: #d9534f;
-}
-</style>
+<ui:define name="content">
 <script>
 	//<![CDATA[
 	$(document).ready(function() {
-		$(":input").inputmask();
-		
-		$("input").focus(function () {
-		    $(this).removeClass("ui-state-focus");
-		});
+		$(".cc").inputmask("9999-9999-9999-9999");
+		$(".cc_exipry").inputmask("99/99");
+		$(".cc_cvv").inputmask("999");
 	});
-
 	//]]>
 </script>
-	</ui:define>
-	<ui:define name="content">
+
+	<h:form id="commandForm"/>
+	<h:form id="outerForm"/>
 		
 	<div class="panel panel-default">
 	   	<div class="panel-heading">
@@ -77,225 +30,126 @@
 	   		<p>#{msg.payment_lbl_info_2}</p>
 	   		<p><strong>#{msg.payment_lbl_info_3}</strong></p>
 	   
-		   	<div class="row" style="background-color:green">
-		   	
-		   		<!-- Bezahlung -->
-		        <div class="col-md-5" style="background-color:yellow">
+		   	<div class="row">
+		   		
+		   		<!-- Bezahlung -->		  															   
+		        <div class="col-md-5">
+	  			  		
+					<h:form class="form-horizontal">
 
-		            <div class="panel panel-default credit-card-box">
-		                <div class="panel-heading display-table" >
-		                    <div class="row display-tr" >
-		                        <h3 class="panel-title display-td" >Payment Details</h3>
-		                        <div class="display-td" >                            
-		                            <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png"/>
-		                        </div>
-		                    </div>                    
-		                </div>
-		                <div class="panel-body">
-		                
-						<form class="form-horizontal" role="form">
-						
-							<div class="form-group">
-						  		<h:outputLabel class="col-sm-4 control-label" for="cc"
-			                               	   value="#{msg.payment_lbl_cc_number}:"/>
-									<div class="col-sm-8">
-										<div class="input-group">
-										    <input class="form-control" style="background-color:white;"
-												   id="cc" 
-												   type="text"
-												   placeholder="#{msg.payment_plh_cc_number}"
-												   required="true" autofocus="true"
-												   data-inputmask="'mask': '9999 9999 9999 9999'" />
-											<span class="input-group-addon"><i class="fa fa-credit-card"></i></span>	    
-										</div>
-								    </div>
-						  	</div>
-						  	
-						  	<div class="form-group">
-								<h:outputLabel class="col-sm-4 control-label" for="cardOwner"
-	                                		   value="#{msg.payment_lbl_cc_owner}:"/>         				   
-						    	<div class="col-sm-8">
-						    		<div class="input-group">
-							    		<input type="tel" class="form-control" name="cardOwner"
-			                               	   placeholder="#{msg.payment_plh_cc_owner}"
-			                                   autocomplete="cc-number"
-			                                   required="true"/>
-			                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						    		</div>						      
-						    	</div>
-						  	</div>	
-							  	
-						<div>
-    <label for="cc">Expiration Date</label>
-    <!-- Set via HTML -->
-    <input id="cc" type="text" placeholder="MM/YY" class="masked" pattern="(1[0-2]|0[1-9])\/(1[5-9]|2\d)" data-valid-example="05/18"/>
-  </div>
-  
-					  
-
-								<div class="form-group">
-									<h:outputLabel class="col-sm-4 control-label" for="cardExpiry"
-		                                		   value="#{msg.payment_lbl_cc_expiry}:"/>         				   
-							    	<div class="col-sm-8">
-							    		<div class="input-group">
-								    		<input type="tel" class="form-control" name="cardExpiry"
-				                               	   placeholder="#{msg.payment_plh_cc_expiry}"
-				                                   autocomplete="cc-exp"
-				                                   required="true"/>
-				                     		<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
-							    		</div>						      
-							    	</div>
-							  	</div>
-
-								<div class="form-group">
-									<h:outputLabel class="col-sm-4 control-label" for="cardCVC"
-		                                		   value="#{msg.payment_lbl_cc_cvv}:"/>         				   
-							    	<div class="col-sm-8">
-							    		<div class="input-group">
-								    		<input type="tel" class="form-control" name="cardCVC"
-				                               	   placeholder="payment_plh_cc_expiry"
-				                                   autocomplete="cc-csc"
-				                                   required="true"/>
-				                     		<span class="input-group-addon">123</span>
-							    		</div>						      
-							    	</div>
-							  	</div>
-							  								  	  
-						</form>	
-
-
-		                    <form role="form" class="form-horizontal" id="payment-form" method="POST" action="javascript:void(0);">
-
-		                        		                        
-		                        <div class="row">
-		                            <div class="col-xs-7 col-md-7">
-		                                <div class="form-group">
-		                                    <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
-		                                    <input 
-		                                        type="tel" 
-		                                        class="form-control" 
-		                                        name="cardExpiry"
-		                                        placeholder="MM / YY"
-		                                        autocomplete="cc-exp"
-		                                        required="true"/>
-		                                </div>
-		                            </div>
-		                            <div class="col-xs-5 col-md-5 pull-right">
-		                                <div class="form-group">
-		                                    <label for="cardCVC">CV CODE</label>
-		                                    <input 
-		                                        type="tel" 
-		                                        class="form-control"
-		                                        name="cardCVC"
-		                                        placeholder="CVC"
-		                                        autocomplete="cc-csc"
-		                                        required="true"/>
-		                                </div>
-		                            </div>
-		                        </div>
-		                        
-		                        <div class="row">
-		                            <div class="col-xs-12">
-		                                <button class="subscribe btn btn-primary btn-block" type="button">#{msg.payment_btn_pay}</button>
-		                            </div>
-		                        </div>
-		                        <div class="row" style="display:none;">
-		                            <div class="col-xs-12">
-		                                <p class="payment-errors"></p>
-		                            </div>
-		                        </div>
-		                    </form>
-		                </div>
-		            </div>            
+						<div class="form-group">
+							<h:outputLabel class="col-sm-4 control-label" for="email"
+	                               		   value="#{msg.payment_lbl_email}:"/>         				   
+					    	<div class="col-sm-8">
+					    		<div class="input-group">
+						    		<h:inputText id="email" class="form-control input-sm"
+		                               	   placeholder="#{msg.payment_plh_email}"
+		                               	   validatorMessage="#{msg.payment_val_email}"
+		                                   required="true" autofocus="true"/>
+		                     		<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+					    		</div>				      
+					    		<h:message for="email" />
+					    	</div>
+					  	</div>
+				  	
+			            <h:selectOneRadio id="selectOneRadio1" value="#{kinoSaalManager.payWithCreditCard}">
+		                    <f:selectItem itemValue="#{true}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-credit-card&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_cc}"/>
+		                    <f:selectItem itemValue="#{false}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-paypal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_paypal}"/>
+		                    <f:ajax event="click" render="@form" />
+		                </h:selectOneRadio>         
+              
+              			<h:panelGroup layout="block" rendered="#{kinoSaalManager.payWithCreditCard}">
+ 
+		 		            <div class="panel panel-default credit-card-box">
+				                
+				                <div class="panel-heading" >
+				                    <div class="row display-tr">
+				                        <h3 class="panel-title display-td" >#{msg.payment_lbl_zahlungsdetails}</h3>
+				                        <div class="display-td">                     
+				                            <img class="img-responsive pull-right" style="width: 80%"
+				                                 src="/resources/images/kino/creditcards.png"/>
+				                        </div>
+				                    </div>                    
+				                </div>
+				                
+				                <div class="panel-body">											
+							  	               
+									<div class="form-group">
+								  		<h:outputLabel class="col-sm-4 control-label" for="cc" value="#{msg.payment_lbl_cc_number}:"/>
+										<div class="col-sm-8">
+											<div class="input-group">
+											    <h:inputText id="cc" class="form-control input-sm cc" required="true"
+											    			 value="#{kinoSaalManager.creditCardNumber}"
+													         placeholder="#{msg.payment_plh_cc_number}"/>
+												<span class="input-group-addon"><i class="fa fa-credit-card"></i></span>	    
+											</div>
+									    </div>
+								  	</div>					                
+				                
+								  	<div class="form-group">
+										<h:outputLabel class="col-sm-4 control-label" for="cc_owner"
+			                                		   value="#{msg.payment_lbl_cc_owner}:"/>         				   
+								    	<div class="col-sm-8">
+								    		<div class="input-group">
+									    		<h:inputText id="cc_owner" class="form-control input-sm" required="true"
+									    					 value="#{kinoSaalManager.creditCardHolder}"
+					                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
+					                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								    		</div>						      
+								    	</div>
+								  	</div>
+								  	
+									<div class="form-group">
+								  		<h:outputLabel class="col-sm-4 control-label" for="cc_exipry"
+					                               	   value="#{msg.payment_lbl_cc_expiry}:"/>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<h:inputText id="cc_exipry" class="form-control input-sm cc_exipry"
+													   		 value="#{kinoSaalManager.creditCardExipry}"
+											   		   		 placeholder="#{msg.payment_plh_cc_expiry}"/>
+											   	<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+								    		</div>		      
+									    </div>
+								  	</div>	
+								  	
+								  	<div class="form-group">
+										<h:outputLabel class="col-sm-4 control-label" for="cc_cvv"
+			                                		   value="#{msg.payment_lbl_cc_cvv}:"/>         				   
+								    	<div class="col-sm-8">
+								    		<div class="input-group">
+									    		<h:inputText id="cc_cvv" class="form-control input-sm cc_cvv" required="true"
+									    					 value="#{kinoSaalManager.creditCardCvv}"
+					                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
+					                     		<span class="input-group-addon">000</span>
+								    		</div>						      
+								    	</div>
+								  	</div>								  								  						  				  						                
+				                </div>
+				            </div>
+ 
+              			</h:panelGroup>
+              			
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h:commandLink class="btn btn-primary btn-xs btn-block" 
+										   	   action="confirm">
+					 				<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.payment_btn_pay}"/>
+					 			</h:commandLink>
+										
+                            </div>
+                        </div>              			
+					</h:form>
+					         
 		        </div>
 		        
 		        <!-- Tickets -->
-		        <div class="col-md-offset-1 col-md-6" style="background-color:pink">
+		        <div class="col-md-offset-1 col-md-6">
 		        	<ui:include src="ticketTable.xhtml"></ui:include>
 		        </div>
 		        
 	        </div>
 	   	</div>
 	</div>
-	
-
-		<!-- ########################################################################## -->
-
-		<h:form id="outerForm" prependId="false">
-
-			<div class="ui-g-12 ui-md-6 ui-lg-6">
-				<!-- ##################### FORM ######################### -->
-
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value">
-					<p:outputLabel for="email" value="#{msg.payment_lbl_email}" />
-					<p:inputText id="email" placeholder="E-Mail" validatorMessage="#{msg.payment_val_email}">
-						<f:validateRegex pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-					</p:inputText>
-				</h:panelGrid>
-				<p:message for="email" />
-				<p:outputPanel id="customPanel" style="margin-bottom:10px">
-
-					<p:selectOneRadio  id="paymentmethods" value="#{kinoSaalManager.paymentmethod}" layout="custom">
-						<f:selectItem itemLabel="#{msg.payment_lbl_cc}"  itemValue="false" />
-						<f:selectItem itemLabel="#{msg.payment_lbl_paypal}" itemValue="true">
-						</f:selectItem>
-						<p:ajax update="panel1" />
-					</p:selectOneRadio>
-
-
-					<h:panelGrid columns="3" cellpadding="5">
-						<p:radioButton id="opt1" for="paymentmethods" itemIndex="0" />
-						<i class="fa fa-credit-card" aria-hidden="true"></i>
-						<h:outputLabel for="opt1" value="#{msg.payment_lbl_cc}" />
-
-						<p:radioButton id="opt2" for="paymentmethods" itemIndex="1" />
-						<i class="fa fa-paypal" aria-hidden="true"></i>
-						<h:outputLabel for="opt2" value="#{msg.payment_lbl_paypal}" />
-					</h:panelGrid>
-
-
-				</p:outputPanel>
-
-
-				<p:panel id="panel1" visible="#{not kinoSaalManager.paymentmethod}" toggleable="true">
-
-					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" columnClasses="label, value" title="#{msg.payment_lbl_zahlungsart}">
-
-						<h:outputText for="cc" value="#{msg.payment_lbl_cc}" />
-						<p:inputMask id="cc" mask="999-99-9999-9999" placeholder="#{msg.payment_lbl_ccinput}" />
-
-						<h:outputText for="ccname" value="#{msg.payment_lbl_cc_owner}" />
-						<p:inputMask id="ccname" placeholder="#{msg.payment_lbl_ccnameinput}" />
-
-
-						<p:outputLabel for="expirationyear" value="#{msg.payment_lbl_cc_gueltigbis}" />
-
-						<p:panel>
-							<p:selectOneMenu id="expirationyear">
-								<f:selectItem itemLabel="#{msg.payment_lbl_cc_year}" itemValue="" noSelectionOption="true" />
-								<f:selectItems value="#{dtEditView.getYears()}" />
-							</p:selectOneMenu>
-							<p:selectOneMenu id="expirationdate">
-								<f:selectItem itemLabel="#{msg.payment_lbl_cc_month}" itemValue="" noSelectionOption="true" />
-								<f:selectItems value="#{dtEditView.getMonths()}" />
-							</p:selectOneMenu>
-						</p:panel>
-						<p:outputLabel for="cvv" value="#{msg.payment_lbl_cc_cvv}" />
-						<p:inputMask id="cvv" mask="999" placeholder="#{msg.payment_lbl_cc_cvv}" />
-					</h:panelGrid>
-
-
-				</p:panel>
-
-				<p:commandButton value="#{msg.payment_btn_pay}" ajax="false" icon="fa fa-shopping-cart" validateClient="true" style="margin-right:10px" action="confirm" />
-
-
-
-				<!-- ##################### END FORM ######################### -->
-			</div>
-			
-		</h:form>
-		<!-- ########################################################################## -->
 
 
 	</ui:define>
