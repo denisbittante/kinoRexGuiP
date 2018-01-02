@@ -19,25 +19,26 @@ public class NavigationController {
 	// programm
 	public String goToStep1(){
 		setStatusStep1();
-		return "index.jsf";
+		return "index.jsf?faces-redirect=true";
 	}
 	
 	// movieshow
 	public String goToStep2(){
 		setStatusStep2();
-		return "movieShow.jsf";
+		return "movieShow.jsf?faces-redirect=true";
 	}
 	
 	// payment
 	public String goToStep3(){
 		setStatusStep3();
-		return "payment.jsf";
+		return "";
+		//return "movieShow.jsf?faces-redirect=false";
 	}	
 	
 	// confirm
 	public String goToStep4(){
 		setStatusStep4();
-		return "bookingConfirm.jsf";
+		return "bookingConfirm.jsf?faces-redirect=true";
 	}
 
 	public void setStatusStep1(){

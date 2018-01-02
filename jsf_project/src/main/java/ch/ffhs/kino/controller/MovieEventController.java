@@ -1,7 +1,7 @@
 package ch.ffhs.kino.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,11 +86,10 @@ public class MovieEventController {
 		
 		String movieTitle = selectedMovie.getTitle();
 		String movieLanguage = detail.getLanguage().getText();
-		String movieEventSummary = movieTitle + " (" + movieLanguage + "), " + "Datum Uhrzeit" + ", " + "HallenNamen";
-				
-		SimpleDateFormat fmt = new SimpleDateFormat("E dd MMM yyyy HH:mm");
-		// fmt.format(movieShow.getDate())
-		//dateTime.getShowDate()
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E dd MMM yyyy");
+		String formattedDate = dateTime.getShowDate().format(formatter);
+		String movieEventSummary = movieTitle + " (" + movieLanguage + "), " + formattedDate + " " + dateTime.getShowTime() + ", " + detail.getHall();
 		setMovieEventSummary(movieEventSummary);
 		
 		FacesContext facesContext = FacesContext.getCurrentInstance();

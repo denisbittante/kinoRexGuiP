@@ -5,6 +5,7 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 
 	<ui:define name="css">
@@ -20,6 +21,14 @@
 	border: solid;
 	height: 19px;
 	width: 19px;
+	padding: 0px;
+}
+
+.seat:hover {background-color: gray;}
+
+.seat:disabled,
+.seat[disabled]{
+  opacity: unset;
 }
 
 .selected {
@@ -40,24 +49,35 @@
 	padding: 0px;
 }
 
-.PREMIUM {
-	background-color: #f1c40f;
-}
+.PREMIUM {background-color: #f1c40f;}
+.PREMIUM:hover {background-color: #f1c40f;}
+.PREMIUM:disabled {background-color: #f1c40f;}
 
-.RESERVED {
+.RESERVED {background-color: green;}
+.RESERVED:hover {background-color: green;}
+.HIDDEN {visibility: hidden;}
+
+.SOLD, .SOLD:hover, .SOLD[disabled]:hover{
 	background-color: #E9365A;
 }
 
-.HIDDEN {
-	visibility: hidden;
-}
-
-.SOLD {
-	background-color: #2c3e50;
-}
-
-.HANDYCAP {
+/* .HANDYCAP, .HANDYCAP:hover, .HANDYCAP:focus, .HANDYCAP:active{
 	background-color: #3498db;
+}
+
+.btn-default, .btn-default:hover, .btn-default:active, .btn-default:visited {
+    background-color: #8064A2 !important;
+} */
+
+.HANDYCAP,
+.HANDYCAP:hover,
+.HANDYCAP:focus,
+.HANDYCAP:active,
+.HANDYCAP.active,
+.HANDYCAP:active:focus,
+.HANDYCAP.active:focus,
+.open .dropdown-toggle.HANDYCAP {
+  background-color: #3498db;
 }
 
 select {
@@ -68,6 +88,20 @@ select {
 	</ui:define>
 	
 	<ui:define name="content">
+<script>
+	//<![CDATA[
+	$(document).ready(function() {
+	});
+	//]]>
+</script>
+<b:modal id="amodal" title="#{msg.mvishw_timeout_title}" closable="true" styleClass="text-left">
+  <p><h:outputText value="#{msg.mvishw_timeout_text1}"/></p>
+  <p><b><h:outputText value="#{msg.mvishw_timeout_text2}"/></b></p>
+  <f:facet name="footer">
+    <b:button value="OK" look="primary" dismiss="modal" />
+  </f:facet>
+</b:modal>
+
 		<div class="panel panel-default">
 			<div class="panel-heading">
 	    		<h:outputText class="font-h2" value="#{msg.mvishw_lbl_title}"/>
@@ -78,18 +112,21 @@ select {
 	    			
 	    			<!-- Kinosaal -->
 				    <div class="col-sm-6 text-center">
+
 	    				<p class="font-h3">#{msg.mvishw_lbl_info}</p>
-	    				<!-- Legende -->
-	    				<div>
-							<h:commandButton readonly="true" styleClass="seat RESERVED"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_meinePlaetze}"/>
-							<h:commandButton readonly="true" styleClass="seat NORMAL"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_frei}"/>
-							<h:commandButton readonly="true" styleClass="seat SOLD"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_verkauft}"/>
-							<h:commandButton readonly="true" styleClass="seat PREMIUM"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_premium}"/>
-							<h:commandButton readonly="true" styleClass="seat HANDYCAP"/> <h:outputText value="#{msg.mvishw_lbl_handicap}"/>
+
+	    				<!-- Legende -->   			
+	    				<div class="btmspace-10">
+	    					<b:button styleClass="seat RESERVED" disabled="disabled" tooltip="#{msg.mvishw_ttp_meinePlaetze}" /> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_meinePlaetze}"/> 				
+							<b:button styleClass="seat NORMAL" tooltip="#{msg.mvishw_ttp_frei}"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_frei}"/>
+							<b:button styleClass="seat SOLD" tooltip="#{msg.mvishw_ttp_verkauft}"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_verkauft}"/>
+							<b:button styleClass="seat PREMIUM" tooltip="#{msg.mvishw_ttp_premium}"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_premium}"/>
+							<b:button styleClass="seat HANDYCAP" tooltip="#{msg.mvishw_ttp_handicap}"/> <h:outputText value="#{msg.mvishw_lbl_handicap}"/>
 						</div>
-						
-	    				<!-- Sitzplan -->					
-						<h:form id="outerForm" prependId="false">
+					
+	    				<!-- Sitzplan -->	
+	    				<h:form id="outerForm" prependId="false" rendered="#{navigationController.step2Active}">
+	    										
 							<table class="noborder">
 								<tr>
 									<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
@@ -98,51 +135,263 @@ select {
 									<tr class="noborder">
 										<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
 											<td class="noborder">
-												<h:commandButton id="seatButton" 
-																 action="#{i.reserve()}" 
-																 styleClass="seat #{kinoSaalManager.style(i)}" 
-																 disabled="#{i.isOccupied()}">
-													<f:ajax render=":outerForm :ticketForm :commandForm" />				 
-												</h:commandButton> 
-												<p:tooltip for="seatButton" value="#{msg.mvishw_seats_row} #{i.seatRow + 1}, #{msg.mvishw_seats_seat} #{i.seatColumn + 1}"/>
+												<b:commandButton id="seatButton" 
+														  action="#{i.reserve()}" 
+														  tooltip="#{msg.mvishw_seats_row} #{i.seatRow + 1}, #{msg.mvishw_seats_seat} #{i.seatColumn + 1}"
+														  styleClass="seat #{kinoSaalManager.style(i)}" 
+														  disabled="#{i.isOccupied()}">
+													<f:ajax render=":outerForm :ticketForm :commandForm"/>				 
+												</b:commandButton> 
 											</td>
 										</ui:repeat>
 									</tr>
 								</ui:repeat>
 							</table>
-						</h:form>	
+						</h:form>
+						
+						<!-- Bezahlung -->
+						<h:form id="paymentForm" class="form-horizontal" rendered="#{navigationController.step3Active}">
+							<p class="font-h3">#{msg.payment_lbl_info_1}</p>
+	   
+	   						<p>#{msg.payment_lbl_info_2}</p>
+	   						<p><strong>#{msg.payment_lbl_info_3}</strong></p>
+	   		
+							<div class="form-group">
+								<h:outputLabel class="col-sm-4 control-label" for="email"
+		                               		   value="#{msg.payment_lbl_email}:*"/>         				   
+						    	<div class="col-sm-8">
+						    		<div class="input-group">
+							    		<p:inputText id="email" class="form-control input-sm"
+							    					 value="#{kinoSaalManager.email}"
+			                               	   	     validatorMessage="#{msg.payment_val_email}"
+			                                   	     required="true" requiredMessage="#{msg.payment_req_email}"
+			                                   	     placeholder="#{msg.payment_plh_email}" autofocus="true">
+			                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+			                           	</p:inputText>
+			                     		<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						    		</div>				      
+						    		<b:message for="email"/>	
+						    	</div>
+						  	</div>
+					  	
+					  		<div class="form-group">
+					  			<div class="col-sm-8 col-sm-offset-4">
+						            <h:selectOneRadio id="selectOneRadio1" value="#{kinoSaalManager.payWithCreditCard}"
+						            				  styleClass="payment_choice">
+					                    <f:selectItem itemValue="#{true}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-credit-card&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_cc}"/>
+					                    <f:selectItem itemValue="#{false}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-paypal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_paypal}"/>
+					                    <f:ajax event="click" render="@form" />
+					                </h:selectOneRadio>  
+				                </div>       
+						  	</div>
+						  	
+	              			<h:panelGroup layout="block" rendered="#{kinoSaalManager.payWithCreditCard}">
+	 
+			 		            <div class="panel panel-default credit-card-box">
+					                
+					                <div class="panel-heading" >
+					                    <div class="row display-tr">
+					                        <h3 class="panel-title display-td" >#{msg.payment_lbl_zahlungsdetails}</h3>
+					                        <div class="display-td">                     
+					                            <img class="img-responsive pull-right" style="width: 80%"
+					                                 src="/resources/images/kino/creditcards.png"/>
+					                        </div>
+					                    </div>                    
+					                </div>
+					                
+					                <div class="panel-body">											
+								  	               
+										<div class="form-group">
+									  		<h:outputLabel class="col-sm-4 control-label" for="cc" value="#{msg.payment_lbl_cc_number}:*"/>
+											<div class="col-sm-8">
+												<div class="input-group">
+												    <p:inputMask id="cc" class="form-control input-sm cc"
+												    			 value="#{kinoSaalManager.creditCardNumber}"
+												    			 required="#{kinoSaalManager.payWithCreditCard}"
+												    			 requiredMessage="#{msg.payment_req_cc_number}"
+												    			 mask="9999-9999-9999-9999"
+														         placeholder="#{msg.payment_plh_cc_number}">
+													<f:validator validatorId="ch.ffhs.kino.validators.CreditCardValidator"/>	         
+													</p:inputMask>
+													<span class="input-group-addon"><i class="fa fa-credit-card"></i></span>	    
+												</div>
+												<b:message for="cc"/>
+										    </div>
+									  	</div>					                
+					                
+									  	<div class="form-group">
+											<h:outputLabel class="col-sm-4 control-label" for="cc_owner"
+				                                		   value="#{msg.payment_lbl_cc_owner}:*"/>         				   
+									    	<div class="col-sm-8">
+									    		<div class="input-group">
+										    		<p:inputText id="cc_owner" class="form-control input-sm" 
+										    					 value="#{kinoSaalManager.creditCardHolder}"
+										    					 required="#{kinoSaalManager.payWithCreditCard}"
+										    					 requiredMessage="#{msg.payment_req_cc_owner}"
+						                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
+						                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
+									    		</div>	
+									    		<b:message for="cc_owner"/>		      
+									    	</div>
+									  	</div>
+									  	
+										<div class="form-group">
+									  		<h:outputLabel class="col-sm-4 control-label" for="cc_exipry"
+						                               	   value="#{msg.payment_lbl_cc_expiry}:*"/>
+											<div class="col-sm-8">
+												<div class="input-group">
+													<p:inputMask id="cc_exipry" class="form-control input-sm cc_exipry"
+														   		 value="#{kinoSaalManager.creditCardExipry}"
+														   		 required="#{kinoSaalManager.payWithCreditCard}"
+														   		 requiredMessage="#{msg.payment_req_cc_expiry}"
+														   		 mask="99/99"
+												   		   		 placeholder="#{msg.payment_plh_cc_expiry}">
+												    </p:inputMask>
+												   	<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+									    		</div>
+									    		<b:message for="cc_exipry"/>	      
+										    </div>
+									  	</div>	
+									  	
+									  	<div class="form-group">
+											<h:outputLabel class="col-sm-4 control-label" for="cc_cvv"
+				                                		   value="#{msg.payment_lbl_cc_cvv}:*"/>         				   
+									    	<div class="col-sm-8">
+									    		<div class="input-group">
+										    		<p:inputMask id="cc_cvv" class="form-control input-sm cc_cvv"
+										    					 value="#{kinoSaalManager.creditCardCvv}"
+										    					 required="#{kinoSaalManager.payWithCreditCard}"
+										    					 requiredMessage="#{msg.payment_req_cc_cvv}"
+										    					 mask="999"
+						                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
+						                     		<span class="input-group-addon">000</span>
+									    		</div>	
+									    		<b:message for="cc_cvv"/>				      
+									    	</div>
+									  	</div>								  								  						  				  						                
+					                </div>
+					            </div>
+	 
+	              			</h:panelGroup>
+	              			
+	                        <div class="row">
+	                            <div class="col-xs-12">
+	                                <h:commandLink class="btn btn-primary btn-xs" 
+											   	   action="#{kinoSaalManager.confirm()}">
+						 				<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.payment_btn_pay}"/>
+						 			</h:commandLink>		
+	                            </div>
+	                        </div>              			
+						</h:form>						
+							
 	    			</div>
 	    			
 	    			<!-- Tickets -->
 				    <div class="col-sm-6">
-						
-						<div>
-							<div class="col-sm-5 text-left">
-								<h:form id="xxxxForm" prependId="false">
-									<span style="color: indianred;">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="txt_count" value="#{kinoSaalManager.timeoutSecond}" /> <i class="fa fa-clock-o fa-spin" aria-hidden="true"></i> <p:poll interval="1" listener="#{kinoSaalManager.remainingSeconds}" update="txt_count" /></span>
-								</h:form>
-							</div>
-							<div class="col-sm-7 text-right">
-								<h:form id="commandForm" class="btmspace-10">
-									<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-danger btn-xs' : 'btn btn-danger btn-xs disabled'}"
-										           action="#{kinoSaalManager.resetReservedSeats()}">
-										<span class="glyphicon glyphicon-trash"></span>
-										<h:outputText value="#{msg.mvishw_ticket_btn_entfernen}" />
-										<f:ajax render=":outerForm :ticketForm :commandForm" />
-									</h:commandLink>
-
-									<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-primary btn-xs leftspace-10' : 'btn btn-primary btn-xs leftspace-10 disabled'}"
-												   action="#{navigationController.goToStep3()}">
-							 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
-							 		</h:commandLink>
-						 		</h:form>
-							</div>
+							<h:form id="commandForm">
+								<div class="col-sm-5 text-left">
+									<h:panelGroup style="color:indianred;" rendered="#{kinoSaalManager.hasTickets}">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="currentRemainingTime" value="#{kinoSaalManager.remainTime}" /> <i class="fa fa-clock-o fa-spin"></i> 
+										<p:poll id="remainingTimePoller" interval="1" autoStart="false" widgetVar="remainingTimePoller" listener="#{kinoSaalManager.remainingTicker}" oncomplete="handleComplete(xhr, status, args)" update="currentRemainingTime"/>
+									</h:panelGroup> 
+								</div>
+								<div class="col-sm-7 text-right">									
+										<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-danger btn-xs' : 'btn btn-danger btn-xs disabled'}"
+											           action="#{kinoSaalManager.resetReservedSeats()}">
+											<span class="glyphicon glyphicon-trash"></span>
+											<h:outputText value="#{msg.mvishw_ticket_btn_entfernen}" />
+											<f:ajax render=":outerForm :ticketForm :commandForm" />
+										</h:commandLink>
+	
+										<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-primary btn-xs leftspace-10' : 'btn btn-primary btn-xs leftspace-10 disabled'}"
+													   action="#{navigationController.goToStep3()}">
+								 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
+								 		</h:commandLink>							 		
+								</div>
+							</h:form>
 							
-					      	<div class="col-sm-12">
-				 				<ui:include src="ticketTable.xhtml"></ui:include>
-				 			</div>
-					 		
-						</div>
+					      	<div class="col-sm-12 topspace-10">
+				 				<!-- <ui:include src="ticketTable.xhtml"></ui:include> -->
+								<h:form id="ticketForm">
+							 		<div class="panel panel-info">
+								 		<div class="panel-heading" style="height:30px;padding:5px">
+						
+											<div class="col-sm-12 text-left">
+												<h:outputText value="#{msg.mvishw_ticket_lbl_KeineAusgewaehlt}" 
+															  rendered="#{!kinoSaalManager.hasTickets}" />
+											</div>	
+												  
+											<div class="col-sm-8 text-left">
+												<h:outputText value="#{msg.tickets_adult} #{kinoSaalManager.count('ADULT')}, " rendered="#{kinoSaalManager.count('ADULT') gt 0}" />
+												<h:outputText value="#{msg.tickets_senior} #{kinoSaalManager.count('SENIOR')}, " rendered="#{kinoSaalManager.count('SENIOR') gt 0}" />
+												<h:outputText value="#{msg.tickets_child} #{kinoSaalManager.count('KIND')}, " rendered="#{kinoSaalManager.count('KIND') gt 0}" />
+												<h:outputText value="#{msg.tickets_student} #{kinoSaalManager.count('STUDENT')}, " rendered="#{kinoSaalManager.count('STUDENT') gt 0}" />					
+											</div>
+											
+											<div class="col-sm-4 text-right bold">
+												<h:outputText value="#{msg.tickets_total} " 
+															  rendered="#{kinoSaalManager.hasTickets}" /> 
+												<h:outputText value="#{kinoSaalManager.totalprice()}" 
+															  rendered="#{kinoSaalManager.hasTickets}">
+													<f:convertNumber groupingUsed="true" pattern="#0.00 CHF" locale="de-CH"/>
+												</h:outputText>					
+											</div>
+											  				
+								    	</div>
+							 		
+								  		<div class="panel-body inspace-10">
+										  	<table id="ticketTable" class="table table-hover table-striped results">
+												<thead>
+													<tr>
+														<th>#{msg.tickets_seat}</th>
+														<th>#{msg.tickets_type}</th>
+														<th>#{msg.tickets_price}</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
+														<tr>
+															<td>
+																<h:outputText value="#{msg.tickets_row} #{seat.seatRow + 1}, #{msg.tickets_seat} #{seat.seatColumn + 1}" />
+															</td>
+															<td>
+																<h:selectOneMenu value="#{seat.ticketType}" rendered="#{!kinoSaalManager.hasPayed}">
+																	<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
+																	<f:ajax execute="@this" render=":outerForm :ticketForm" />
+																</h:selectOneMenu>		
+																
+																<h:outputText value="#{seat.ticketType.title}" rendered="#{kinoSaalManager.hasPayed}"/>				
+															</td>
+															
+															<!-- <td>
+																<h:selectOneMenu value="#{seat.ticketType}">
+																	<f:selectItems value="#{kinoSaalManager.getTicketTypes()}"/>
+																	<f:ajax execute="@this" render=":outerForm :ticketForm" />
+																</h:selectOneMenu>
+															</td> -->
+									
+															<td>
+																<h:outputText value="#{seat.ticketType.cost}">
+																	<f:convertNumber groupingUsed="true" pattern="#0.00 CHF" locale="de-CH"/>
+																</h:outputText>
+															</td>
+															<td>
+																<h:commandLink action="#{seat.reserve()}" 
+									                			   			   class="btn btn-default btn-xs"
+									                			   			   rendered="#{!kinoSaalManager.hasPayed}">
+									                				<span class="glyphicon glyphicon-trash"></span>
+									                    			<f:ajax render=":outerForm :ticketForm :commandForm" />
+									                			</h:commandLink>
+															</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+								  		</div>
+								  	</div>
+							  							  
+								</h:form>
+				 			</div>					 		
 					</div>
 					
 	    		</div>

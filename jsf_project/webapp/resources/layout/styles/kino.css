@@ -3,17 +3,14 @@
 html, body{
 	margin:0; 
 	padding:0; 
-	font-size:12px; 
-	font-family: Georgia, Arial, Verdana;
+	font-size:12px !important;
+	font-family: Arial, Verdana !important;
+	/* font-family: Georgia, Arial, Verdana !important; */
 }
 
 body{
-	color:#888888; 
-	background-color:#EEEEEE;
-}
-
-.header{
-	height:60px;
+	color:#888888 !important; 
+	background-color:#EEEEEE !important; 
 }
 
 .font-10{
@@ -23,9 +20,9 @@ body{
 	font-size:12px;
 }
 
-.font-h1, .font-h2, .font-h3, .font-h4{
-    font-family: Georgia, "Times New Roman", Times, serif;
-}
+/* .font-h1, .font-h2, .font-h3, .font-h4{
+    font-family: Georgia, Arial, Verdana;
+} */
 
 .font-h1{
 	font-size: 2em;
@@ -58,6 +55,8 @@ h6 { font-size: .75em; } */
 .clear, .clear::after, .group, .group::after{clear:both;}
 
 .header_row {
+	margin: 0 auto;
+	height:60px;
  	color:#888888; 
 	background-color:#EEEEEE;
 }
@@ -235,7 +234,7 @@ tr:nth-child(even) {
   z-index: 3;
 }
 
-/** The Spacing **/
+/** Spacing **/
 .btn-breadcrumb .btn {padding:6px 12px 6px 24px;}
 .btn-breadcrumb .btn:first-child {padding:6px 6px 6px 10px;}
 .btn-breadcrumb .btn:last-child {padding:6px 18px 6px 24px;}
@@ -257,6 +256,11 @@ tr:nth-child(even) {
 .btn-breadcrumb .btn.btn-success:hover:after {border-left: 10px solid #449d44;}
 .btn-breadcrumb .btn.btn-success:hover:before, .btn-breadcrumb .btn.btn-success:before {border-left: 10px solid #398439;}
 .breadcrumb-success{ border: solid 1px #398439; }
+
+/***** Payment *****/
+.payment_choice table{margin-bottom:5px;}
+.payment_choice table, th, td{border-style: hidden !important;}
+.payment_choice td{width:50%;}
 
 /***** Footer *****/
 #footer{padding:20px 0;}

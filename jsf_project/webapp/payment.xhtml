@@ -3,18 +3,12 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:define name="content">
-<script>
-	//<![CDATA[
-	$(document).ready(function() {
-		$(".cc").inputmask("9999-9999-9999-9999");
-		$(".cc_exipry").inputmask("99/99");
-		$(".cc_cvv").inputmask("999");
-	});
-	//]]>
-</script>
 
 	<h:panelGroup id="commandForm"/>
 	<h:panelGroup id="outerForm"/>
@@ -35,29 +29,37 @@
 		   		<!-- Bezahlung -->		  															   
 		        <div class="col-md-5">
 	  			  		
-					<h:form class="form-horizontal">
+					<h:form id="payment" class="form-horizontal">
 
 						<div class="form-group">
 							<h:outputLabel class="col-sm-4 control-label" for="email"
-	                               		   value="#{msg.payment_lbl_email}:"/>         				   
+	                               		   value="#{msg.payment_lbl_email}:*"/>         				   
 					    	<div class="col-sm-8">
 					    		<div class="input-group">
 						    		<h:inputText id="email" class="form-control input-sm"
-		                               	   placeholder="#{msg.payment_plh_email}"
-		                               	   validatorMessage="#{msg.payment_val_email}"
-		                                   required="true" autofocus="true"/>
+						    					 value="#{kinoSaalManager.email}"
+		                               	   	     validatorMessage="#{msg.payment_val_email}"
+		                                   	     required="true" requiredMessage="#{msg.payment_req_email}"
+		                                   	     pt:placeholder="#{msg.payment_plh_email}" autofocus="true">
+		                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		                           	</h:inputText>
 		                     		<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 					    		</div>				      
-					    		<h:message for="email" />
+					    		<b:message for="email"/>	
 					    	</div>
 					  	</div>
 				  	
-			            <h:selectOneRadio id="selectOneRadio1" value="#{kinoSaalManager.payWithCreditCard}">
-		                    <f:selectItem itemValue="#{true}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-credit-card&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_cc}"/>
-		                    <f:selectItem itemValue="#{false}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-paypal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_paypal}"/>
-		                    <f:ajax event="click" render="@form" />
-		                </h:selectOneRadio>         
-              
+				  		<div class="form-group">
+				  			<div class="col-sm-8 col-sm-offset-4">
+					            <h:selectOneRadio id="selectOneRadio1" value="#{kinoSaalManager.payWithCreditCard}"
+					            				  styleClass="payment_choice">
+				                    <f:selectItem itemValue="#{true}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-credit-card&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_cc}"/>
+				                    <f:selectItem itemValue="#{false}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-paypal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_paypal}"/>
+				                    <f:ajax event="click" render="@form" />
+				                </h:selectOneRadio>  
+			                </div>       
+					  	</div>
+					  	
               			<h:panelGroup layout="block" rendered="#{kinoSaalManager.payWithCreditCard}">
  
 		 		            <div class="panel panel-default credit-card-box">
@@ -75,53 +77,68 @@
 				                <div class="panel-body">											
 							  	               
 									<div class="form-group">
-								  		<h:outputLabel class="col-sm-4 control-label" for="cc" value="#{msg.payment_lbl_cc_number}:"/>
+								  		<h:outputLabel class="col-sm-4 control-label" for="cc" value="#{msg.payment_lbl_cc_number}:*"/>
 										<div class="col-sm-8">
 											<div class="input-group">
-											    <h:inputText id="cc" class="form-control input-sm cc" required="true"
+											    <h:inputText id="cc" class="form-control input-sm cc"
 											    			 value="#{kinoSaalManager.creditCardNumber}"
-													         placeholder="#{msg.payment_plh_cc_number}"/>
+											    			 required="#{kinoSaalManager.payWithCreditCard}"
+											    			 requiredMessage="#{msg.payment_req_cc_number}"
+													         pt:placeholder="#{msg.payment_plh_cc_number}">
+												<f:validator validatorId="ch.ffhs.kino.validators.CreditCardValidator"/>	         
+												</h:inputText>
 												<span class="input-group-addon"><i class="fa fa-credit-card"></i></span>	    
 											</div>
+											<b:message for="cc"/>
 									    </div>
 								  	</div>					                
 				                
 								  	<div class="form-group">
 										<h:outputLabel class="col-sm-4 control-label" for="cc_owner"
-			                                		   value="#{msg.payment_lbl_cc_owner}:"/>         				   
+			                                		   value="#{msg.payment_lbl_cc_owner}:*"/>         				   
 								    	<div class="col-sm-8">
 								    		<div class="input-group">
-									    		<h:inputText id="cc_owner" class="form-control input-sm" required="true"
+									    		<h:inputText id="cc_owner" class="form-control input-sm" 
 									    					 value="#{kinoSaalManager.creditCardHolder}"
-					                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
+									    					 required="#{kinoSaalManager.payWithCreditCard}"
+									    					 requiredMessage="#{msg.payment_req_cc_owner}"
+					                               	   		 pt:placeholder="#{msg.payment_plh_cc_owner}"/>
 					                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
-								    		</div>						      
+								    		</div>	
+								    		<b:message for="cc_owner"/>		      
 								    	</div>
 								  	</div>
 								  	
 									<div class="form-group">
 								  		<h:outputLabel class="col-sm-4 control-label" for="cc_exipry"
-					                               	   value="#{msg.payment_lbl_cc_expiry}:"/>
+					                               	   value="#{msg.payment_lbl_cc_expiry}:*"/>
 										<div class="col-sm-8">
 											<div class="input-group">
 												<h:inputText id="cc_exipry" class="form-control input-sm cc_exipry"
 													   		 value="#{kinoSaalManager.creditCardExipry}"
-											   		   		 placeholder="#{msg.payment_plh_cc_expiry}"/>
+													   		 required="#{kinoSaalManager.payWithCreditCard}"
+													   		 requiredMessage="#{msg.payment_req_cc_expiry}"
+											   		   		 pt:placeholder="#{msg.payment_plh_cc_expiry}">
+											    </h:inputText>
 											   	<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
-								    		</div>		      
+								    		</div>
+								    		<b:message for="cc_exipry"/>	      
 									    </div>
 								  	</div>	
 								  	
 								  	<div class="form-group">
 										<h:outputLabel class="col-sm-4 control-label" for="cc_cvv"
-			                                		   value="#{msg.payment_lbl_cc_cvv}:"/>         				   
+			                                		   value="#{msg.payment_lbl_cc_cvv}:*"/>         				   
 								    	<div class="col-sm-8">
 								    		<div class="input-group">
-									    		<h:inputText id="cc_cvv" class="form-control input-sm cc_cvv" required="true"
+									    		<h:inputText id="cc_cvv" class="form-control input-sm cc_cvv"
 									    					 value="#{kinoSaalManager.creditCardCvv}"
-					                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
+									    					 required="#{kinoSaalManager.payWithCreditCard}"
+									    					 requiredMessage="#{msg.payment_req_cc_cvv}"
+					                               	   		 pt:placeholder="#{msg.payment_plh_cc_owner}"/>
 					                     		<span class="input-group-addon">000</span>
-								    		</div>						      
+								    		</div>	
+								    		<b:message for="cc_cvv"/>				      
 								    	</div>
 								  	</div>								  								  						  				  						                
 				                </div>

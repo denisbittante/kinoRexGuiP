@@ -1,13 +1,14 @@
 package ch.ffhs.kino.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
 
 import ch.ffhs.kino.saal.Seat;
 import ch.ffhs.kino.saal.Seat.SeatType;
@@ -17,25 +18,27 @@ import ch.ffhs.kino.saal.Seat.TicketType;
 @SessionScoped
 public class BookingController {
 
+	public static final int SESSION_TIME = 1 * 60; // 10 Minuten
 	ArrayList<Seat> allSeats = new ArrayList<Seat>();
 	int columns_count = 16;
 	int seats = 176;
-
+	
+	private int timeoutSecond;
+	private String remainTime;
 	private boolean hasTickets = false;
 	private boolean payWithCreditCard = true;
+	private boolean hasPayed = false;
+	private String email;
 	private String creditCardNumber;
 	private String creditCardHolder;
 	private String creditCardExipry;
 	private String creditCardCvv;
-	private boolean hasPayed = false;
-
-	Date timeout;
-	private Integer timeoutSecond = 180;
+	
+	boolean timerRunning = false;
 
 	@PostConstruct
 	public void init() {
 		setHasPayed(false);
-		
 		for (int i = 0; i < seats; i++) {
 			Seat e = new Seat(i / columns_count, i % columns_count);
 			allSeats.add(e);
@@ -60,16 +63,31 @@ public class BookingController {
 		allSeats.get(98).setHidden(true);
 		allSeats.get(101).setHidden(true);
 		allSeats.get(157).setHidden(true);
+		
+		setTimeoutSecond(SESSION_TIME);
 	}
 
 	public TicketType[] getTicketTypes() {
         return TicketType.values();
     }
 	
-	public void remainingSeconds() {
-		timeoutSecond--;
+	public void remainingTicker() {
+		this.timeoutSecond--;
+		System.out.println("timeoutSecond: " + this.timeoutSecond);		
+		if(this.timeoutSecond <= 0){
+			setTimeoutSecond(SESSION_TIME);
+			if(hasTickets){
+				resetReservedSeats();
+				
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				NavigationController navigationBean = (NavigationController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "navigationController");
+				navigationBean.setStatusStep2();	
+				
+				RequestContext.getCurrentInstance().addCallbackParam("finish", "timeout");
+			}
+		}
 	}
-
+	
 	public List<Integer> returnRows() {
 		ArrayList<Integer> rows = new ArrayList<Integer>();
 		for (int i = 0; i < seats / columns_count; i++)
@@ -97,6 +115,19 @@ public class BookingController {
 			if (seat.isReserved())
 				mySeats.add(seat);
 		
+		RequestContext context = RequestContext.getCurrentInstance();
+		if(mySeats.size() == 0){
+			setTimeoutSecond(SESSION_TIME);
+			if(timerRunning){
+				timerRunning = false;
+				context.execute("PF('remainingTimePoller').stop();");
+			}
+		}else{
+			context.execute("PF('remainingTimePoller').stop();");
+			context.execute("PF('remainingTimePoller').start();");
+			timerRunning = true;				
+		}
+		
 		if(mySeats.size() > 0)
 			setHasTickets(true);
 		else
@@ -111,7 +142,7 @@ public class BookingController {
 		return "true";
 	}
 
-	public void resetReservedSeats() {
+	public void resetReservedSeats() {     
 		for (Seat seat : allSeats)
 			seat.setReserved(false);
 	}
@@ -138,9 +169,10 @@ public class BookingController {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "programm?faces-redirect=true";
 	}
-
+	
 	public String confirm(){
 		setHasPayed(true);
+		RequestContext.getCurrentInstance().execute("PF('remainingTimePoller').stop();");
 		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		NavigationController navigationBean = (NavigationController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "navigationController");
@@ -148,11 +180,11 @@ public class BookingController {
 	}
 	
 	// #### getters and setters ####
-	public Integer getTimeoutSecond() {
+	public int getTimeoutSecond() {
 		return timeoutSecond;
 	}
 
-	public void setTimeoutSecond(Integer timeoutSecond) {
+	public void setTimeoutSecond(int timeoutSecond) {
 		this.timeoutSecond = timeoutSecond;
 	}
 
@@ -170,6 +202,14 @@ public class BookingController {
 
 	public void setPayWithCreditCard(boolean payWithCreditCard) {
 		this.payWithCreditCard = payWithCreditCard;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getCreditCardNumber() {
@@ -210,5 +250,14 @@ public class BookingController {
 
 	public void setHasPayed(boolean hasPayed) {
 		this.hasPayed = hasPayed;
-	}		
+	}
+
+	public String getRemainTime() {
+		return String.format("%02d min, %02d sec", timeoutSecond/60, timeoutSecond%60);
+		//return String.format("%02d:%02d", timeoutSecond/60, timeoutSecond%60);
+	}
+	
+	public void setRemainTime(String remainTime) {
+		this.remainTime = remainTime;
+	}	
 }

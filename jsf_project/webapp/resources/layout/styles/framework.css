@@ -110,6 +110,10 @@ address, article, aside, figcaption, figure, footer, header, main, nav, section{
 .btmspace-50{margin-bottom:50px;}
 .btmspace-80{margin-bottom:80px;}
 
+.topspace-10{margin-top:10px;}
+.topspace-15{margin-top:15px;}
+.topspace-30{margin-top:30px;}
+
 .inspace-5{padding:5px;}
 .inspace-10{padding:10px;}
 .inspace-15{padding:15px;}
