@@ -3,7 +3,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
 	<f:facet name="first">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,10 +17,15 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="/resources/layout/styles/layoutNew.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="/resources/layout/styles/kino.css" type="text/css" media="all" />
-		
+				
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>		
+		
 	</f:facet>
 
 	<title>#{msg.header_title}</title>
@@ -32,9 +38,45 @@
 <script>
 	//<![CDATA[
 	$(document).ready(function() {
-		$(".seat").removeClass("btn");
-		$(".seat").removeClass("btn-default");
+	    $('[data-toggle="tooltip"]').tooltip({
+	        placement : 'top'
+	    });
+	    
+	    $('.clearer').hide($(this).prev('input').val());
+
+	    $('.hasclear').keyup(function () {
+	      $(this).next('span').toggle(Boolean($(this).val()));
+	    });
+
+	    $('.clearer').click(function () {
+	      $(this).prev('input').val('').focus();
+	      $(this).hide();
+	    });
+	    
+	   
+	    $(function(){
+	    	 
+	        $(document).on( 'scroll', function(){
+	     
+	        	if ($(window).scrollTop() > 100) {
+	    			$('.scroll-top-wrapper').addClass('show');
+	    		} else {
+	    			$('.scroll-top-wrapper').removeClass('show');
+	    		}
+	    	});
+	     
+	    	$('.scroll-top-wrapper').on('click', scrollToTop);
+	    });
+	     
+	    function scrollToTop() {
+	    	verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+	    	element = $('body');
+	    	offset = element.offset();
+	    	offsetTop = offset.top;
+	    	$('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+	    }
 	});
+	
 	function handleComplete(xhr, status, args) {
 		var finish = args.finish;
 		if(finish == "timeout"){
@@ -42,15 +84,45 @@
 			$("#ticketForm").load(window.location.href + " #ticketForm" );
 			$("#commandForm").load(window.location.href + " #commandForm" );
 			$("#paymentForm").load(window.location.href + " #paymentForm" );
-			//PF('dialogTimeout').show();
 			$('#amodal').modal();
 		}
 	};	
 	//]]>
 </script>
+<style>
+.fixed_header {
+    width: calc(100vw - 30px);
+    background-color: #B2D490;
+    z-index: 1;
+    position: fixed;
+    top: 0px;
+}
+.fixed_bread{
+	top: 60px;
+}
+
+.fixedWrapper{
+    width:100%;
+    position:fixed;
+    top:0px;
+    margin:0px auto;
+    z-index: 100;
+}
+
+.fixed_footer{
+}
+
+
+.content{
+	top: 100px;
+}
+
+</style>
 	<body>
 	<div class="container-fluid">
 	
+<!-- 		<div class="fixedWrapper"> -->
+		
 		<!-- Infos -->
 		<div class="row header_row vertical-box">
 			<div class="box-tr">			
@@ -88,70 +160,72 @@
 		</div>
 		
 		<!-- Process Steps -->
-		<div>
+		<!-- <div> -->
 			<h:form>
 		        <div class="btn-group btn-breadcrumb breadcrumb-default">
 		            
 		            <h:link class="btn btn-primary" outcome="programm">
-		      			<i class="glyphicon glyphicon-home"></i>
+		      			<i class="glyphicon glyphicon-home"></i><h:outputText styleClass="font-h3" value=" "/>
 		      		</h:link>
 
 					<!-- 1. Vorstellung wählen -->
 					<c:if test="${navigationController.step1Active}">
 						<div class="btn btn-success">
-							<u><h:outputText value="#{msg.wiz_1}"/></u>
+							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_1}"/></u>
 						</div>
 					</c:if>						
 		      		<h:commandLink styleClass="#{navigationController.step1Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
 		      					   disabled="#{navigationController.step1Disabled}"
 						    	   action="#{navigationController.goToStep1()}"
 						    	   rendered="#{!navigationController.step1Active}">
-						    	   <h:outputText value="#{msg.wiz_1}"/>
+						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_1}"/>
 		            </h:commandLink>	
 		            
 		            <!-- 2. Sitzplatz wählen -->
 		            <c:if test="${navigationController.step2Active}">
 		            	<div class="btn btn-success">
-							<u><h:outputText value="#{msg.wiz_2}"/></u>
+							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_2}"/></u>
 						</div>
 		            </c:if>
 		            <h:commandLink styleClass="#{navigationController.step2Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
 		      					   disabled="#{navigationController.step2Disabled}"
 						    	   action="#{navigationController.goToStep2()}"
 						    	   rendered="#{!navigationController.step2Active}">
-						    	   <h:outputText value="#{msg.wiz_2}"/>
+						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_2}"/>
 		            </h:commandLink>
 		            
 		            <!-- 3. Bezahlen -->
 		            <c:if test="${navigationController.step3Active}">
 		            	<div class="btn btn-success">
-							<u><h:outputText value="#{msg.wiz_3}"/></u>
+							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_3}"/></u>
 						</div>
 		            </c:if>
 		            <h:commandLink styleClass="#{navigationController.step3Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
 		      					   disabled="#{navigationController.step3Disabled}"
 						    	   action="#{navigationController.goToStep3()}"
 						    	   rendered="#{!navigationController.step3Active}">
-						    	   <h:outputText value="#{msg.wiz_3}"/>
+						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_3}"/>
 		            </h:commandLink>
 		            
 		            <!-- 4. Bestellbestätigung -->
 		            <c:if test="${navigationController.step4Active}">
 		            	<div class="btn btn-success">
-							<u><h:outputText value="#{msg.wiz_4}"/></u>
+							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_4}"/></u>
 						</div>
 		            </c:if>
 		            <h:commandLink styleClass="#{navigationController.step4Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
 		      					   disabled="#{navigationController.step4Disabled}"
 						    	   action="#{navigationController.goToStep4()}"
 						    	   rendered="#{!navigationController.step4Active}">
-						    	   <h:outputText value="#{msg.wiz_4}"/>
+						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_4}"/>
 		            </h:commandLink>
 
 		      		<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
 		        </div>				
 			</h:form>			
-		</div>
+		<!-- </div>	 -->	
+		<!-- </div> -->
+
 		
 		<!-- Content -->
 		<div class="content_row inspace-10">
@@ -195,8 +269,12 @@
 				</div>
 			</footer>
 		</div>
-		
-		<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+
+		<div class="scroll-top-wrapper ">
+		  <span class="scroll-top-inner">
+		    <i class="fa fa-2x fa-arrow-circle-up"></i>
+		  </span>
+		</div>
 	</div>
 	
 	</body>

@@ -18,7 +18,7 @@ import ch.ffhs.kino.saal.Seat.TicketType;
 @SessionScoped
 public class BookingController {
 
-	public static final int SESSION_TIME = 1 * 60; // 10 Minuten
+	public static final int SESSION_TIME = 10 * 60; // 10 Minuten
 	ArrayList<Seat> allSeats = new ArrayList<Seat>();
 	int columns_count = 16;
 	int seats = 176;
@@ -123,6 +123,7 @@ public class BookingController {
 				context.execute("PF('remainingTimePoller').stop();");
 			}
 		}else{
+			System.out.println("remainingTimePoller start");
 			context.execute("PF('remainingTimePoller').stop();");
 			context.execute("PF('remainingTimePoller').start();");
 			timerRunning = true;				
@@ -254,6 +255,7 @@ public class BookingController {
 
 	public String getRemainTime() {
 		return String.format("%02d min, %02d sec", timeoutSecond/60, timeoutSecond%60);
+		//return String.format("%02d:%02d min", timeoutSecond/60, timeoutSecond%60);
 		//return String.format("%02d:%02d", timeoutSecond/60, timeoutSecond%60);
 	}
 	

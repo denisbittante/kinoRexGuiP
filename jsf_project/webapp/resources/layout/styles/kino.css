@@ -3,6 +3,7 @@
 html, body{
 	margin:0; 
 	padding:0; 
+	overflow-y: scroll !important;
 	font-size:12px !important;
 	font-family: Arial, Verdana !important;
 	/* font-family: Georgia, Arial, Verdana !important; */
@@ -54,6 +55,11 @@ h6 { font-size: .75em; } */
 .clear::before, .clear::after, .group::before, .group::after{display:table; content:"";}
 .clear, .clear::after, .group, .group::after{clear:both;}
 
+.clearer {
+	pointer-events: auto;
+	cursor: pointer; 
+}
+
 .header_row {
 	margin: 0 auto;
 	height:60px;
@@ -85,6 +91,44 @@ h6 { font-size: .75em; } */
     vertical-align: middle;
 }
 
+/***** Scroll to Top *****/
+.scroll-top-wrapper {
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+	overflow: hidden;
+	text-align: center;
+	z-index: 99999999;
+    background-color: #777777;
+	color: #eeeeee;
+	width: 50px;
+	height: 48px;
+	line-height: 48px;
+	right: 30px;
+	bottom: 30px;
+	padding-top: 2px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+.scroll-top-wrapper:hover {
+	background-color: #888888;
+}
+.scroll-top-wrapper.show {
+    visibility:visible;
+    cursor:pointer;
+	opacity: 1.0;
+}
+.scroll-top-wrapper i.fa {
+	line-height: inherit;
+}
+
 /***** CreditCard Box *****/
 .credit-card-box .panel-heading {
 	padding: 5px 15px;
@@ -110,38 +154,48 @@ h6 { font-size: .75em; } */
 }
 
 /***** Tables *****/
-table, th, td {
-	border:1px solid; 
-	border-collapse:collapse; 
-	vertical-align:top;
-}
-table, th {
-	table-layout:auto;
-}
-table {
-	width:100%; 
-	margin-bottom:15px;
-}
-th, td {
-	padding:5px 8px;
-}
-td {
-	border-width:0 1px;
-}
-table, th, td, input, textarea {
-	border-color:#D7D7D7;
-}
 th {
 	color:#e6e6e6; 
 	background-color:#4d4d4d;
 }
-tr {
-	color:inherit; 
-	background-color:#fbfbfb;
+
+/***** Tooltip *****/
+.tooltipx {
+    position: relative;
+    display: inline-block;
 }
-tr:nth-child(even) {
-	color:inherit; 
-	background-color:#f7f7f7;
+
+.tooltipx .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltipx .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltipx:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
 
 /***** Social Icons *****/
@@ -294,8 +348,6 @@ tr:nth-child(even) {
 #copyright{padding:30px 0; border-top:1px solid;}
 #copyright *{margin:0; padding:0;}
 #copyright{border-color:#DADADA;}
-
-#backtotop{color:#FFFFFF; background-color:#E9365A;}
 
 /***** Modal *****/
 .modal-backdrop.in {
