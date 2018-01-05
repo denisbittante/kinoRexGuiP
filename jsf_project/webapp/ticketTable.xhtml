@@ -73,7 +73,8 @@
 									</td>
 									<td>
 										<h:commandLink action="#{seat.reserve()}" 
-			                			   			   class="btn btn-default btn-xs">
+			                			   			   class="btn btn-default btn-xs"
+			                			   			   rendered="#{!kinoSaalManager.hasPayed}">
 			                				<span class="glyphicon glyphicon-trash"></span>
 			                    			<f:ajax render=":outerForm :ticketForm :commandForm" />
 			                			</h:commandLink>

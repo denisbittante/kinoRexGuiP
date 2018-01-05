@@ -4,6 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
 	<f:facet name="first">
@@ -13,19 +14,17 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicon.jpg" />
 		
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="/resources/layout/styles/layoutNew.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="/resources/layout/styles/kino.css" type="text/css" media="all" />
-				
+						
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>		
-		
+		<script src="https://www.w3schools.com/lib/w3.js"></script>
 	</f:facet>
 
 	<title>#{msg.header_title}</title>
@@ -37,27 +36,9 @@
 <f:view>
 <script>
 	//<![CDATA[
-	$(document).ready(function() {
-	    $('[data-toggle="tooltip"]').tooltip({
-	        placement : 'top'
-	    });
-	    
-	    $('.clearer').hide($(this).prev('input').val());
-
-	    $('.hasclear').keyup(function () {
-	      $(this).next('span').toggle(Boolean($(this).val()));
-	    });
-
-	    $('.clearer').click(function () {
-	      $(this).prev('input').val('').focus();
-	      $(this).hide();
-	    });
-	    
-	   
-	    $(function(){
-	    	 
-	        $(document).on( 'scroll', function(){
-	     
+	$(document).ready(function() {	  
+	    $(function(){    	 
+	        $(document).on( 'scroll', function(){	     
 	        	if ($(window).scrollTop() > 100) {
 	    			$('.scroll-top-wrapper').addClass('show');
 	    		} else {
@@ -127,11 +108,12 @@
 		<div class="row header_row vertical-box">
 			<div class="box-tr">			
 				<div class="box-td">
-					<a href="index.jsf"> <img src="/resources/images/logoRex.png"
-						style="width: 44px" alt="logo" /> #{msg.header_title}
-					</a>
+					<h:link outcome="index" styleClass="leftspace-20">
+						<img src="/resources/images/logoRex.png"
+							 style="width: 44px" alt="logo" /> #{msg.header_title}
+					</h:link>
 				</div>
-	
+
 				<div class="text-center box-td">
 					<i class="fa fa-phone"></i> +41 44 814 27 74
 					<i class="fa fa-envelope-o leftspace-20"></i> kinorex@gmx.ch								         
@@ -258,14 +240,25 @@
 				<div class="one_third">
 					<h6 class="title">#{msg.footer_title_newsletter}</h6>
 					<p class="btmspace-30">#{msg.footer_text_newsletter}</p>
-					<form method="post" action="#">
-						<fieldset>
-							<legend>Email:</legend>
-							<input class="btmspace-15" type="text" value="" placeholder="Name" />
-							<input class="btmspace-15" type="text" value="" placeholder="Email" />
-							<button type="submit" value="submit">#{msg.footer_btn_submit}</button>
-						</fieldset>
-					</form>
+					<h:form>
+						<div class="form-group">
+							<h:outputLabel class="control-label" for="newsletter" value="#{msg.payment_lbl_email}*:"/>
+						  	<div class="input-group">
+				    			<p:inputText id="newsletter" class="form-control input-sm"
+	                              	   	     validatorMessage="#{msg.payment_val_email}"
+	                                  	     required="true" requiredMessage="#{msg.payment_req_email}"
+	                                  	     placeholder="#{msg.payment_plh_email}">
+	                           	<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+	                          	</p:inputText>
+	                    		<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+			    			</div>				      
+			    			<b:message for="newsletter"/>
+						</div>
+						<h:commandLink class="btn btn-primary btn-xs col-sm-6 pull-right" >
+			 				<h:outputText value="#{msg.footer_btn_submit}"/>
+			 			</h:commandLink>
+						
+					</h:form>
 				</div>
 			</footer>
 		</div>

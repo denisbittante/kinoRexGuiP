@@ -11,6 +11,7 @@ import ch.ffhs.kino.model.Movie;
 import ch.ffhs.kino.model.MovieEvent;
 import ch.ffhs.kino.model.MovieEventDetail;
 import ch.ffhs.kino.model.MovieLanguage;
+import ch.ffhs.kino.model.ShowType;
 
 public class BackendService {
 
@@ -52,7 +53,8 @@ public class BackendService {
 		
 		MovieEventDetail detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.DEUTSCH);
-		detail.setHall("Saal 1");	
+		detail.setHall("Saal 1");
+		detail.setType(ShowType.NORMAL);
 		event.getDetails().add(detail);
 		
 		EventDateTime showTime = new EventDateTime();
@@ -73,6 +75,7 @@ public class BackendService {
 		MovieEventDetail detail2 = new MovieEventDetail();	
 		detail2.setLanguage(MovieLanguage.ENGLISH);
 		detail2.setHall("Saal 1");
+		detail.setType(ShowType.NORMAL);
 		event.getDetails().add(detail2);
 		
 		EventDateTime showTime2 = new EventDateTime();
@@ -88,6 +91,7 @@ public class BackendService {
 		detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.ENGLISH);
 		detail.setHall("Saal 2");	
+		detail.setType(ShowType.THREE_D);
 		event.getDetails().add(detail);
 		
 		showTime = new EventDateTime();
@@ -128,6 +132,7 @@ public class BackendService {
 		detail2 = new MovieEventDetail();	
 		detail2.setLanguage(MovieLanguage.ENGLISH);
 		detail2.setHall("Saal 2");
+		detail2.setType(ShowType.THREE_D);
 		event.getDetails().add(detail2);
 		
 		showTime2 = new EventDateTime();
@@ -172,7 +177,8 @@ public class BackendService {
 		
 		detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.DEUTSCH);
-		detail.setHall("Saal 3");	
+		detail.setHall("Saal 3");
+		detail.setType(ShowType.NORMAL);
 		event.getDetails().add(detail);
 		
 		showTime = new EventDateTime();
@@ -198,6 +204,7 @@ public class BackendService {
 		detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.DEUTSCH);
 		detail.setHall("Saal 4");	
+		detail.setType(ShowType.NORMAL);
 		event.getDetails().add(detail);
 		
 		showTime = new EventDateTime();
@@ -223,6 +230,7 @@ public class BackendService {
 		detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.DEUTSCH);
 		detail.setHall("Saal 5");	
+		detail.setType(ShowType.NORMAL);
 		event.getDetails().add(detail);
 		
 		showTime = new EventDateTime();
@@ -248,6 +256,7 @@ public class BackendService {
 		detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.DEUTSCH);
 		detail.setHall("Saal 6");	
+		detail.setType(ShowType.NORMAL);
 		event.getDetails().add(detail);
 		
 		showTime = new EventDateTime();

@@ -34,6 +34,7 @@ public class MovieEventController {
 	
 	private GenreType searchGenre;
 	private MovieLanguage searchLanguage;
+	private boolean search3D;
 	private String movieEventSummary;
 
 	@PostConstruct
@@ -74,6 +75,16 @@ public class MovieEventController {
 					continue;
 				}
 			}
+			
+			// Filter 3D
+			if (search3D) {
+				Optional<MovieEventDetail> foundEvent = movieEvent.getDetails().stream().filter(x -> x.getType().isThreeD()).findFirst();
+				if(!foundEvent.isPresent()){
+					filteredEvents.remove(i);
+					continue;
+				}
+			}
+			
 		}
 	}
 
@@ -187,5 +198,13 @@ public class MovieEventController {
 
 	public void setMovieEventSummary(String movieEventSummary) {
 		this.movieEventSummary = movieEventSummary;
+	}
+
+	public boolean isSearch3D() {
+		return search3D;
+	}
+
+	public void setSearch3D(boolean search3d) {
+		search3D = search3d;
 	}
 }

@@ -9,8 +9,27 @@
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 
 	<ui:define name="css">
+<script>
+	//<![CDATA[
+	$(document).ready(function() {
+	    $('[data-toggle="tooltip"]').tooltip({
+	        placement : 'top'
+	    });
+	    
+	    $('.clearer').hide($(this).prev('input').val());
 
-		<style type="text/css">
+	    $('.hasclear').keyup(function () {
+	      $(this).next('span').toggle(Boolean($(this).val()));
+	    });
+
+	    $('.clearer').click(function () {
+	      $(this).prev('input').val('').focus();
+	      $(this).hide();
+	    });		
+	});
+	//]]>
+</script>	
+<style type="text/css">
 .seat {
 	border-radius: 50%;
 	background-color: gray;
@@ -22,13 +41,6 @@
 	height: 19px;
 	width: 19px;
 	padding: 0px;
-}
-
-.seat:hover {background-color: gray;}
-
-.seat:disabled,
-.seat[disabled]{
-  opacity: unset;
 }
 
 .selected {
@@ -146,7 +158,7 @@ select {
 						</h:form>
 						
 						<!-- Bezahlung -->
-						<h:panelGroup layout="block" rendered="#{navigationController.step3Active}">
+						<h:panelGroup id="paymentPanel" layout="block" rendered="#{navigationController.step3Active and kinoSaalManager.hasTickets}">
 							<p class="font-h3">#{msg.payment_lbl_info_1}</p>	   
 	   						<p>#{msg.payment_lbl_info_3}</p>						
 
@@ -186,7 +198,10 @@ select {
 						                <h:panelGroup layout="block" rendered="#{!kinoSaalManager.payWithCreditCard}">
 					                		<h:commandLink class="btn btn-primary btn-xs col-md-4 pull-right" 
 												   	   	   action="#{kinoSaalManager.confirm()}">
-							 					<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.payment_btn_pay}"/>
+							 					<h:outputText value="#{kinoSaalManager.totalprice()}" 
+															  rendered="#{kinoSaalManager.hasTickets}">
+													<f:convertNumber groupingUsed="true" pattern="#0.00 CHF #{msg.payment_btn_pay}" locale="de-CH"/>
+												</h:outputText>
 							 				</h:commandLink>
 					                	</h:panelGroup>
 					                </div>	
@@ -284,7 +299,10 @@ select {
 							 						
 											<h:commandLink class="btn btn-primary btn-xs col-sm-3 pull-right" 
 													   	   action="#{kinoSaalManager.confirm()}">
-								 				<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.payment_btn_pay}"/>
+													<h:outputText value="#{kinoSaalManager.totalprice()}" 
+																  rendered="#{kinoSaalManager.hasTickets}">
+														<f:convertNumber groupingUsed="true" pattern="#0.00 CHF #{msg.payment_btn_pay}" locale="de-CH"/>
+													</h:outputText>
 								 			</h:commandLink>							            						 						
 							 										  								  						  				  						                
 						                </div>
@@ -308,7 +326,7 @@ select {
 									           action="#{kinoSaalManager.resetReservedSeats()}">
 									<span class="glyphicon glyphicon-trash"></span>
 									<h:outputText value="#{msg.mvishw_ticket_btn_entfernen}" />
-									<f:ajax render=":outerForm :ticketForm :commandForm" />
+									<f:ajax render=":outerForm :ticketForm :commandForm :paymentPanel" />
 								</h:commandLink>
 
 								<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-primary btn-xs leftspace-10' : 'btn btn-primary btn-xs leftspace-10 disabled'}"
@@ -346,14 +364,14 @@ select {
 										  				
 							    	</div>
 						 		
-							  		<div class="panel-body inspace-10">
-									  	<table id="ticketTable" class="table table-hover table-striped results">
+							  		<h:panelGroup layout="block" class="panel-body inspace-10" rendered="#{kinoSaalManager.hasTickets}">
+									  	<table id="ticketTable" class="table table-hover table-striped">
 											<thead>
 												<tr>
-													<th>#{msg.tickets_seat}</th>
-													<th>#{msg.tickets_type}</th>
-													<th>#{msg.tickets_price}</th>
-													<th></th>
+													<th class="w3-dark-grey">#{msg.tickets_seat}</th>
+													<th class="w3-dark-grey">#{msg.tickets_type}</th>
+													<th class="w3-dark-grey">#{msg.tickets_price}</th>
+													<th class="w3-dark-grey"></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -380,14 +398,14 @@ select {
 															<h:commandLink action="#{seat.reserve()}" 
 								                			   			   rendered="#{!kinoSaalManager.hasPayed}">
 								                				<span class="glyphicon glyphicon-trash" style="color:black;"></span>
-								                    			<f:ajax render=":outerForm :ticketForm :commandForm" />
+								                    			<f:ajax render=":outerForm :ticketForm :commandForm :paymentPanel" />
 								                			</h:commandLink>
 														</td>
 													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
-							  		</div>
+							  		</h:panelGroup>
 							  	</div>
 						  							  
 							</h:form>

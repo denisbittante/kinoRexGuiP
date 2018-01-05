@@ -20,10 +20,9 @@ body{
 .font-12{
 	font-size:12px;
 }
-
-/* .font-h1, .font-h2, .font-h3, .font-h4{
-    font-family: Georgia, Arial, Verdana;
-} */
+.font-14{
+	font-size:14px;
+}
 
 .font-h1{
 	font-size: 2em;
@@ -82,6 +81,7 @@ h6 { font-size: .75em; } */
 .vertical-box{
     display: table;
     width: 100%;
+    margin-bottom:10px;
 }
 .vertical-box .box-tr {
     display: table-row;
@@ -89,6 +89,7 @@ h6 { font-size: .75em; } */
 .vertical-box .box-td {
     display: table-cell;
     vertical-align: middle;
+    padding: 0px;
 }
 
 /***** Scroll to Top *****/
@@ -157,6 +158,15 @@ h6 { font-size: .75em; } */
 th {
 	color:#e6e6e6; 
 	background-color:#4d4d4d;
+}
+
+.results tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.results tr[visible='true']{
+  display:table-row;
 }
 
 /***** Tooltip *****/
@@ -331,23 +341,8 @@ th {
 #footer .contact li *{margin:0; padding:0; line-height:1.6;}
 #footer .contact li i{display:block; position:absolute; top:0; left:0; width:30px; font-size:16px; text-align:center;}
 
-#footer input, #footer button{border:1px solid;}
-#footer input{display:block; width:100%; padding:8px;}
-#footer button{padding:8px 18px 10px; text-transform:uppercase; font-weight:700; cursor:pointer;}
-
 #footer .title{color:#333333;}
 #footer .linklist li{border-color:#DADADA;}
-
-#footer input, #footer button{border-color:transparent;}
-#footer input{color:#333333; background-color:#DADADA;}
-#footer input:focus{border-color:#E9365A;}
-#footer button{color:#FFFFFF; background-color:#E9365A;}
-
-/* Copyright
---------------------------------------------------------------------------------------------------------------- */
-#copyright{padding:30px 0; border-top:1px solid;}
-#copyright *{margin:0; padding:0;}
-#copyright{border-color:#DADADA;}
 
 /***** Modal *****/
 .modal-backdrop.in {
