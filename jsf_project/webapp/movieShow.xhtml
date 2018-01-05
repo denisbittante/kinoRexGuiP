@@ -8,79 +8,6 @@
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:k="http://java.sun.com/jsf/composite/kinocomp">
 
-	<ui:define name="css">
-<script>
-	//<![CDATA[
-	$(document).ready(function() {
-	    $('[data-toggle="tooltip"]').tooltip({
-	        placement : 'top'
-	    });
-	    
-	    $('.clearer').hide($(this).prev('input').val());
-
-	    $('.hasclear').keyup(function () {
-	      $(this).next('span').toggle(Boolean($(this).val()));
-	    });
-
-	    $('.clearer').click(function () {
-	      $(this).prev('input').val('').focus();
-	      $(this).hide();
-	    });		
-	});
-	//]]>
-</script>	
-<style type="text/css">
-.seat {
-	border-radius: 50%;
-	background-color: gray;
-	color: white;
-	text-align: center;
-	text-decoration: none;
-	margin: auto;
-	border: solid;
-	height: 19px;
-	width: 19px;
-	padding: 0px;
-}
-
-.selected {
-	background-color: #E9365A;
-}
-
-.leinwand {
-	background-color: gray;
-	border-width: 20px;
-	border-color: white;
-	color: white;
-	text-align: center;
-	padding: 5px 5px;
-}
-
-.noborder {
-	border: none;
-	text-align: center;
-	padding: 0px;
-}
-
-table.noborder {
-	width:100%; 
-	margin-bottom:10px;
-	border-collapse:collapse;
-}
-
-.PREMIUM {background-color: #f1c40f;}
-.RESERVED {background-color: green;}
-.HIDDEN {visibility: hidden;}
-.SOLD { background-color: #E9365A; }
-.HANDYCAP { background-color: #3498db; }
-
-select {
-	color: #4f4f4f;
-}
-</style>
-
-	</ui:define>
-	
 	<ui:define name="content">
 
 		<b:modal id="amodal" title="#{msg.mvishw_timeout_title}" closable="true" styleClass="text-left">
@@ -163,22 +90,20 @@ select {
 	   						<p>#{msg.payment_lbl_info_3}</p>						
 
 							<h:form id="paymentForm" class="form-horizontal">
-									   		  
-								<div class="form-group has-feedback">
-									<h:outputLabel class="col-sm-4 control-label tooltipx" for="email"
-		                               		   	   value="#{msg.payment_lbl_email}*:">
+							   	
+								<div class="form-group">
+									<h:outputLabel class="col-sm-4 control-label tooltipx" for="email" value="#{msg.payment_lbl_email}*:">
 		                        				   <a href="#"><span class="glyphicon glyphicon-info-sign" style="color:dodgerblue;" data-toggle="tooltip" data-original-title="#{msg.payment_ttp_email}"></span></a> 		            				   
 						    		</h:outputLabel>
 							    	<div class="col-sm-8">
 							    		<div class="input-group">
-								    		<p:inputText id="email" class="form-control input-sm hasclear"
+								    		<p:inputText id="email" class="form-control input-sm clearable"
 								    					 value="#{kinoSaalManager.email}"
 				                               	   	     validatorMessage="#{msg.payment_val_email}"
 				                                   	     required="true" requiredMessage="#{msg.payment_req_email}"
 				                                   	     placeholder="#{msg.payment_plh_email}" autofocus="true">
 				                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 				                           	</p:inputText>
-				                           	<span class="clearer glyphicon glyphicon-remove form-control-feedback" style="margin-right: 45px;"/>
 				                     		<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 							    		</div>				      
 							    		<b:message for="email"/>	
@@ -222,20 +147,19 @@ select {
 						                </div>
 						                
 						                <div class="panel-body">											
-									  	               
+									  	                       
 											<div class="form-group">
 										  		<h:outputLabel class="col-sm-4 control-label" for="cc" value="#{msg.payment_lbl_cc_number}*:"/>
 												<div class="col-sm-8">
 													<div class="input-group">
-													    <p:inputMask id="cc" class="form-control input-sm hasclear"
+														<p:inputMask id="cc" class="form-control input-sm clearable"
 													    			 value="#{kinoSaalManager.creditCardNumber}"
 													    			 required="#{kinoSaalManager.payWithCreditCard}"
 													    			 requiredMessage="#{msg.payment_req_cc_number}"
 													    			 mask="9999-9999-9999-9999"
 															         placeholder="#{msg.payment_plh_cc_number}">
 															<f:validator validatorId="ch.ffhs.kino.validators.CreditCardValidator"/>	         
-														</p:inputMask>
-														<span class="clearer glyphicon glyphicon-remove form-control-feedback" style="margin-right: 45px;"/>
+														</p:inputMask>												    								
 														<span class="input-group-addon"><i class="fa fa-credit-card"></i></span>	    
 													</div>
 													<b:message for="cc"/>
@@ -243,16 +167,14 @@ select {
 										  	</div>					                
 						                
 										  	<div class="form-group">
-												<h:outputLabel class="col-sm-4 control-label" for="cc_owner"
-					                                		   value="#{msg.payment_lbl_cc_owner}*:"/>         				   
+												<h:outputLabel class="col-sm-4 control-label" for="cc_owner" value="#{msg.payment_lbl_cc_owner}*:"/>         				   
 										    	<div class="col-sm-8">
 										    		<div class="input-group">
-											    		<p:inputText id="cc_owner" class="form-control input-sm hasclear" 
+											    		<p:inputText id="cc_owner" class="form-control input-sm clearable" 
 											    					 value="#{kinoSaalManager.creditCardHolder}"
 											    					 required="#{kinoSaalManager.payWithCreditCard}"
 											    					 requiredMessage="#{msg.payment_req_cc_owner}"
-							                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>
-							                            <span class="clearer glyphicon glyphicon-remove form-control-feedback" style="margin-right: 45px;"/>
+							                               	   		 placeholder="#{msg.payment_plh_cc_owner}"/>                   
 							                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
 										    		</div>	
 										    		<b:message for="cc_owner"/>		      
@@ -264,14 +186,13 @@ select {
 							                               	   value="#{msg.payment_lbl_cc_expiry}*:"/>
 												<div class="col-sm-8">
 													<div class="input-group">
-														<p:inputMask id="cc_exipry" class="form-control input-sm hasclear"
+														<p:inputMask id="cc_exipry" class="form-control input-sm" type="text"
 															   		 value="#{kinoSaalManager.creditCardExipry}"
 															   		 required="#{kinoSaalManager.payWithCreditCard}"
 															   		 requiredMessage="#{msg.payment_req_cc_expiry}"
 															   		 mask="99/99"
 													   		   		 placeholder="#{msg.payment_plh_cc_expiry}">
-													    </p:inputMask>
-													    <span class="clearer glyphicon glyphicon-remove form-control-feedback" style="margin-right: 45px;"/>
+													    </p:inputMask>													    
 													   	<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
 										    		</div>
 										    		<b:message for="cc_exipry"/>	      
@@ -285,12 +206,11 @@ select {
 					                        	</h:outputLabel>			                                		           				   
 										    	<div class="col-sm-8">
 										    		<div class="input-group">
-											    		<p:inputMask id="cc_cvv" class="form-control input-sm hasclear"
+											    		<p:inputMask id="cc_cvv" class="form-control input-sm"
 											    					 value="#{kinoSaalManager.creditCardCvv}"
 											    					 required="#{kinoSaalManager.payWithCreditCard}"
 											    					 requiredMessage="#{msg.payment_req_cc_cvv}"
-											    					 mask="999" placeholder="#{msg.payment_plh_cc_cvv}"/>
-											    		<span class="clearer glyphicon glyphicon-remove form-control-feedback" style="margin-right: 45px;"/>									    					 
+											    					 mask="999" placeholder="#{msg.payment_plh_cc_cvv}"/>					    					 
 							                     		<span class="input-group-addon">123</span>
 										    		</div>	
 										    		<b:message for="cc_cvv"/>				      

@@ -4,38 +4,23 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
 	
 	<ui:define name="content">
-<script>
-	//<![CDATA[
-	$(document).ready(function() {
-		$(".search").keyup(function () {
-			   var searchTerm = $(".search").val();
-			   var listItem = $('.results tbody').children('tr');
-			   var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
-			
-			   $.extend($.expr[':'], {'containsi': function(elem, i, match, array){
-			         return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
-			     }
-			   });
-			     
-			   $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e){
-			     $(this).attr('visible','false');
-			   });
-			
-			   $(".results tbody tr:containsi('" + searchSplit + "')").each(function(e){
-			     $(this).attr('visible','true');
-			   });
-			
-			   var jobCount = $('.results tbody tr[visible="true"]').length;
-			   if(jobCount == '0') {$('.no-result').show();}
-			   else {$('.no-result').hide();}
-			   
+	<script>
+		//<![CDATA[
+		$(document).ready(function() {
+			$(".search").keyup(function () {
+				searchProgramm($(this).val());	   
 			});
-	});
-	//]]>
-</script>
+			
+			$(".search").on('change', function() { 
+				searchProgramm($(this).val());
+			});
+		});
+		//]]>
+	</script>
 	<div class="panel panel-default">
 	   	<div class="panel-heading">
 			<h:outputText class="font-h2" value="#{msg.programm_lbl_title}"/>
@@ -68,14 +53,15 @@
 
  			        <div class="box-td col-sm-6 pull-right">
 		                <div class="input-group form-group-sm stylish-input-group input-append">
-		                    <input type="text" class="search form-control input-sm" placeholder="#{msg.programm_lbl_suchen}"/>
+		                    <input type="text" class="search form-control input-sm clearable" placeholder="#{msg.programm_lbl_suchen}"/>
 		                    <span class="input-group-addon input-sm">
 		                        <button type="submit">
 		                            <span class="glyphicon glyphicon-search"></span>
 		                        </button>  
 		                    </span>
 		                </div>
-			        </div>	    
+			        </div>	 
+			                  
 				</div>
 			</div>
 							   		

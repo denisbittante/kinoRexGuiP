@@ -37,26 +37,56 @@
 <script>
 	//<![CDATA[
 	$(document).ready(function() {	  
-	    $(function(){    	 
-	        $(document).on( 'scroll', function(){	     
-	        	if ($(window).scrollTop() > 100) {
-	    			$('.scroll-top-wrapper').addClass('show');
-	    		} else {
-	    			$('.scroll-top-wrapper').removeClass('show');
-	    		}
-	    	});
-	     
-	    	$('.scroll-top-wrapper').on('click', scrollToTop);
-	    });
-	     
-	    function scrollToTop() {
-	    	verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
-	    	element = $('body');
-	    	offset = element.offset();
-	    	offsetTop = offset.top;
-	    	$('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
-	    }
+	    
+		function tog(v){return v?'addClass':'removeClass';} 
+		$(document).on('input', '.clearable', function(){
+			$(this)[tog(this.value)]('x');
+		}).on('mousemove', '.x', function( e ){
+			$(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');   
+		}).on('click', '.onX', function(){
+			$(this).removeClass('x onX').val('').change();   
+		});
+
+        $(document).on( 'scroll', function(){	     
+        	if ($(window).scrollTop() > 100) {
+    			$('.scroll-top-wrapper').addClass('show');
+    		} else {
+    			$('.scroll-top-wrapper').removeClass('show');
+    		}
+    	});
+     
+    	$('.scroll-top-wrapper').on('click', scrollToTop);
 	});
+
+    function scrollToTop() {
+    	verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+    	element = $('body');
+    	offset = element.offset();
+    	offsetTop = offset.top;
+    	$('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+    }
+    
+	function searchProgramm(searchTerm){
+		var listItem = $('.results tbody').children('tr');
+		var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+		
+		$.extend($.expr[':'], {'containsi': function(elem, i, match, array){
+			return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		  }
+		});
+		  
+		$(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function(e){
+		  $(this).attr('visible','false');
+		});
+		
+		$(".results tbody tr:containsi('" + searchSplit + "')").each(function(e){
+		  $(this).attr('visible','true');
+		});
+		
+		var jobCount = $('.results tbody tr[visible="true"]').length;
+		if(jobCount == '0') {$('.no-result').show();}
+		else {$('.no-result').hide();}				
+	}
 	
 	function handleComplete(xhr, status, args) {
 		var finish = args.finish;
@@ -71,6 +101,14 @@
 	//]]>
 </script>
 <style>
+.clearable{
+  background: #fff url(../resources/images/clearicon.gif) no-repeat right -10px center;
+  padding: 3px 18px 3px 4px;
+  transition: background 0.4s;
+}
+.clearable.x  { background-position: right 5px center; }
+.clearable.onX{ cursor: pointer; }
+
 .fixed_header {
     width: calc(100vw - 30px);
     background-color: #B2D490;
@@ -244,7 +282,7 @@
 						<div class="form-group">
 							<h:outputLabel class="control-label" for="newsletter" value="#{msg.payment_lbl_email}*:"/>
 						  	<div class="input-group">
-				    			<p:inputText id="newsletter" class="form-control input-sm"
+				    			<p:inputText id="newsletter" class="form-control input-sm clearable"
 	                              	   	     validatorMessage="#{msg.payment_val_email}"
 	                                  	     required="true" requiredMessage="#{msg.payment_req_email}"
 	                                  	     placeholder="#{msg.payment_plh_email}">

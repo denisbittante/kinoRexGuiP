@@ -54,11 +54,6 @@ h6 { font-size: .75em; } */
 .clear::before, .clear::after, .group::before, .group::after{display:table; content:"";}
 .clear, .clear::after, .group, .group::after{clear:both;}
 
-.clearer {
-	pointer-events: auto;
-	cursor: pointer; 
-}
-
 .header_row {
 	margin: 0 auto;
 	height:60px;
@@ -129,6 +124,51 @@ h6 { font-size: .75em; } */
 .scroll-top-wrapper i.fa {
 	line-height: inherit;
 }
+
+/***** Kinosaal *****/
+.seat {
+	border-radius: 50%;
+	background-color: gray;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	margin: auto;
+	border: solid;
+	height: 19px;
+	width: 19px;
+	padding: 0px;
+}
+
+.selected {background-color: #E9365A;}
+
+.leinwand {
+	background-color: gray;
+	border-width: 20px;
+	border-color: white;
+	color: white;
+	text-align: center;
+	padding: 5px 5px;
+}
+
+.noborder {
+	border: none;
+	text-align: center;
+	padding: 0px;
+}
+
+table.noborder {
+	width:100%; 
+	margin-bottom:10px;
+	border-collapse:collapse;
+}
+
+.PREMIUM {background-color: #f1c40f;}
+.RESERVED {background-color: green;}
+.HIDDEN {visibility: hidden;}
+.SOLD { background-color: #E9365A; }
+.HANDYCAP { background-color: #3498db; }
+
+select {color: #4f4f4f;}
 
 /***** CreditCard Box *****/
 .credit-card-box .panel-heading {
