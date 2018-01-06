@@ -21,7 +21,46 @@
 					   	
 		        <!-- Tickets -->
 		        <div class="row col-xs-6 col-md-6">
-		        	<ui:include src="ticketTable.xhtml"/>
+				  	<table id="ticketTable" class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th class="w3-dark-grey">#{msg.tickets_seat}</th>
+								<th class="w3-dark-grey">#{msg.tickets_type}</th>
+								<th class="w3-dark-grey">#{msg.tickets_price}</th>
+								<th class="w3-dark-grey"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="#{kinoSaalManager.returnMySeats()}" var="seat">
+								<tr>
+									<td>
+										<h:outputText value="#{msg.tickets_row} #{seat.seatRow + 1}, #{msg.tickets_seat} #{seat.seatColumn + 1}" />
+									</td>
+									<td>
+										<h:selectOneMenu value="#{seat.ticketType}" rendered="#{!kinoSaalManager.hasPayed}">
+											<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
+											<f:ajax execute="@this" render=":outerForm :ticketForm :paymentForm:paymentpp :paymentForm:paymentcc"/>
+										</h:selectOneMenu>		
+										
+										<h:outputText value="#{seat.ticketType.title}" rendered="#{kinoSaalManager.hasPayed}"/>				
+									</td>
+
+									<td>
+										<h:outputText value="#{seat.ticketType.cost}">
+											<f:convertNumber groupingUsed="true" pattern="#0.00 CHF" locale="de-CH"/>
+										</h:outputText>
+									</td>
+									<td>
+										<h:commandLink action="#{seat.reserve()}" 
+			                			   			   rendered="#{!kinoSaalManager.hasPayed}">
+			                				<span class="glyphicon glyphicon-trash" style="color:black;"></span>
+			                    			<f:ajax render=":outerForm :ticketForm :commandForm :paymentForm:paymentpp :paymentForm:paymentcc" />
+			                			</h:commandLink>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 		        </div>	   		
 		   	</div>
 		</div>
