@@ -32,22 +32,31 @@
 			<div class="vertical-box">
 				<div class="box-tr">	
 					<div class="box-td">					
-						<h:form>	
-							<h:outputText value="#{msg.programm_lbl_genre}"/>
+						<h:form id="filterForm">	
+							<h:outputText value="#{msg.programm_lbl_genre}"/> <i class="fa fa-filter" aria-hidden="true"></i>
 							<h:selectOneMenu class="leftspace-10" value="#{movieEventController.searchGenre}">
 								<f:selectItems value="#{movieEventController.getGenres()}"/>
-								<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm"/>
+								<f:ajax render=":movieForm filterForm" listener="#{movieEventController.search}"/>
 							</h:selectOneMenu>
 	
-							<h:outputText class="leftspace-30" value="#{msg.programm_lbl_language}"/>
+							<h:outputText class="leftspace-30" value="#{msg.programm_lbl_language}"/> <i class="fa fa-filter" aria-hidden="true"></i>
 							<h:selectOneMenu class="leftspace-10 rightspace-20" value="#{movieEventController.searchLanguage}">
 								<f:selectItems value="#{movieEventController.getLanguage()}"/>
-								<f:ajax execute="@this" listener="#{movieEventController.search}" render=":movieForm"/>
+								<f:ajax render=":movieForm filterForm" listener="#{movieEventController.search}"/>
 							</h:selectOneMenu>
 							
-							<h:selectBooleanCheckbox value="#{movieEventController.search3D}">
-								<f:ajax render=":movieForm" listener="#{movieEventController.search}"/>
+							<h:selectBooleanCheckbox class="leftspace-10" value="#{movieEventController.search3D}">
+								<f:ajax render=":movieForm filterForm" listener="#{movieEventController.search}"/>
 							</h:selectBooleanCheckbox><img src="/resources/images/kino/3d.png" style="width:20px;margin-bottom:5px;"/>
+							
+							<h:panelGroup class="leftspace-30" rendered="#{movieEventController.hasFilter}">
+								<h:commandLink>
+									<f:ajax render=":movieForm filterForm" listener="#{movieEventController.removeFilter}"/>
+									<h:outputText value="#{msg.programm_lbl_removeFilter}"/>
+								</h:commandLink>							
+							</h:panelGroup>
+	
+										
 						</h:form>
 					</div>		
 
@@ -70,9 +79,9 @@
 					<thead>
 				      <tr>
 				        <th class="w3-dark-grey w3-hover-black" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(1)')">#{msg.programm_lbl_film}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
-				        <th class="w3-dark-grey w3-hover-black" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(2)')" style="width:80px;">#{msg.programm_lbl_3d}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
-				        <th class="w3-dark-grey w3-hover-black text-center" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(3)')" style="width: 100px;">#{msg.programm_lbl_language}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
-					    <th class="w3-dark-grey w3-hover-black text-center" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(4)')">#{msg.programm_lbl_saal}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
+				        <th class="w3-dark-grey w3-hover-black text-center" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(2)')" style="width: 100px;">#{msg.programm_lbl_language}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
+					    <th class="w3-dark-grey w3-hover-black text-center" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(3)')">#{msg.programm_lbl_saal}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
+					    <th class="w3-dark-grey w3-hover-black" onclick="w3.sortHTML('#movieTable','.item', 'td:nth-child(4)')" style="width:80px;">#{msg.programm_lbl_3d}<i class="fa fa-sort leftspace-10" style="font-size:13px;"></i></th>
 				        <c:forEach items="#{movieEventController.dates}" var="eventDate">
 				        	<th class="w3-dark-grey w3-hover-black text-center"><h:outputText value="#{eventDate}" converter="localDateTimeConverter"/></th>
 				        </c:forEach>
@@ -92,22 +101,22 @@
 						  	</td>
 						  	<td class="text-center">
 							  	<c:forEach items="#{event.details}" var="detail">
-							  		<c:choose>
-									  <c:when test="#{detail.getType().isThreeD()}">
-									    <img src="/resources/images/kino/3d.png" style="width:20px"/>
-									  </c:when>
-									</c:choose>
-							  		<br></br>
-							  	</c:forEach>
-						  	</td>
-						  	<td class="text-center">
-							  	<c:forEach items="#{event.details}" var="detail">
 							  		<h:outputText value="#{detail.language.getText()}"/><br></br>
 							  	</c:forEach>
 						  	</td>
 						  	<td class="text-center">
 							  	<c:forEach items="#{event.details}" var="detail">
 							  		<h:outputText value="#{detail.hall}"/><br></br>
+							  	</c:forEach>
+						  	</td>
+						  	<td class="text-center">
+							  	<c:forEach items="#{event.details}" var="detail">
+							  		<c:choose>
+									  <c:when test="#{detail.getType().isThreeD()}">
+									    <img src="/resources/images/kino/3d.png" style="width:20px"/>
+									  </c:when>
+									</c:choose>
+							  		<br></br>
 							  	</c:forEach>
 						  	</td>
 						  	<c:forEach items="#{movieEventController.dates}" var="eventDate">

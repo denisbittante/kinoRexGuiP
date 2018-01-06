@@ -35,10 +35,12 @@ public class MovieEventController {
 	private GenreType searchGenre;
 	private MovieLanguage searchLanguage;
 	private boolean search3D;
+	private boolean hasFilter;
 	private String movieEventSummary;
 
 	@PostConstruct
 	public void init() {
+		setHasFilter(false);
 		BackendService service = new BackendService();
 		dates = service.getEventsDates();	
 		events = service.getAllMovieEvents();
@@ -53,8 +55,14 @@ public class MovieEventController {
         return MovieLanguage.values();
     }
 	
-	public void search() {
+	public void search() {		
 		filteredEvents = new ArrayList<MovieEvent>(events);
+
+		if(searchGenre == GenreType.NONE && searchLanguage == MovieLanguage.NONE && !search3D)
+			setHasFilter(false);
+		else
+			setHasFilter(true);
+		
 		for (int i = filteredEvents.size() - 1; i >= 0; i--) {
 			MovieEvent movieEvent = filteredEvents.get(i);
 			
@@ -83,11 +91,17 @@ public class MovieEventController {
 					filteredEvents.remove(i);
 					continue;
 				}
-			}
-			
+			}			
 		}
 	}
 
+	public void removeFilter(){
+		setSearch3D(false);
+		setSearchGenre(GenreType.NONE);
+		setSearchLanguage(MovieLanguage.NONE);
+		search();
+	}
+	
 	public String selectEvent(MovieEvent movieEvent, MovieEventDetail detail, EventDateTime dateTime){
 		Movie selectedMovie = movieEvent.getMovie();
 		
@@ -206,5 +220,13 @@ public class MovieEventController {
 
 	public void setSearch3D(boolean search3d) {
 		search3D = search3d;
+	}
+
+	public boolean isHasFilter() {
+		return hasFilter;
+	}
+
+	public void setHasFilter(boolean hasFilter) {
+		this.hasFilter = hasFilter;
 	}
 }

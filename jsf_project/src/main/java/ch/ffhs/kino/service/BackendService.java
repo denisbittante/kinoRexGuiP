@@ -59,7 +59,7 @@ public class BackendService {
 		
 		EventDateTime showTime = new EventDateTime();
 		showTime.setShowDate(LocalDate.now());
-		showTime.setShowTime(LocalTime.parse("18:30"));
+		showTime.setShowTime(LocalTime.parse("16:00"));
 		detail.getEventDateTimes().add(showTime);
 		
 		showTime = new EventDateTime();
@@ -69,8 +69,28 @@ public class BackendService {
 		
 		showTime = new EventDateTime();
 		showTime.setShowDate(LocalDate.now().plusDays(2));
-		showTime.setShowTime(LocalTime.parse("19:30"));
-		detail.getEventDateTimes().add(showTime);		
+		showTime.setShowTime(LocalTime.parse("16:00"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(3));
+		showTime.setShowTime(LocalTime.parse("16:00"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(4));
+		showTime.setShowTime(LocalTime.parse("16:00"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(5));
+		showTime.setShowTime(LocalTime.parse("16:00"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(6));
+		showTime.setShowTime(LocalTime.parse("16:00"));
+		detail.getEventDateTimes().add(showTime);
 		//---------------
 		MovieEventDetail detail2 = new MovieEventDetail();	
 		detail2.setLanguage(MovieLanguage.ENGLISH);
@@ -80,7 +100,22 @@ public class BackendService {
 		
 		EventDateTime showTime2 = new EventDateTime();
 		showTime2.setShowDate(LocalDate.now());
-		showTime2.setShowTime(LocalTime.parse("22:45"));
+		showTime2.setShowTime(LocalTime.parse("20:15"));
+		detail2.getEventDateTimes().add(showTime2);
+		
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(1));
+		showTime2.setShowTime(LocalTime.parse("20:15"));
+		detail2.getEventDateTimes().add(showTime2);
+		
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(2));
+		showTime2.setShowTime(LocalTime.parse("20:15"));
+		detail2.getEventDateTimes().add(showTime2);
+		
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(3));
+		showTime2.setShowTime(LocalTime.parse("20:15"));
 		detail2.getEventDateTimes().add(showTime2);
 
 		// 2. Film
@@ -194,7 +229,27 @@ public class BackendService {
 		showTime = new EventDateTime();
 		showTime.setShowDate(LocalDate.now().plusDays(2));
 		showTime.setShowTime(LocalTime.parse("19:30"));
-		detail.getEventDateTimes().add(showTime);		
+		detail.getEventDateTimes().add(showTime);	
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(3));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(4));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(5));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(6));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
 		
 		// 4. Film
 		event = new MovieEvent();
@@ -204,7 +259,7 @@ public class BackendService {
 		detail = new MovieEventDetail();	
 		detail.setLanguage(MovieLanguage.DEUTSCH);
 		detail.setHall("Saal 4");	
-		detail.setType(ShowType.NORMAL);
+		detail.setType(ShowType.THREE_D);
 		event.getDetails().add(detail);
 		
 		showTime = new EventDateTime();
@@ -221,6 +276,43 @@ public class BackendService {
 		showTime.setShowDate(LocalDate.now().plusDays(2));
 		showTime.setShowTime(LocalTime.parse("19:30"));
 		detail.getEventDateTimes().add(showTime);	
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(3));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(4));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		//---------------------------------------------
+		detail2 = new MovieEventDetail();	
+		detail2.setLanguage(MovieLanguage.ENGLISH);
+		detail2.setHall("Saal 4");
+		detail2.setType(ShowType.THREE_D);
+		event.getDetails().add(detail2);
+
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(3));
+		showTime2.setShowTime(LocalTime.parse("22:30"));
+		detail2.getEventDateTimes().add(showTime2);
+		
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(4));
+		showTime2.setShowTime(LocalTime.parse("22:30"));
+		detail2.getEventDateTimes().add(showTime2);
+		
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(5));
+		showTime2.setShowTime(LocalTime.parse("22:30"));
+		detail2.getEventDateTimes().add(showTime2);
+		
+		showTime2 = new EventDateTime();
+		showTime2.setShowDate(LocalDate.now().plusDays(6));
+		showTime2.setShowTime(LocalTime.parse("22:45"));
+		detail2.getEventDateTimes().add(showTime2);
 		
 		// 5. Film
 		event = new MovieEvent();
@@ -245,6 +337,21 @@ public class BackendService {
 		
 		showTime = new EventDateTime();
 		showTime.setShowDate(LocalDate.now().plusDays(2));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);	
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(3));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(4));
+		showTime.setShowTime(LocalTime.parse("19:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(5));
 		showTime.setShowTime(LocalTime.parse("19:30"));
 		detail.getEventDateTimes().add(showTime);	
 		
@@ -273,6 +380,26 @@ public class BackendService {
 		showTime.setShowDate(LocalDate.now().plusDays(2));
 		showTime.setShowTime(LocalTime.parse("19:30"));
 		detail.getEventDateTimes().add(showTime);	
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(3));
+		showTime.setShowTime(LocalTime.parse("18:30"));
+		detail.getEventDateTimes().add(showTime);	
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(4));
+		showTime.setShowTime(LocalTime.parse("18:30"));
+		detail.getEventDateTimes().add(showTime);	
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(5));
+		showTime.setShowTime(LocalTime.parse("18:30"));
+		detail.getEventDateTimes().add(showTime);
+		
+		showTime = new EventDateTime();
+		showTime.setShowDate(LocalDate.now().plusDays(6));
+		showTime.setShowTime(LocalTime.parse("18:30"));
+		detail.getEventDateTimes().add(showTime);
 		
 		return events;
 	}

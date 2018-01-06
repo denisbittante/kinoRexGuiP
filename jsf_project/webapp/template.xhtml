@@ -17,7 +17,6 @@
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-		<link rel="stylesheet" href="/resources/layout/styles/layoutNew.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="/resources/layout/styles/kino.css" type="text/css" media="all" />
 						
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -104,52 +103,24 @@
 </script>
 <style>
 .clearable{
-  background: #fff url(../resources/images/clearicon.gif) no-repeat right -10px center;
-  padding: 3px 18px 3px 4px;
-  transition: background 0.4s;
+	background: #fff url(../resources/images/clearicon.gif) no-repeat right -10px center;
+  	padding: 3px 18px 3px 4px;
+  	transition: background 0.4s;
 }
-.clearable.x  { background-position: right 5px center; }
+.clearable.x { background-position: right 5px center; }
 .clearable.onX{ cursor: pointer; }
-
-.fixed_header {
-    width: calc(100vw - 30px);
-    background-color: #B2D490;
-    z-index: 1;
-    position: fixed;
-    top: 0px;
-}
-.fixed_bread{
-	top: 60px;
-}
-
-.fixedWrapper{
-    width:100%;
-    position:fixed;
-    top:0px;
-    margin:0px auto;
-    z-index: 100;
-}
-
-.fixed_footer{
-}
-
-
-.content{
-	top: 100px;
-}
+body {margin: 20px;}
 
 </style>
 	<body>
 
-	<div class="container-fluid">
-		
-<!-- 		<div class="fixedWrapper"> -->
+	<div id="header">
 		
 		<!-- Infos -->
-		<div class="row header_row vertical-box">
+		<div class="row header_row vertical-box" style="margin-bottom:0px;">
 			<div class="box-tr">			
 				<div class="box-td">
-					<h:link outcome="index" styleClass="leftspace-20">
+					<h:link outcome="index" styleClass="font-14 leftspace-20">
 						<img src="/resources/images/logoRex.png"
 							 style="width: 44px" alt="logo" /> #{msg.header_title}
 					</h:link>
@@ -161,7 +132,7 @@
 				</div>
 			
 				<div class="text-right box-td">
-					<ul class="faico clear pull-right">
+					<ul class="faico clear pull-right" style="margin-right:40px;">
 						<li><a class="faicon-facebook" href="#"><i
 								class="fa fa-facebook"></i></a></li>
 						<li><a class="faicon-twitter" href="#"><i
@@ -183,14 +154,13 @@
 		</div>
 		
 		<!-- Process Steps -->
-		<!-- <div> -->
 		<h:form id="hiddenForm" style="display: none;"> 
 			<h:commandButton id="gotoRegButton" actionListener="#{navigationController.goToStep2()}" /> 
 		</h:form> 
 
 		<h:form id="navigationForm">
 
-	        <div class="btn-group btn-breadcrumb breadcrumb-default">
+	        <div id="navigation" class="btn-group btn-breadcrumb breadcrumb-default rightspace-40">
 	            
 	            <h:commandLink class="btn btn-primary" action="#{navigationController.goToStep1()}">
 	      			<i class="glyphicon glyphicon-home"></i><h:outputText value=" "/>
@@ -251,10 +221,11 @@
 	      		<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
 	        </div>				
 		</h:form>			
-		<!-- </div>	 -->	
-		<!-- </div> -->
 
-		
+	</div>	
+	
+	<div id="content">
+	
 		<!-- Content -->
 		<div class="content_row inspace-10">
 			<ui:insert name="content"></ui:insert>
@@ -314,8 +285,8 @@
 		    <i class="fa fa-2x fa-arrow-circle-up"></i>
 		  </span>
 		</div>
-	</div>
 
+</div>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	

@@ -1,7 +1,7 @@
 package ch.ffhs.kino.model;
 
 public enum MovieLanguage {
-	DEUTSCH("D", "Deutsch"), ENGLISH("E", "Englisch"), FRANZOESISCH("F", "Französisch"), NONE("", "");
+	NONE("", "-- Alle --"), DEUTSCH("D", "Deutsch"), ENGLISH("E", "Englisch"), FRANZOESISCH("F", "Französisch");
 
 	private String text;
 	private String longText;

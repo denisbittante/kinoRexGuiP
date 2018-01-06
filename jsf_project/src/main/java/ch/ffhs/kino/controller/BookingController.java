@@ -42,13 +42,9 @@ public class BookingController {
 			allSeats.add(e);
 		}
 
-		allSeats.get(5).setType(SeatType.HANDYCAP);
-		allSeats.get(6).setType(SeatType.HANDYCAP);
-		allSeats.get(7).setType(SeatType.HANDYCAP);
-
-		allSeats.get(100).setType(SeatType.PREMIUM);
 		allSeats.get(101).setType(SeatType.PREMIUM);
 		allSeats.get(102).setType(SeatType.PREMIUM);
+		allSeats.get(103).setType(SeatType.PREMIUM);
 		allSeats.get(104).setType(SeatType.PREMIUM);
 
 		allSeats.get(40).setType(SeatType.SOLD);
@@ -57,10 +53,19 @@ public class BookingController {
 		allSeats.get(66).setType(SeatType.SOLD);
 		allSeats.get(67).setType(SeatType.SOLD);
 
-		allSeats.get(88).setHidden(true);
-		allSeats.get(98).setHidden(true);
-		allSeats.get(101).setHidden(true);
-		allSeats.get(157).setHidden(true);
+		allSeats.get(112).setHidden(true);
+		allSeats.get(113).setHidden(true);
+		allSeats.get(114).setHidden(true);
+		allSeats.get(125).setHidden(true);
+		allSeats.get(126).setHidden(true);
+		allSeats.get(127).setHidden(true);
+		
+		allSeats.get(128).setType(SeatType.HANDYCAP);
+		allSeats.get(129).setType(SeatType.HANDYCAP);
+		allSeats.get(130).setType(SeatType.HANDYCAP);		
+		allSeats.get(141).setType(SeatType.HANDYCAP);
+		allSeats.get(142).setType(SeatType.HANDYCAP);
+		allSeats.get(143).setType(SeatType.HANDYCAP);
 		
 		setTimeoutSecond(SESSION_TIME);
 	}
@@ -144,11 +149,6 @@ public class BookingController {
 		for (Seat seat : returnMySeats)
 			total += seat.getTicketType().getCost();
 		return total;
-	}
-
-	public String endSession() {
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "programm?faces-redirect=true";
 	}
 	
 	public String confirm(){
