@@ -14,7 +14,7 @@ public class CreditCardValidator implements Validator{
 	 public void validate(FacesContext ctx,UIComponent component,Object value) throws ValidatorException{
 	    String ccNumber=(String)value;
 	    boolean validCard = validateCard(ccNumber);
-	    if (validCard==false) throw new ValidatorException(new FacesMessage(" Invalid credit card format!!!!"));
+	    if (validCard==false) throw new ValidatorException(new FacesMessage("Keine gültige Kreditkarten-Nummer."));
 	  }
 
 	  private boolean validateCard(String ccNumber){

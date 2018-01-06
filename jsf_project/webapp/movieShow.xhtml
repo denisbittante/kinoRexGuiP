@@ -13,7 +13,7 @@
 	  color:#ddd;
 	}	
 	.modal-dialog {
-	  width: 330px;
+	  width: 350px;
 	  overflow: auto;
 	  background-color:#444;
 	}	
@@ -47,9 +47,9 @@
 	    	<div class="panel-body">
 	    		<div class="row">
 	    			<!-- rechte Seite: Sitzplan, Bezahlung -->
-				    <div class="col-sm-6 text-center">
+				    <div class="col-sm-6">
 				    
-				    	<h:panelGroup id="kinosaalPanel" layout="block" rendered="#{navigationController.step2Active}">			    
+				    	<h:panelGroup id="kinosaalPanel" class="text-center" layout="block" rendered="#{navigationController.step2Active}">			    
 							<h:form id="outerForm" >
 								<p class="font-h3">#{msg.mvishw_lbl_info}</p>
 			    				<!-- Legende -->   			
@@ -105,8 +105,12 @@
 						
 						<!-- Bezahlung -->
 						<h:panelGroup id="paymentPanel" layout="block" rendered="#{navigationController.step3Active and kinoSaalManager.hasTickets}">
-							<p class="font-h3">#{msg.payment_lbl_info_1}</p>	   
-	   						<p>#{msg.payment_lbl_info_3}</p>						
+							<p class="font-h3 text-center">#{msg.payment_lbl_info_1}</p>	   
+	   						<div class="row">
+							    <div class="col-sm-8 col-sm-offset-4">
+							      <span>#{msg.payment_lbl_info_3}</span>
+							    </div>
+							</div>			
 
 							<h:form id="paymentForm" class="form-horizontal">
 							   	
@@ -269,6 +273,7 @@
 								</h:commandLink>
 
 								<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-primary btn-xs leftspace-10' : 'btn btn-primary btn-xs leftspace-10 disabled'}"
+											   rendered="#{navigationController.step2Active}"
 											   action="#{navigationController.goToStep3()}">
 						 			<span class="glyphicon glyphicon-shopping-cart"></span> <h:outputText value="#{msg.mvishw_ticket_btn_kaufen}"/>
 						 		</h:commandLink>							 		
