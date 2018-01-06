@@ -82,21 +82,24 @@
 		  $(this).attr('visible','true');
 		});
 		
-		var jobCount = $('.results tbody tr[visible="true"]').length;
-		if(jobCount == '0') {$('.no-result').show();}
+		var count = $('.results tbody tr[visible="true"]').length;
+		if(count == '0') {$('.no-result').show();}
 		else {$('.no-result').hide();}				
 	}
+		
+	function timeOut(){
+		$('#dialogTimeout').modal();
+	};
 	
-	function handleComplete(xhr, status, args) {
-		var finish = args.finish;
-		if(finish == "timeout"){
-			$("#outerForm").load(window.location.href + " #outerForm" );
-			$("#ticketForm").load(window.location.href + " #ticketForm" );
+	function goToStep2(){
+		if ($("#kinosaalPanel").length){
 			$("#commandForm").load(window.location.href + " #commandForm" );
-			$("#paymentForm").load(window.location.href + " #paymentForm" );
-			$('#amodal').modal();
+			$("#ticketForm").load(window.location.href + " #ticketForm" );
+			$("#kinosaalPanel").load(window.location.href + " #kinosaalPanel" );
+		}else{
+			document.getElementById("navigationForm:step2").click();
 		}
-	};	
+	}
 	//]]>
 </script>
 <style>
@@ -137,8 +140,9 @@
 
 </style>
 	<body>
+
 	<div class="container-fluid">
-	
+		
 <!-- 		<div class="fixedWrapper"> -->
 		
 		<!-- Infos -->
@@ -180,7 +184,12 @@
 		
 		<!-- Process Steps -->
 		<!-- <div> -->
-			<h:form>
+		<h:form id="hiddenForm" style="display: none;"> 
+			<h:commandButton id="gotoRegButton" actionListener="#{navigationController.goToStep2()}" /> 
+		</h:form> 
+
+			<h:form id="navigationForm">
+
 		        <div class="btn-group btn-breadcrumb breadcrumb-default">
 		            
 		            <h:link class="btn btn-primary" outcome="programm">
@@ -206,7 +215,7 @@
 							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_2}"/></u>
 						</div>
 		            </c:if>
-		            <h:commandLink styleClass="#{navigationController.step2Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+		            <h:commandLink id="step2" styleClass="#{navigationController.step2Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
 		      					   disabled="#{navigationController.step2Disabled}"
 						    	   action="#{navigationController.goToStep2()}"
 						    	   rendered="#{!navigationController.step2Active}">

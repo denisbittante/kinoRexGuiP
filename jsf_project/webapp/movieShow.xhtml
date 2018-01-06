@@ -8,15 +8,37 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-
-		<b:modal id="amodal" title="#{msg.mvishw_timeout_title}" closable="true" styleClass="text-left">
-			<p><h:outputText value="#{msg.mvishw_timeout_text1}"/></p>
-		  	<p><b><h:outputText value="#{msg.mvishw_timeout_text2}"/></b></p>
-		  	<f:facet name="footer">
-		    	<b:button value="OK" look="primary" dismiss="modal" />
-		  	</f:facet>
-		</b:modal>
-
+	<style>
+	.modal-content{
+	  color:#ddd;
+	}	
+	.modal-dialog {
+	  width: 330px;
+	  overflow: auto;
+	  background-color:#444;
+	}	
+	.modal.fade.in {
+	  top: 25%;
+	}
+	</style>	
+		<div id="dialogTimeout" class="modal fade" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content w3-dark-grey">
+					<div class="modal-header">
+						<div class="modal-title font-18 pull-left" style="color:indianred;"><span class="glyphicon glyphicon-time"></span>#{msg.mvishw_timeout_title}</div>
+						<button type="button" class="close btn-xs" style="margin-top:-10px;" data-dismiss="modal" aria-hidden="true" onclick="goToStep2()">×</button>
+					</div>
+					<div class="modal-body">
+						<p><h:outputText value="#{msg.mvishw_timeout_text1}"/></p>
+				  		<p><b><h:outputText value="#{msg.mvishw_timeout_text2}"/></b></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default btn-xs" data-dismiss="modal" onclick="goToStep2()">#{msg.dialog_close}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+				
 		<div class="panel panel-default">
 			<div class="panel-heading">
 	    		<h:outputText class="font-h2" value="#{msg.mvishw_lbl_title}"/>
@@ -24,60 +46,62 @@
 	    	</div>
 	    	<div class="panel-body">
 	    		<div class="row">
-
 	    			<!-- rechte Seite: Sitzplan, Bezahlung -->
 				    <div class="col-sm-6 text-center">
-						<h:form id="outerForm" prependId="false" rendered="#{navigationController.step2Active}">
-							<p class="font-h3">#{msg.mvishw_lbl_info}</p>
-		    				<!-- Legende -->   			
-		    				<div class="btmspace-10">
-			    				<div class="tooltipx">
-			    					<h:button readonly="true" styleClass="seat RESERVED"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_meinePlaetze}"/> 				
-									<span class="tooltiptext">#{msg.mvishw_ttp_meinePlaetze}</span>
-								</div>	
-								
-								<div class="tooltipx">
-									<h:button readonly="true" styleClass="seat NORMAL"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_frei}"/>
-									<span class="tooltiptext">#{msg.mvishw_ttp_frei}</span>
-								</div>	
-								<div class="tooltipx">
-									<h:button readonly="true" styleClass="seat SOLD"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_verkauft}"/>
-									<span class="tooltiptext">#{msg.mvishw_ttp_verkauft}</span>
-								</div>	
-								<div class="tooltipx">
-									<h:button readonly="true" styleClass="seat PREMIUM"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_premium}"/>
-									<span class="tooltiptext">#{msg.mvishw_ttp_premium}</span>
-								</div>	
-								<div class="tooltipx">
-									<h:button readonly="true" styleClass="seat HANDYCAP"/> <h:outputText value="#{msg.mvishw_lbl_handicap}"/>
-									<span class="tooltiptext">#{msg.mvishw_ttp_handicap}</span>
-								</div>	
-							</div>
-										
-	    					<!-- Sitzplan -->	
-							<table class="noborder">
-								<tr>
-									<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
-								</tr>
-								<ui:repeat var="row" value="#{kinoSaalManager.returnRows()}">
-									<tr class="noborder">
-										<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
-											<td class="noborder">
-												<div class="tooltipx">
-													<h:commandButton id="seatButton" 
-															  action="#{i.reserve()}" 
-															  styleClass="seat #{kinoSaalManager.style(i)}" 
-															  disabled="#{i.isOccupied()}">
-														<f:ajax render=":outerForm :ticketForm :commandForm"/>				 
-													</h:commandButton>											
-												  	<span class="tooltiptext">#{msg.mvishw_seats_row} #{i.seatRow + 1}, #{msg.mvishw_seats_seat} #{i.seatColumn + 1}</span>
-												</div>
-											</td>
-										</ui:repeat>
+				    
+				    	<h:panelGroup id="kinosaalPanel" layout="block" rendered="#{navigationController.step2Active}">			    
+							<h:form id="outerForm" >
+								<p class="font-h3">#{msg.mvishw_lbl_info}</p>
+			    				<!-- Legende -->   			
+			    				<div class="btmspace-10">
+				    				<div class="tooltipx">
+				    					<h:button readonly="true" styleClass="seat RESERVED"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_meinePlaetze}"/> 				
+										<span class="tooltiptext">#{msg.mvishw_ttp_meinePlaetze}</span>
+									</div>	
+									
+									<div class="tooltipx">
+										<h:button readonly="true" styleClass="seat NORMAL"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_frei}"/>
+										<span class="tooltiptext">#{msg.mvishw_ttp_frei}</span>
+									</div>	
+									<div class="tooltipx">
+										<h:button readonly="true" styleClass="seat SOLD"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_verkauft}"/>
+										<span class="tooltiptext">#{msg.mvishw_ttp_verkauft}</span>
+									</div>	
+									<div class="tooltipx">
+										<h:button readonly="true" styleClass="seat PREMIUM"/> <h:outputText class="rightspace-20" value="#{msg.mvishw_lbl_premium}"/>
+										<span class="tooltiptext">#{msg.mvishw_ttp_premium}</span>
+									</div>	
+									<div class="tooltipx">
+										<h:button readonly="true" styleClass="seat HANDYCAP"/> <h:outputText value="#{msg.mvishw_lbl_handicap}"/>
+										<span class="tooltiptext">#{msg.mvishw_ttp_handicap}</span>
+									</div>	
+								</div>
+											
+		    					<!-- Sitzplan -->	
+								<table class="noborder">
+									<tr>
+										<td colspan="100%" class="leinwand">#{msg.mvishw_lbl_leinwand}</td>
 									</tr>
-								</ui:repeat>
-							</table>
-						</h:form>
+									<ui:repeat var="row" value="#{kinoSaalManager.returnRows()}">
+										<tr class="noborder">
+											<ui:repeat var="i" value="#{kinoSaalManager.returnOneRow(row)}">
+												<td class="noborder">
+													<div class="tooltipx">
+														<h:commandButton id="seatButton" 
+																  action="#{i.reserve()}" 
+																  styleClass="seat #{kinoSaalManager.style(i)}" 
+																  disabled="#{i.isOccupied()}">
+															<f:ajax render=":outerForm :ticketForm :commandForm"/>				 
+														</h:commandButton>											
+													  	<span class="tooltiptext">#{msg.mvishw_seats_row} #{i.seatRow + 1}, #{msg.mvishw_seats_seat} #{i.seatColumn + 1}</span>
+													</div>
+												</td>
+											</ui:repeat>
+										</tr>
+									</ui:repeat>
+								</table>
+							</h:form>
+						</h:panelGroup>
 						
 						<!-- Bezahlung -->
 						<h:panelGroup id="paymentPanel" layout="block" rendered="#{navigationController.step3Active and kinoSaalManager.hasTickets}">
@@ -118,8 +142,7 @@
 						                <h:panelGroup layout="block" rendered="#{!kinoSaalManager.payWithCreditCard}">
 					                		<h:commandLink class="btn btn-primary btn-xs col-md-4 pull-right" 
 												   	   	   action="#{kinoSaalManager.confirm()}">
-							 					<h:outputText value="#{kinoSaalManager.totalprice()}" 
-															  rendered="#{kinoSaalManager.hasTickets}">
+							 					<h:outputText id="paymentpp" value="#{kinoSaalManager.totalprice()}">
 													<f:convertNumber groupingUsed="true" pattern="#0.00 CHF #{msg.payment_btn_pay}" locale="de-CH"/>
 												</h:outputText>
 							 				</h:commandLink>
@@ -214,8 +237,7 @@
 							 						
 											<h:commandLink class="btn btn-primary btn-xs col-sm-3 pull-right" 
 													   	   action="#{kinoSaalManager.confirm()}">
-													<h:outputText value="#{kinoSaalManager.totalprice()}" 
-																  rendered="#{kinoSaalManager.hasTickets}">
+													<h:outputText id="paymentcc" value="#{kinoSaalManager.totalprice()}">
 														<f:convertNumber groupingUsed="true" pattern="#0.00 CHF #{msg.payment_btn_pay}" locale="de-CH"/>
 													</h:outputText>
 								 			</h:commandLink>							            						 						
@@ -229,11 +251,13 @@
 	    			</div>
 	    			
 	    			<!-- linke Seite: Tickets -->
+	    			<h:form>
+	    				<p:poll id="remainingTimePoller" interval="1" autoStart="true" widgetVar="remainingTimePoller" listener="#{kinoSaalManager.remainingTicker()}" update=":commandForm:currentRemainingTime"/>
+				    </h:form>
 				    <div class="col-sm-6">
 						<h:form id="commandForm">
 							<div class="col-sm-5 text-left">
-								<h:panelGroup style="color:indianred;" rendered="#{kinoSaalManager.hasTickets}">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="currentRemainingTime" value="#{kinoSaalManager.remainTime}" /> <i class="fa fa-clock-o fa-spin"></i> 
-									<p:poll id="remainingTimePoller" interval="1" autoStart="false" widgetVar="remainingTimePoller" listener="#{kinoSaalManager.remainingTicker()}" oncomplete="handleComplete(xhr, status, args)" update="currentRemainingTime"/>
+								<h:panelGroup styleClass="font-h3" style="color:indianred;" rendered="#{kinoSaalManager.hasTickets}">#{msg.mvishw_ticket_lbl_reservierung} <h:outputText id="currentRemainingTime" value="#{kinoSaalManager.remainTime}" /> <i class="fa fa-clock-o fa-spin"></i> 
 								</h:panelGroup> 
 							</div>
 							<div class="col-sm-7 text-right">									
@@ -241,7 +265,7 @@
 									           action="#{kinoSaalManager.resetReservedSeats()}">
 									<span class="glyphicon glyphicon-trash"></span>
 									<h:outputText value="#{msg.mvishw_ticket_btn_entfernen}" />
-									<f:ajax render=":outerForm :ticketForm :commandForm :paymentPanel" />
+									<f:ajax render=":outerForm :ticketForm :commandForm :paymentPanel :paymentForm:paymentpp :paymentForm:paymentcc" />
 								</h:commandLink>
 
 								<h:commandLink styleClass="#{kinoSaalManager.hasTickets ? 'btn btn-primary btn-xs leftspace-10' : 'btn btn-primary btn-xs leftspace-10 disabled'}"
@@ -298,7 +322,7 @@
 														<td>
 															<h:selectOneMenu value="#{seat.ticketType}" rendered="#{!kinoSaalManager.hasPayed}">
 																<f:selectItems value="#{dtEditView.ticketTypes}" var="man" itemLabel="#{man.title}" itemValue="#{man}" />
-																<f:ajax execute="@this" render=":outerForm :ticketForm" />
+																<f:ajax execute="@this" render=":outerForm :ticketForm :paymentForm:paymentpp :paymentForm:paymentcc"/>
 															</h:selectOneMenu>		
 															
 															<h:outputText value="#{seat.ticketType.title}" rendered="#{kinoSaalManager.hasPayed}"/>				
@@ -313,7 +337,7 @@
 															<h:commandLink action="#{seat.reserve()}" 
 								                			   			   rendered="#{!kinoSaalManager.hasPayed}">
 								                				<span class="glyphicon glyphicon-trash" style="color:black;"></span>
-								                    			<f:ajax render=":outerForm :ticketForm :commandForm :paymentPanel" />
+								                    			<f:ajax render=":outerForm :ticketForm :commandForm :paymentForm:paymentpp :paymentForm:paymentcc" />
 								                			</h:commandLink>
 														</td>
 													</tr>

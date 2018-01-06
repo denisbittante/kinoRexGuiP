@@ -34,8 +34,6 @@ public class BookingController {
 	private String creditCardExipry;
 	private String creditCardCvv;
 	
-	boolean timerRunning = false;
-
 	@PostConstruct
 	public void init() {
 		setHasPayed(false);
@@ -72,18 +70,12 @@ public class BookingController {
     }
 	
 	public void remainingTicker() {
-		this.timeoutSecond--;
-		System.out.println("timeoutSecond: " + this.timeoutSecond);		
+		this.timeoutSecond--;	
 		if(this.timeoutSecond <= 0){
 			setTimeoutSecond(SESSION_TIME);
 			if(hasTickets){
 				resetReservedSeats();
-				
-				FacesContext facesContext = FacesContext.getCurrentInstance();
-				NavigationController navigationBean = (NavigationController) facesContext.getApplication().getVariableResolver().resolveVariable(facesContext, "navigationController");
-				navigationBean.setStatusStep2();	
-				
-				RequestContext.getCurrentInstance().addCallbackParam("finish", "timeout");
+				RequestContext.getCurrentInstance().execute("timeOut()");
 			}
 		}
 	}
@@ -114,25 +106,13 @@ public class BookingController {
 		for (Seat seat : allSeats)
 			if (seat.isReserved())
 				mySeats.add(seat);
-		
-		RequestContext context = RequestContext.getCurrentInstance();
-		if(mySeats.size() == 0){
-			setTimeoutSecond(SESSION_TIME);
-			if(timerRunning){
-				timerRunning = false;
-				context.execute("PF('remainingTimePoller').stop();");
-			}
-		}else{
-			System.out.println("remainingTimePoller start");
-			context.execute("PF('remainingTimePoller').stop();");
-			context.execute("PF('remainingTimePoller').start();");
-			timerRunning = true;				
-		}
-		
-		if(mySeats.size() > 0)
+	
+		if(mySeats.size() > 0){
 			setHasTickets(true);
-		else
+		}else{
 			setHasTickets(false);
+			setTimeoutSecond(SESSION_TIME);
+		}
 		
 		return mySeats;
 	}
@@ -254,9 +234,7 @@ public class BookingController {
 	}
 
 	public String getRemainTime() {
-		return String.format("%02d min, %02d sec", timeoutSecond/60, timeoutSecond%60);
-		//return String.format("%02d:%02d min", timeoutSecond/60, timeoutSecond%60);
-		//return String.format("%02d:%02d", timeoutSecond/60, timeoutSecond%60);
+		return String.format("%02d:%02d min", timeoutSecond/60, timeoutSecond%60);
 	}
 	
 	public void setRemainTime(String remainTime) {

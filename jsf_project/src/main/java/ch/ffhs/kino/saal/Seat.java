@@ -27,9 +27,8 @@ public class Seat {
 	}
 
 	public String isOccupied() {
-		if (type == SeatType.SOLD) {
+		if (type == SeatType.SOLD)
 			return "true";
-		}
 		return "false";
 	}
 
@@ -69,15 +68,10 @@ public class Seat {
 	private TicketType ticketType = TicketType.ADULT;
 
 	public void reserve() {
-
-		System.out.println("Seat " + this.toString() + "was reserved");
-
-		if (this.isReserved()) {
+		if (this.isReserved())
 			this.setReserved(false);
-		} else {
+		else
 			this.setReserved(true);
-		}
-
 	}
 
 	public SeatType getType() {
