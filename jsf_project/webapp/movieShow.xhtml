@@ -139,7 +139,7 @@
 						  			<div class="col-sm-8">
 							            <h:selectOneRadio id="zahlungsart" value="#{kinoSaalManager.payWithCreditCard}"
 							            				  styleClass="payment_choice" style="float: left;">
-						                    <f:selectItem itemValue="#{true}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-credit-card&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_cc}"/>
+						                    <f:selectItem itemValue="#{true}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-credit-card&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_cc}&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;"/>
 						                    <f:selectItem itemValue="#{false}" itemEscaped="false" itemLabel="&amp;nbsp;&lt;i class=&quot;fa fa-paypal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; #{msg.payment_lbl_paypal}"/>
 						                    <f:ajax event="click" render="@form" />
 						                </h:selectOneRadio>  
