@@ -278,7 +278,7 @@ th {
 .btn-breadcrumb .btn{
 	border-color: transparent; border: 0px solid transparent;
 	border-right: 1px solid transparent !important; 
-	font-size: 11px;
+	font-size: 12px;
 }
 .breadcrumb-default{ background-color: #fff; }
 .btn-primary,.breadcrumb-primary{ background-color: #337ab7; }

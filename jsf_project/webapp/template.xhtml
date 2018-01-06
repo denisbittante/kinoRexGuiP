@@ -188,69 +188,69 @@
 			<h:commandButton id="gotoRegButton" actionListener="#{navigationController.goToStep2()}" /> 
 		</h:form> 
 
-			<h:form id="navigationForm">
+		<h:form id="navigationForm">
 
-		        <div class="btn-group btn-breadcrumb breadcrumb-default">
-		            
-		            <h:link class="btn btn-primary" outcome="programm">
-		      			<i class="glyphicon glyphicon-home"></i><h:outputText styleClass="font-h3" value=" "/>
-		      		</h:link>
+	        <div class="btn-group btn-breadcrumb breadcrumb-default">
+	            
+	            <h:commandLink class="btn btn-primary" action="#{navigationController.goToStep1()}">
+	      			<i class="glyphicon glyphicon-home"></i><h:outputText value=" "/>
+	      		</h:commandLink>
 
-					<!-- 1. Vorstellung wählen -->
-					<c:if test="${navigationController.step1Active}">
-						<div class="btn btn-success">
-							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_1}"/></u>
-						</div>
-					</c:if>						
-		      		<h:commandLink styleClass="#{navigationController.step1Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
-		      					   disabled="#{navigationController.step1Disabled}"
-						    	   action="#{navigationController.goToStep1()}"
-						    	   rendered="#{!navigationController.step1Active}">
-						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_1}"/>
-		            </h:commandLink>	
-		            
-		            <!-- 2. Sitzplatz wählen -->
-		            <c:if test="${navigationController.step2Active}">
-		            	<div class="btn btn-success">
-							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_2}"/></u>
-						</div>
-		            </c:if>
-		            <h:commandLink id="step2" styleClass="#{navigationController.step2Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
-		      					   disabled="#{navigationController.step2Disabled}"
-						    	   action="#{navigationController.goToStep2()}"
-						    	   rendered="#{!navigationController.step2Active}">
-						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_2}"/>
-		            </h:commandLink>
-		            
-		            <!-- 3. Bezahlen -->
-		            <c:if test="${navigationController.step3Active}">
-		            	<div class="btn btn-success">
-							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_3}"/></u>
-						</div>
-		            </c:if>
-		            <h:commandLink styleClass="#{navigationController.step3Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
-		      					   disabled="#{navigationController.step3Disabled}"
-						    	   action="#{navigationController.goToStep3()}"
-						    	   rendered="#{!navigationController.step3Active}">
-						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_3}"/>
-		            </h:commandLink>
-		            
-		            <!-- 4. Bestellbestätigung -->
-		            <c:if test="${navigationController.step4Active}">
-		            	<div class="btn btn-success">
-							<u><h:outputText styleClass="font-h3" value="#{msg.wiz_4}"/></u>
-						</div>
-		            </c:if>
-		            <h:commandLink styleClass="#{navigationController.step4Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
-		      					   disabled="#{navigationController.step4Disabled}"
-						    	   action="#{navigationController.goToStep4()}"
-						    	   rendered="#{!navigationController.step4Active}">
-						    	   <h:outputText styleClass="font-h3" value="#{msg.wiz_4}"/>
-		            </h:commandLink>
+				<!-- 1. Vorstellung wählen -->
+				<c:if test="${navigationController.step1Active}">
+					<div class="btn btn-success">
+						<u><h:outputText value="#{msg.wiz_1}"/></u>
+					</div>
+				</c:if>						
+	      		<h:commandLink styleClass="#{navigationController.step1Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+	      					   disabled="#{navigationController.step1Disabled}"
+					    	   action="#{navigationController.goToStep1()}"
+					    	   rendered="#{!navigationController.step1Active}">
+					    	   <h:outputText value="#{msg.wiz_1}"/>
+	            </h:commandLink>	
+	            
+	            <!-- 2. Sitzplatz wählen -->
+	            <c:if test="${navigationController.step2Active}">
+	            	<div class="btn btn-success">
+						<u><h:outputText value="#{msg.wiz_2}"/></u>
+					</div>
+	            </c:if>
+	            <h:commandLink id="step2" styleClass="#{navigationController.step2Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+	      					   disabled="#{navigationController.step2Disabled}"
+					    	   action="#{navigationController.goToStep2()}"
+					    	   rendered="#{!navigationController.step2Active}">
+					    	   <h:outputText value="#{msg.wiz_2}"/>
+	            </h:commandLink>
+	            
+	            <!-- 3. Bezahlen -->
+	            <c:if test="${navigationController.step3Active}">
+	            	<div class="btn btn-success">
+						<u><h:outputText value="#{msg.wiz_3}"/></u>
+					</div>
+	            </c:if>
+	            <h:commandLink styleClass="#{navigationController.step3Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+	      					   disabled="#{navigationController.step3Disabled}"
+					    	   action="#{navigationController.goToStep3()}"
+					    	   rendered="#{!navigationController.step3Active}">
+					    	   <h:outputText value="#{msg.wiz_3}"/>
+	            </h:commandLink>
+	            
+	            <!-- 4. Bestellbestätigung -->
+	            <c:if test="${navigationController.step4Active}">
+	            	<div class="btn btn-success">
+						<u><h:outputText value="#{msg.wiz_4}"/></u>
+					</div>
+	            </c:if>
+	            <h:commandLink styleClass="#{navigationController.step4Disabled ? 'btn btn-btn-default visible-lg-block visible-md-block disabled' : 'btn btn-success visible-lg-block visible-md-block'}"
+	      					   disabled="#{navigationController.step4Disabled}"
+					    	   action="#{navigationController.goToStep4()}"
+					    	   rendered="#{!navigationController.step4Active}">
+					    	   <h:outputText value="#{msg.wiz_4}"/>
+	            </h:commandLink>
 
-		      		<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
-		        </div>				
-			</h:form>			
+	      		<div class="btn btn-default visible-xs-block hidden-xs visible-sm-block ">...</div>
+	        </div>				
+		</h:form>			
 		<!-- </div>	 -->	
 		<!-- </div> -->
 
