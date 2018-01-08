@@ -17,7 +17,7 @@ public class Movie {
 	private String title;
 	private List<GenreType> genre;
 	private String desc;
-	private String movieImage;
+	private List<String> movieImages;
 	private int altersfreigabe;
 	private String altersfreigabeImage;
 	private int laengeMin;
@@ -41,7 +41,7 @@ public class Movie {
 	@Override
 	public String toString() {
 		return "Movie [id=" + id + ", originalLanguage=" + originalLanguage + ", regie=" + regie + ", actors=" + actors
-				+ ", title=" + title + ", genre=" + genre + ", desc=" + desc + ", imageRessource=" + movieImage
+				+ ", title=" + title + ", genre=" + genre + ", desc=" + desc
 				+ ", altersfreigabe=" + altersfreigabe + ", laengeMin=" + laengeMin + ", webseite=" + webseite
 				+ ", criticsStar=" + criticStars + ", trailer=" + trailer + "]";
 	}
@@ -136,14 +136,6 @@ public class Movie {
 	public void setAltersfreigabe(int altersfreigabe) {
 		this.altersfreigabe = altersfreigabe;
 	}
-
-	public String getMovieImage() {
-		return movieImage;
-	}
-
-	public void setMovieImage(String movieImage) {
-		this.movieImage = movieImage;
-	}
 	
 	public void setGenre(GenreType... genreTypes) {
 		this.genre = Arrays.asList(genreTypes);
@@ -159,5 +151,13 @@ public class Movie {
 
 	public void setAltersfreigabeImage(String altersfreigabeImage) {
 		this.altersfreigabeImage = altersfreigabeImage;
+	}
+
+	public List<String> getMovieImages() {
+		return movieImages;
+	}
+
+	public void setMovieImages(List<String> movieImages) {
+		this.movieImages = movieImages;
 	}
 }

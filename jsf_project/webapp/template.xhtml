@@ -36,6 +36,10 @@
 	//<![CDATA[
 	$(document).ready(function() {	  
 	    
+		$('[data-toggle="tooltip"]').tooltip({
+	        placement : 'top'
+	    });
+		
 		function tog(v){return v?'addClass':'removeClass';} 
 		$(document).on('input', '.clearable', function(){
 			$(this)[tog(this.value)]('x');

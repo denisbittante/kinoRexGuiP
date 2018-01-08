@@ -415,7 +415,14 @@ public class BackendService {
 		movie1.setCriticStars(4.3);
 		movie1.setOriginalLanguage(MovieLanguage.FRANZOESISCH);
 		movie1.setSubtitle(MovieLanguage.DEUTSCH);
-		movie1.setMovieImage(String.format(IMAGE_PATH,"movie1.jpg"));
+
+		List<String> images = new ArrayList<String>();
+		images.add(String.format(IMAGE_PATH,"movie1.jpg"));
+		images.add(String.format(IMAGE_PATH,"movie1b.jpg"));
+		images.add(String.format(IMAGE_PATH,"movie1c.jpg"));
+		images.add(String.format(IMAGE_PATH,"movie1d.jpg"));
+		movie1.setMovieImages(images);
+		
 		movie1.setTrailer("http://www.youtube.com/embed/VAB0tvLZtTw?autoplay=1;rel=0;3&amp;autohide=1&amp;showinfo=0");
 		movie1.setWebseite("http://www.imdb.com/title/tt6314690/");
 		movie1.setRegie("David Alaux");
@@ -432,7 +439,11 @@ public class BackendService {
 		movie2.setCriticStars(4.9);
 		movie2.setOriginalLanguage(MovieLanguage.ENGLISH);
 		movie2.setSubtitle(MovieLanguage.DEUTSCH);
-		movie2.setMovieImage(String.format(IMAGE_PATH,"movie2.jpg"));
+
+		images = new ArrayList<String>();
+		images.add(String.format(IMAGE_PATH,"movie2.jpg"));
+		movie2.setMovieImages(images);
+		
 		movie2.setRegie("Rian Johnson");
 		movie2.addActors("Tom Hardy").addActors("Dave Bautista").addActors("Edward James Olmos").addActors("Harrison Ford");
 
@@ -448,7 +459,9 @@ public class BackendService {
 		movie3.setCriticStars(3.0);
 		movie3.setOriginalLanguage(MovieLanguage.ENGLISH);
 		movie3.setSubtitle(MovieLanguage.DEUTSCH);
-		movie3.setMovieImage(String.format(IMAGE_PATH,"movie3.jpg"));
+		images = new ArrayList<String>();
+		images.add(String.format(IMAGE_PATH,"movie3.jpg"));
+		movie3.setMovieImages(images);
 		movie3.setRegie("Carlos Saldanha");
 		movie3.addActors("John Cena").addActors("Kate McKinnon").addActors("Bobby Cannavale").addActors("Gina Rodriguez");
 		
@@ -463,7 +476,9 @@ public class BackendService {
 		movie4.setCriticStars(4.0);
 		movie4.setOriginalLanguage(MovieLanguage.ENGLISH);
 		movie4.setSubtitle(MovieLanguage.DEUTSCH);
-		movie4.setMovieImage(String.format(IMAGE_PATH,"movie4.jpg"));
+		images = new ArrayList<String>();
+		images.add(String.format(IMAGE_PATH,"movie4.jpg"));
+		movie4.setMovieImages(images);		
 		movie4.setRegie("Kenneth Branagh");
 		movie4.addActors("Johnny Depp").addActors("Michelle Pfeiffer").addActors("Penélope Cruz").addActors("Willem Dafoe");
 				
@@ -479,7 +494,9 @@ public class BackendService {
 		movie5.setCriticStars(3.0);
 		movie5.setOriginalLanguage(MovieLanguage.ENGLISH);
 		movie5.setSubtitle(MovieLanguage.DEUTSCH);
-		movie5.setMovieImage(String.format(IMAGE_PATH,"movie5.jpg"));
+		images = new ArrayList<String>();
+		images.add(String.format(IMAGE_PATH,"movie5.jpg"));
+		movie5.setMovieImages(images);
 		movie5.setRegie("Bora Dagtekin");
 		movie5.addActors("Corinna Harfouch").addActors("Elyas M'Barek").addActors("Jana Pallaske").addActors("Jella Haase");
 		
@@ -495,7 +512,9 @@ public class BackendService {
 		movie6.setCriticStars(3.0);
 		movie6.setOriginalLanguage(MovieLanguage.ENGLISH);
 		movie6.setSubtitle(MovieLanguage.DEUTSCH);
-		movie6.setMovieImage(String.format(IMAGE_PATH,"movie6.jpg"));
+		images = new ArrayList<String>();
+		images.add(String.format(IMAGE_PATH,"movie6.jpg"));
+		movie6.setMovieImages(images);
 		movie6.setRegie("Adam Robitel");
 		movie6.addActors("Lin Shaye").addActors("Leigh Whannell").addActors("Angus Sampson").addActors("Javier Botet");
 	}

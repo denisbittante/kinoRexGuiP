@@ -67,10 +67,48 @@
 	    	<div class="panel-body">
 	
 				<!-- Links -->
-			    <div class="col-sm-3 clear text-center">
+			    <div class="col-sm-2 clear text-center">
 			    
-				    <h:graphicImage value="#{movieEventController.selectedMovie.movieImage}"
+			    <c:choose>
+				  <c:when test="${fn:length(movieEventController.selectedMovie.movieImages) gt 1}">
+					<div id="movieCarousel" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<li data-target="#movieCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#movieCarousel" data-slide-to="1"></li>
+							<li data-target="#movieCarousel" data-slide-to="2"></li>
+						</ol>
+					
+						<div class="carousel-inner">					  
+							<ui:repeat var="img" value="#{movieEventController.selectedMovie.movieImages}" varStatus="myVarStatus">
+								<h:panelGroup layout="block" styleClass="#{myVarStatus.index == 0 ? 'item active' : 'item'}">
+									<h:graphicImage value="#{img}" class="img-responsive" style="width:100%;display:block;margin:auto;" alt="movie"/>					  
+								</h:panelGroup>
+							</ui:repeat>					  
+						</div>
+					
+					  	<!-- Left and right controls -->
+						<a class="left carousel-control" href="#movieCarousel" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left"></span>
+						  	<span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="#movieCarousel" data-slide="next">
+						  	<span class="glyphicon glyphicon-chevron-right"></span>
+						  	<span class="sr-only">Next</span>
+						</a>
+					</div>
+				  </c:when>
+				  <c:otherwise>
+					<h:graphicImage value="#{movieEventController.selectedMovie.movieImages[0]}"
 								    class="img-responsive" style="width:250px;display:block;margin:auto;" alt="movie"/>
+				  </c:otherwise>
+				</c:choose>
+
+
+
+
+					
+
 					<br></br>
 					<h:outputText value="#{msg.mvidet_lbl_kritik}" />					
 					<p style="white-space: nowrap;">
